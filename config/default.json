@@ -1,0 +1,4 @@
+{
+    "mongoURI": "mongodb+srv://demon123:evN7Yc8xveN68uj@cluster0.igrzw.mongodb.net/anime_website?retryWrites=true&w=majority",
+    "jwtSecret": "anything"
+}
