@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
 import AppNavbar from "./components/navbar";
@@ -13,18 +13,19 @@ import "react-toastify/dist/ReactToastify.css";
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <AppNavbar />
-
-        <ToastContainer />
-        <main className="container h-100">
-          <Switch>
-            <CardContainer />
-            <Route exact path="/" component={Animes} />
-            {/* <Redirect to="/not-found"/> */}
-          </Switch>
-        </main>
-      </div>
+      <Router>
+        <div className="App">
+          <AppNavbar />
+          <ToastContainer />
+          <main className="container h-100">
+            <Switch>
+              <CardContainer/>
+              <Route exact path="/" component={Animes} />
+              {/* <Redirect to="/not-found"/> */}
+            </Switch>
+          </main>
+        </div>
+      </Router>
     );
   }
 }
