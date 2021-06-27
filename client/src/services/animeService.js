@@ -22,7 +22,9 @@ export function getAnimeByMalId(id) {
 }
 
 export function getAnimeBySearchQuery(query) {
-  console.log(searchUrl(query));
+  console.log("query", query);
+  if (query.length < 3) return [];
+  console.log("searchquery",searchUrl(query));
   return http.get(searchUrl(query));
 }
 
