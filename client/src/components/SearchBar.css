@@ -43,6 +43,7 @@ input:focus {
   overflow: hidden;
   overflow-y: auto;
   border-radius: 3px;
+  z-index: 999;
 }
 
 .dataResult::-webkit-scrollbar {
