@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { getAnimes } from "../services/animeService";
+import { getAnimes, getAnimeByMalId, getAnimeBySearchQuery } from "../services/animeService";
 
 class Animes extends Component {
     state = {
-        animes: []
+        animes: [],
+        anime: {},
+        anime2: {}
     }
 
     async componentDidMount() {
@@ -14,11 +16,28 @@ class Animes extends Component {
         } catch (err) {
             console.log(err);
         }
+        const {data: anime} = await getAnimeByMalId(1);
+        try {
+            this.setState({ anime })
+            // console.log("data",anime);
+        } catch (err) {
+            console.log(err);
+        }
+        const {data: anime2} = await getAnimeBySearchQuery({q:"grand blue"});
+        try {
+            this.setState({ anime2 })
+            console.log("data2",anime2.results[0].title);
+        } catch (err) {
+            console.log(err);
+        }
     }
 
     render() {
-        const { animes } = this.state;
+        const { animes, anime, anime2 } = this.state;
         return (
+            <>
+            <div>{anime.title}</div>
+            {/* <div>{anime2.results[0].title}</div> */}
             <div className="list">
                 {
                     animes.map(anime => (
@@ -29,6 +48,7 @@ class Animes extends Component {
                     ))
                 }
             </div>
+            </>
         );
     }
 }

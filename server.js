@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const mongoose = require('mongoose');
 const config = require('config');
 const path = require('path');
@@ -6,6 +7,7 @@ mongoose.set('useFindAndModify', false);
 
 const app = express();
 
+app.use(cors());
 //DB config
 const db = config.get('mongoURI');
 //Connect to Mongo
