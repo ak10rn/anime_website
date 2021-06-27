@@ -50,7 +50,6 @@ function SearchBar({ placeholder, data }) {
               <a
                 className="dataItem"
                 href={`/anime/${value.id}`}
-                rel="noopener noreferrer"
               >
                 <p>{value.title} </p>
               </a>
