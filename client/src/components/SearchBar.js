@@ -12,8 +12,10 @@ function SearchBar({ placeholder, data }) {
   const changeHandler = async (event) => {
     setQuery(event.target.value);
     if (event.target.value !== "") {
-      const searchedAnimes = await getAnimeBySearchQuery({ q: event.target.value });
-      const newSearchData = searchedAnimes.data.results.map(anime => {
+      const searchedAnimes = await getAnimeBySearchQuery({
+        q: event.target.value,
+      });
+      const newSearchData = searchedAnimes.data.results.map((anime) => {
         return { title: anime.title, id: anime.mal_id };
       });
       console.log(searchedAnimes);
@@ -23,15 +25,17 @@ function SearchBar({ placeholder, data }) {
     }
   };
 
-  const debouncedChangeHandler = useMemo(
-    () => debounce(changeHandler, 300)
-  , [searchData, setSearchData, query, setQuery]);
+  const debouncedChangeHandler = useMemo(() => debounce(changeHandler, 300), [
+    searchData,
+    setSearchData,
+    query,
+    setQuery,
+  ]);
 
   const clearInput = () => {
     setSearchData([]);
     setQuery("");
   };
-
 
   return (
     <div className="search">

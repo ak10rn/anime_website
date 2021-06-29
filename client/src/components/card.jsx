@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import "./card.css";
 
 import { getAnimeByMalId } from "../services/animeService";
 
@@ -13,7 +14,13 @@ class Card extends Component {
   }
   render() {
     return (
-      <div className="card text-white bg-dark mb-3">
+      <div
+        className="card shadow text-white bg-dark mb-3 ho"
+        style={{ cursor: "pointer" }}
+      >
+        <div className="middle">
+          <div className="text">Know Me Senpai!</div>
+        </div>
         <div className="row no-gutters">
           <div className="col-md-4">
             <img
@@ -33,8 +40,7 @@ class Card extends Component {
                     <span>{genre.name} </span>
                   ))}
                 <br />
-
-                <span style={{ color: "red" }}>
+                <span style={{ color: "#FF355E" }}>
                   {" "}
                   Rating: {this.state.anime.rating}
                 </span>
@@ -43,7 +49,9 @@ class Card extends Component {
             <div className="card-footer">
               <p className="card-text">
                 <small className="text-muted">
-                  Rated - {this.state.anime.score}/10
+                  <span style={{ color: "	#29AB87" }}>
+                    Rated - {this.state.anime.score}/10
+                  </span>
                 </small>
               </p>
             </div>
