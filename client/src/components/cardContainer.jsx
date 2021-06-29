@@ -3,8 +3,22 @@ import Card from "./card";
 
 class CardContainer extends Component {
   render() {
+    const containerStyle = {
+      display: "grid",
+      width: "100%",
+      maxWidth: "80rem",
+      gridTemplateColumns: "repeat(auto-fit, minmax(20rem, 1fr))",
+      gridGap: "0.75rem",
+      gap: "0.75rem",
+      padding: "1.5rem",
+    };
     return (
-      <div className="card-group">
+      <div className="" style={containerStyle}>
+        <Card></Card>
+        <Card></Card>
+        <Card></Card>
+        <Card></Card>
+        <Card></Card>
         <Card></Card>
         <Card></Card>
         <Card></Card>
