@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
 import AppNavbar from "./components/navbar";
-import Animes from "./components/animes";
+import Anime from "./components/anime";
 import CardContainer from "./components/cardContainer";
 
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -19,8 +19,8 @@ class App extends Component {
           <ToastContainer />
           <main className="container h-100">
             <Switch>
+              <Route exact path="/anime" component={Anime} />
               <CardContainer/>
-              <Route exact path="/" component={Animes} />
               {/* <Redirect to="/not-found"/> */}
             </Switch>
           </main>

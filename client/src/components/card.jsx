@@ -4,7 +4,7 @@ import poster from "../icons/aot.jpg";
 class Card extends Component {
   render() {
     return (
-      <div class="card">
+      <div className="card">
         <img className="card-img-top" src={poster} alt="Card"></img>
         <div className="card-body">
           <h5 className="card-title">Shingeki no Kyojin</h5>
