@@ -60,7 +60,7 @@ function SearchBar({ placeholder, data }) {
               <a
                 key={value.id}
                 className="dataItem"
-                href={`/anime/${value.id}`}
+                href={`/anime/${value.mal_id}`}
               >
                 <p>{value.title} </p>
               </a>

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Card from "./card";
+import Info from "./info";
 
 class CardContainer extends Component {
   render() {
@@ -13,18 +14,21 @@ class CardContainer extends Component {
       padding: "1.5rem",
     };
     return (
-      <div className="" style={containerStyle}>
-        <Card></Card>
-        <Card></Card>
-        <Card></Card>
-        <Card></Card>
-        <Card></Card>
-        <Card></Card>
-        <Card></Card>
-        <Card></Card>
-        <Card></Card>
-        <Card></Card>
-      </div>
+      <>
+        <Info />
+        <div className="" style={containerStyle}>
+          <Card></Card>
+          <Card></Card>
+          <Card></Card>
+          <Card></Card>
+          <Card></Card>
+          <Card></Card>
+          <Card></Card>
+          <Card></Card>
+          <Card></Card>
+          <Card></Card>
+        </div>
+      </>
     );
   }
 }
