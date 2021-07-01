@@ -35,11 +35,6 @@ class Anime extends Component {
       },
     ],
   };
-  async componentDidMount() {
-    const { data } = await getAnimeByMalId(16491);
-    this.setState({ anime: data });
-    console.log("heree", this.state.anime);
-  }
   handleAddReview = () => {
     // open modal
 
