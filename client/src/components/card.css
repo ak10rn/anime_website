@@ -17,7 +17,9 @@
   width: 100%;
   opacity: 0;
   transition: 0.5s ease;
-  background-color: #008cba;
+
+  background-color: greenyellow;
+
 }
 
 .ho:hover .middle {
@@ -25,7 +27,9 @@
 }
 
 .text {
-  color: white;
+
+  color: black;
+
   font-size: 20px;
   position: absolute;
   top: 50%;
