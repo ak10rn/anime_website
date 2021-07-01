@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./card.css";
 import RateModal from "./rateModal";
 
+
 import { getAnimeByMalId } from "../services/animeService";
 
 class Card extends Component {
