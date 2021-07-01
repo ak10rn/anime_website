@@ -36,7 +36,7 @@ class Anime extends Component {
     ],
   };
   async componentDidMount() {
-    const { data } = await getAnimeByMalId(this.props.match.params.id);
+    const { data } = await getAnimeByMalId(16491);
     this.setState({ anime: data });
     console.log("heree", this.state.anime);
   }
@@ -93,16 +93,16 @@ class Anime extends Component {
                 </div>
                 {this.state.reviews.map((review) => {
                   return (
-                    <div className="anime-review">
-                      <div className="user-info">
-                        <img src={review.img} alt="User Image" />
-                        <div>
-                          <strong> {review.name}</strong>
-                          <span>Rated {review.userRating} out of 10</span>
+                    <div key={review.id+'anime-review'} className="anime-review">
+                      <div key={review.id+'user-info'} className="user-info">
+                        <img key={review.id+'img'} src={review.img} alt="User Image" />
+                        <div key={review.id+'div'}>
+                          <strong key={review.id+'strong'}> {review.name}</strong>
+                          <span key={review.id+'span'}>Rated {review.userRating} out of 10</span>
                         </div>
                       </div>
-                      <div className="user-comment">
-                        <p>{review.comment}</p>
+                      <div key={review.id+'user-comment'} className="user-comment">
+                        <p key={review.id+'p'}>{review.comment}</p>
                       </div>
                     </div>
                   );
