@@ -1,0 +1,80 @@
+.title {
+  height: 50px;
+  justify-content: center;
+  align-content: center;
+}
+.anime-box {
+  display: flex;
+  flex-direction: row;
+}
+.title p {
+  font-size: 1.6rem;
+}
+.left-panel {
+  display: flex;
+  flex-direction: column;
+  min-width: 225px;
+  margin: 10px 20px 10px 0;
+}
+.anime-body {
+  width: 75%;
+  display: flex;
+  flex-direction: column;
+  margin: 10px 0 10px 5px;
+}
+.anime-rating {
+  background-color: grey;
+  padding: 5px;
+  width: 75px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+}
+.anime-rating h5{
+  text-align: center;
+}
+.anime-sypnosis {
+  margin: 20px 0;
+}
+.underlineUnder {
+  text-decoration: underline;
+  text-underline-position: under;
+}
+.anime-reviews{
+  display: flex;
+  flex-direction: column;
+  border-radius: 6px;
+  padding-top: 40px;
+}
+.anime-reviews-head{
+  display: flex;
+  flex-direction: row;
+}
+.anime-review{
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid black;
+  margin-bottom: 30px;
+}
+.user-info{
+  display: flex;
+  flex-direction: row;
+}
+.user-info img{
+  padding: 6px;
+  border-radius: 20%;
+  height: 80px;
+  width: 80px;
+}
+.user-info div{
+  display: flex;
+  flex-direction: column;
+  padding: 5px 10px;
+}
+.user-info div strong{
+  padding: 5px 0;
+  color: yellow;
+}
+.user-info div span{
+  padding: 10px 0;
+}
