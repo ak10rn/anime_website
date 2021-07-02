@@ -34,7 +34,7 @@ class AppNavbar extends Component {
   render() {
     return (
       <>
-        <Navbar color="dark" dark expand="sm" className="sticky-top mb-5">
+        <Navbar color="dark" dark expand="sm" className="sticky-top mb-3">
           <Container>
             <Link className="navbar-brand" to="/">
               <span style={{ color: "greenyellow" }}>Animes</span>
