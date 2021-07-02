@@ -22,6 +22,10 @@
   flex-direction: column;
   margin: 10px 0 10px 5px;
 }
+.anime-det{
+  display: flex;
+  flex-direction: row;
+}
 .anime-rating {
   background-color: grey;
   padding: 5px;
@@ -33,8 +37,15 @@
 .anime-rating h5{
   text-align: center;
 }
+.anime-block{
+  display: block;
+  margin-bottom: 10px;
+}
+.anime-ep span{
+  font-size: large;
+}
 .anime-sypnosis {
-  margin: 20px 0;
+  margin: 10px 0;
 }
 .underlineUnder {
   text-decoration: underline;
@@ -77,4 +88,7 @@
 }
 .user-info div span{
   padding: 10px 0;
+}
+.user-comment{
+  padding-bottom: 15px;
 }
