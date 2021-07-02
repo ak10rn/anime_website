@@ -1,12 +1,23 @@
 import React, { Component } from "react";
 import { getAnimeByMalId } from "../services/animeService";
 import "./anime.css";
+import ReactReadMoreReadLess from "react-read-more-read-less";
 
 class Anime extends Component {
   state = {
     anime: {
       title: "Attack on Titan",
       rating: 8,
+      episodes: 75,
+      genre: [
+        "Action",
+        "Military",
+        "Mystery",
+        "Super Power",
+        "Drama",
+        "Fantasy",
+        "Shounen",
+      ],
       img: "https://cdn.myanimelist.net/images/anime/10/47347.jpg",
       sypnosis:
         "Centuries ago, mankind was slaughtered to near extinction by monstrous humanoid creatures called titans, forcing humans to hide in fear behind enormous concentric walls. What makes these giants truly terrifying is that their taste for human flesh is not born out of hunger but what appears to be out of pleasure. To ensure their survival, the remnants of humanity began living within defensive barriers, resulting in one hundred years without a single titan encounter. However, that fragile calm is soon shattered when a colossal titan manages to breach the supposedly impregnable outer wall, reigniting the fight for survival against the man-eating abominations.",
@@ -46,6 +57,7 @@ class Anime extends Component {
       userRating: "8",
       id: 343234234,
     };
+
     const reviews = [newReview, ...this.state.reviews];
     this.setState({ reviews });
   };
@@ -63,23 +75,34 @@ class Anime extends Component {
               </div>
             </div>
             <div className="anime-body">
-              <div className="anime-rating">
-                <h5>Rating</h5>
-                <i
-                  className="fa fa-star"
-                  style={{ color: "gold", fontSize: "1.5rem" }}
-                />
-                <span> {this.state.anime.rating}/10</span>
+              <div className="anime-det">
+                <div className="anime-rating">
+                  <h5>Rating</h5>
+                  <i
+                    className="fa fa-star"
+                    style={{ color: "gold", fontSize: "1.5rem" }}
+                  />
+                  <span> {this.state.anime.rating}/10</span>
+                </div>
+              </div>
+              <div className="anime-block mt-3">
+                <span>Episodes: {this.state.anime.episodes}</span>
+              </div>
+              <div className="anime-block">
+                <span>Genre: {this.state.anime.genre.join(", ")}</span>
               </div>
               <div className="anime-sypnosis">
                 <h5 className="underlineUnder">Sypnosis</h5>
                 <p>{this.state.anime.sypnosis}</p>
               </div>
+
+              {/* Review */}
+
               <div className="anime-reviews">
                 <div className="anime-reviews-head mb-4 position-relative">
                   <h5 className="underlineUnder">Reviews</h5>
                   <button
-                    className="btn btn-secondary position-absolute"
+                    className="btn btn-primary position-absolute"
                     style={{ right: 0 }}
                     onClick={this.handleAddReview}
                   >
@@ -88,16 +111,38 @@ class Anime extends Component {
                 </div>
                 {this.state.reviews.map((review) => {
                   return (
-                    <div key={review.id+'anime-review'} className="anime-review">
-                      <div key={review.id+'user-info'} className="user-info">
-                        <img key={review.id+'img'} src={review.img} alt="User Image" />
-                        <div key={review.id+'div'}>
-                          <strong key={review.id+'strong'}> {review.name}</strong>
-                          <span key={review.id+'span'}>Rated {review.userRating} out of 10</span>
+                    <div
+                      key={review.id + "anime-review"}
+                      className="anime-review"
+                    >
+                      <div key={review.id + "user-info"} className="user-info">
+                        <img
+                          key={review.id + "img"}
+                          src={review.img}
+                          alt="User Image"
+                        />
+                        <div key={review.id + "div"}>
+                          <strong key={review.id + "strong"}>
+                            {" "}
+                            {review.name}
+                          </strong>
+                          <span key={review.id + "span"}>
+                            Rated {review.userRating} out of 10
+                          </span>
                         </div>
                       </div>
-                      <div key={review.id+'user-comment'} className="user-comment">
-                        <p key={review.id+'p'}>{review.comment}</p>
+                      <div
+                        key={review.id + "user-comment"}
+                        className="user-comment"
+                      >
+                        {/* <p >{review.comment}</p> */}
+                        <ReactReadMoreReadLess
+                          charLimit={400}
+                          readMoreText={"Read more ▼"}
+                          readLessText={"Read less ▲"}
+                        >
+                          {review.comment}
+                        </ReactReadMoreReadLess>
                       </div>
                     </div>
                   );

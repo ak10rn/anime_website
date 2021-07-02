@@ -25,6 +25,7 @@
     "force": "^0.0.3",
     "material-ui-search-bar": "^1.0.0",
     "mongoose": "^5.12.14",
+    "react-read-more-read-less": "^1.0.7",
     "readmore-js": "^2.2.1"
   },
   "devDependencies": {
