@@ -6,12 +6,65 @@ const router = express.Router();
 //Article Model
 const Anime = require('../../models/anime.js');
 
-// @route GET api/articles
-// @desc Get All Articles
+// @route GET api/animes
+// @desc Get All Animes
 // @access Public
 router.get('/', async(req, res) => {
-    const articles = await Anime.find().sort({date: -1});
-    res.json(articles)
+    try {
+        const animes = await Anime.find().sort({ date: -1 });
+        res.json(animes);
+    } catch (err) {
+        console.log(err);
+    }
+});
+
+// @route POST api/animes
+// @desc Create An anime
+// @access Private
+router.post('/', async (req, res) => {
+    //console.log("post",req.body);
+    try {
+        const newAnime = new Anime(req.body);
+        await newAnime.save().then(anime => res.json(anime));
+    } catch (err) {
+        console.log(err);
+    }
+});
+
+// @route PUT api/animes
+// @desc Update An anime
+// @access Private and isAuthor
+router.put('/:id', async (req, res) => {
+    try {
+        anime = await Anime.findByIdAndUpdate(req.params.id);
+        res.json(anime);
+    } catch (err) {
+        console.log(err);
+    }
+});
+
+// @route DELETE api/animes/:id
+// @desc Delete An anime
+// @access Private and isAuthor////////////////////////////////////
+router.delete('/:id', async (req, res) => {
+    try {
+        anime = await Anime.findByIdAndDelete(req.params.id);
+        res.json(anime);
+    } catch (err) {
+        console.log(err);
+    }
+});
+
+// @route GET api/animes/:id
+// @desc Get an Anime
+// @access Public
+router.get('/:id', async(req, res) => {
+    try {
+        const anime = await Anime.findOne({mal_id: req.params.id}).populate('reviews');
+        res.json(anime);
+    } catch (err) {
+        console.log(err);
+    }
 });
 
 // // @route POST api/articles

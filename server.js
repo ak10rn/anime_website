@@ -24,6 +24,7 @@ mongoose
 app.use(express.json());
 
 app.use('/api/animes', require('./routes/api/animes'));
+app.use('/api/reviews', require('./routes/api/reviews'));
 // app.use('/api/users', require('./routes/api/users'));
 // app.use('/api/auth', require('./routes/api/auth'));
 

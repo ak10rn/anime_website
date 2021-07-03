@@ -19,8 +19,8 @@ class App extends Component {
           <ToastContainer />
           <main className="container h-100">
             <Switch>
-              <CardContainer/>
               <Route exact path="/" component={Animes} />
+              <CardContainer/>
               {/* <Redirect to="/not-found"/> */}
             </Switch>
           </main>

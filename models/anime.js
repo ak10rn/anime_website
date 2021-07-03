@@ -3,17 +3,39 @@ const Schema = mongoose.Schema;
 
 //Create Schema
 const AnimeSchema = new Schema({
-    name: {
-        type: String,
-        default: "default userid"
-    },
     date: {
         type: Date,
         default: Date.now
     },
+    reviews: [{ type: Schema.Types.ObjectId, ref: 'review' }],
+    title: {
+        type: String
+    },
+    mal_id: {
+        type: Number
+    },
+    url: {
+        type: String
+    },
+    trailer_url: {
+        type: String
+    },
+    episodes: {
+        type: String
+    },
+    studios: {
+        type: Array,
+        default: []
+    },
+    genres: {
+        type: Array,
+        default: []
+    },
     rating: {
-        type: Number,
-        default: 0
+        type: String
+    },
+    synopsis: {
+        type: String
     }
 });
 
