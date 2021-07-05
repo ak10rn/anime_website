@@ -63,7 +63,7 @@ export function saveAnime(anime) {
   if (anime._id) {
     const body = { ...anime };
     delete body._id;
-    return http.put(animeUrl(anime._id), body);
+    return http.put(`${apiUrl}/${anime._id}`, body);
   }
   return http.post(apiUrl, anime);
 }

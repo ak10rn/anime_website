@@ -36,7 +36,7 @@ router.post('/', async (req, res) => {
 // @access Private and isAuthor
 router.put('/:id', async (req, res) => {
     try {
-        anime = await Anime.findByIdAndUpdate(req.params.id);
+        anime = await Anime.findByIdAndUpdate(req.params.id,req.body);
         res.json(anime);
     } catch (err) {
         console.log(err);
@@ -60,7 +60,7 @@ router.delete('/:id', async (req, res) => {
 // @access Public
 router.get('/:id', async(req, res) => {
     try {
-        const anime = await Anime.findOne({mal_id: req.params.id}).populate('reviews');
+        const anime = await Anime.findOne({mal_id: req.params.id}).populate({path: 'reviews', options: { sort: { 'date': -1 } } });
         res.json(anime);
     } catch (err) {
         console.log(err);

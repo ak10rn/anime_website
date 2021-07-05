@@ -13,7 +13,7 @@
   font-size: 18px;
   padding: 15px;
   height: 30px;
-  width: 300px;
+  width: 250px;
 }
 
 .searchIcon {
@@ -29,13 +29,14 @@ input:focus {
   outline: none;
 }
 .searchIcon svg {
-  font-size: 35px;
+  font-size: 20px;
+  margin-right: 10px;
 }
 
 .dataResult {
   margin-top: 5px;
   margin-left: 10px;
-  width: 300px;
+  width: 281px;
   height: 200px;
   position: absolute;
   background-color: white;

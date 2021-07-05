@@ -17,6 +17,9 @@ const AnimeSchema = new Schema({
     url: {
         type: String
     },
+    image_url: {
+        type: String
+    },
     trailer_url: {
         type: String
     },
@@ -36,6 +39,10 @@ const AnimeSchema = new Schema({
     },
     synopsis: {
         type: String
+    },
+    score: {
+        type: Number,
+        default: 5
     }
 });
 
