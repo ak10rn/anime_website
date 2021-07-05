@@ -2,6 +2,7 @@ import http from "./http";
 const querystring = require('querystring');
 
 const apiUrl = "/api/animes";
+const reviewUrl = "/api/reviews";
 
 const jikanUrl = "https://api.jikan.moe/v3";
 
@@ -16,6 +17,36 @@ function searchUrl(query) {
 export function getAnimes() {
   return http.get(apiUrl);
 }
+
+export function getAnime(mal_id) {
+  return http.get(`${apiUrl}/${mal_id}`);
+}
+
+export function saveReview(review) {
+  if (review._id) {
+    const body = { ...review };
+    delete body._id;
+    return http.put(`${reviewUrl}/${review._id}`, body);
+  }
+  return http.post(reviewUrl, review);
+}
+
+export function deleteReview(review) {
+  return http.delete(`${reviewUrl}/${review._id}`,{ data:review });
+}
+
+// to add a review
+// const savedReview = await saveReview(review);
+// anime.reviews.push(savedReview._id);
+// const savedPost = await saveAnime(anime);
+// console.log(savedPost);
+
+// to delete a review
+// deleteReview(review);
+// const index = anime.reviews.indexOf(review._id);
+// anime.review.splice(index);
+// const savedPost = await saveAnime(anime);
+// console.log(savedPost);
 
 export function getAnimeByMalId(id) {
   return http.get(animeUrl(id));
@@ -32,7 +63,7 @@ export function saveAnime(anime) {
   if (anime._id) {
     const body = { ...anime };
     delete body._id;
-    return http.put(animeUrl(anime._id), body);
+    return http.put(`${apiUrl}/${anime._id}`, body);
   }
   return http.post(apiUrl, anime);
 }

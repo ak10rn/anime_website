@@ -3,9 +3,8 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
 import AppNavbar from "./components/navbar";
-import Animes from "./components/animes";
+import Anime from "./components/anime";
 import CardContainer from "./components/cardContainer";
-import Info from "./components/info";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
@@ -16,13 +15,12 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
-          <AppNavbar />
-          <Info />
+          <AppNavbar {...this.props}/>
           <ToastContainer />
           <main className="container h-100">
             <Switch>
-              <CardContainer />
-              <Route exact path="/" component={Animes} />
+              <Route path="/anime/:id" component={Anime} />
+              <Route exact path="/" component={CardContainer} />
               {/* <Redirect to="/not-found"/> */}
             </Switch>
           </main>

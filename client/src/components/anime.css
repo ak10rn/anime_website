@@ -1,0 +1,69 @@
+.title {
+  height: 50px;
+  justify-content: center;
+  align-content: center;
+}
+.title p {
+  font-size: 1.6rem;
+}
+.anime-details {
+  min-width: 225px;
+  margin: 10px 20px 10px 0;
+}
+.anime-body {
+  margin: 10px 0 10px 5px;
+}
+.anime-rating {
+  background-color: grey;
+  padding: 5px ;
+  width: 75px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+}
+.anime-rating h5 {
+  text-align: center;
+}
+.anime-block {
+  display: block;
+  margin-bottom: 5px;
+}
+.anime-ep span {
+  font-size: large;
+}
+.anime-sypnosis {
+  margin: 8px 0;
+}
+.underlineUnder {
+  text-decoration: underline;
+  text-underline-position: under;
+}
+.anime-reviews {
+  border-radius: 6px;
+  padding-top: 20px;
+}
+
+.anime-review {
+  border-bottom: 1px solid black;
+  margin-bottom: 30px;
+}
+
+.user-img {
+  padding: 6px;
+  border-radius: 20%;
+  height: 80px;
+  width: 80px;
+}
+.user-info {
+  padding: 5px 10px;
+}
+.user-info strong {
+  padding: 5px 0;
+  color: yellow;
+}
+.user-info span {
+  padding: 10px 0;
+}
+.user-comment {
+  padding-bottom: 15px;
+}

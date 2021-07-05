@@ -34,7 +34,7 @@ class AppNavbar extends Component {
   render() {
     return (
       <>
-        <Navbar color="dark" dark expand="sm" className="sticky-top mb-5">
+        <Navbar color="dark" dark expand="sm" className="sticky-top mb-3">
           <Container>
             <Link className="navbar-brand" to="/">
               <span style={{ color: "greenyellow" }}>Animes</span>
@@ -43,7 +43,7 @@ class AppNavbar extends Component {
             <Collapse isOpen={this.state.isOpen} navbar>
               <Nav className="ms-auto" navbar>
                 <NavItem>
-                  <SearchBar placeholder="Search . . ." data={Data} />
+                  <SearchBar placeholder="Search . . ." data={Data} {...this.props}/>
                 </NavItem>
                 <NavItem style={{ marginLeft: "20px" }}>
                   <NavLink href="https://github.com/demonhue">
