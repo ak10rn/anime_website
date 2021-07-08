@@ -5,13 +5,15 @@ import { getAnimes } from "../services/animeService";
 
 class CardContainer extends Component {
   state = {
-    animes: []
-  }
+    animes: [],
+  };
   async componentDidMount() {
     //console.log("test", props);
     const { data } = await getAnimes();
     try {
-      this.setState({ animes: Object.values(data).filter(anime => anime.reviews.length > 0) });
+      this.setState({
+        animes: Object.values(data).filter((anime) => anime.reviews.length > 0),
+      });
       console.log(this.state.animes);
     } catch (err) {
       console.log(err);
@@ -29,16 +31,14 @@ class CardContainer extends Component {
     };
     const { animes } = this.state;
     return (
-      <>
-        <Info numberOfAnimes={this.state.animes.length}/>
+      <React.Fragment>
+        <Info numberOfAnimes={this.state.animes.length} />
         <div className="" style={containerStyle}>
-          {
-            animes.map(anime => (
-              <Card key={anime._id} anime={anime} {...this.props}/>
-            ))
-          }
+          {animes.map((anime) => (
+            <Card key={anime._id} anime={anime} {...this.props} />
+          ))}
         </div>
-      </>
+      </React.Fragment>
     );
   }
 }

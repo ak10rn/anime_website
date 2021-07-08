@@ -93,7 +93,6 @@ const Anime = (props) => {
   };
 
   const handleAddReview = () => {
-    // open modal
     handleModal();
   };
 
@@ -192,7 +191,7 @@ const Anime = (props) => {
     setModal(!modal);
   };
   return (
-    <>
+    <React.Fragment>
       <RateModal
         modalState={modal}
         toggle={handleModal}
@@ -310,7 +309,7 @@ const Anime = (props) => {
             "No reviews yet, Be the first one to write a review :)"}
         </div>
       </div>
-    </>
+    </React.Fragment>
   );
 };
 
