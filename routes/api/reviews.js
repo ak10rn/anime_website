@@ -11,7 +11,7 @@ const Review = require('../../models/review.js');
 // @access Public
 router.get('/', async(req, res) => {
     try {
-        const reviews = await Review.find().sort({ date: -1 });
+        const reviews = await Review.find().populate({ path: 'user', select: '-password -email' }).sort({ date: -1 });
         res.json(reviews);
     } catch (err) {
         console.log(err);
@@ -55,12 +55,24 @@ router.delete('/:id', async (req, res) => {
     }
 });
 
+// @route DELETE api/reviews/:id
+// @desc Delete An review
+// @access Private and isAuthor////////////////////////////////////
+router.delete('/', async (req, res) => {
+    try {
+        review = await Review.findOneAndDelete({ user:req.body.user._id, mal_id:req.body.mal_id });
+        res.json(review);
+    } catch (err) {
+        console.log(err);
+    }
+});
+
 // @route GET api/reviews/:id
 // @desc Get an review
 // @access Public
 router.get('/:id', async(req, res) => {
     try {
-        const review = await Review.findById(req.params.id);
+        const review = await Review.findById(req.params.id).populate({ path: 'user', select: '-password -email' }).sort({ date: -1 });
         res.json(review);
     } catch (err) {
         console.log(err);

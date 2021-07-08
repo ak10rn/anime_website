@@ -3,7 +3,7 @@ import "./anime.css";
 import ReactReadMoreReadLess from "react-read-more-read-less";
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from "react";
-import { getAnime, getAnimeByMalId, saveAnime, saveReview } from "../services/animeService";
+import { getAnime, getAnimeByMalId, saveAnime, saveReview, deleteReview } from "../services/animeService";
 import RateModal from "./rateModal";
 
 const Anime = (props) => {
@@ -16,6 +16,7 @@ const Anime = (props) => {
   const { id } = useParams();
 
   useEffect(async () => {
+    console.log(props.user);
     if (!anime.title) {
       try {
         let { data } = await getAnime(id);
@@ -28,8 +29,10 @@ const Anime = (props) => {
           }
         }
         const newAnime = { ...data };
+        console.log(data);
         if (data.reviews) {
           setAndOrderReviews(data.reviews);
+          console.log("reviews",data.reviews);
           delete newAnime.reviews;
         }
         setAnime(newAnime);
@@ -42,6 +45,7 @@ const Anime = (props) => {
   }, [id])
   
   function avgScore(reviews) {
+    if (reviews.length === 0) return -1;
     let sum = 0;
     for (let i = 0; i < reviews.length; i++){
       sum += parseInt(reviews[i].user_rating);
@@ -68,28 +72,99 @@ const Anime = (props) => {
     setReviews(sortedNewReviews);
   };
 
+  const indexOfReviewMadeByCurrentUser = () => {
+    //if returns -1, the no review by the user
+    if (!props.user) return console.log("Login first dumbass");
+    return reviews.findIndex(review => review.user.name === props.user.name);
+  }
+
   const handleAddReview = () => {
     // open modal
     handleModal();
   };
 
   const handleNewReview = async (e) => {
+    if (!props.user) return console.log("Login first dumbass");
+
+    if(indexOfReviewMadeByCurrentUser()!==-1)return console.log("theres already a review made by current user");
+
     const animedb = { ...anime };
     animedb.reviews = reviews.map(review => review._id);
+
     const newReview = { ...e };
     newReview.mal_id = id;
+    newReview.user = { ...props.user };
+
     const newReviews = [newReview, ...reviews];
-    setAndOrderReviews(newReviews);
+    setReviews(newReviews);
+
     animedb.score = avgScore(newReviews);
     setScore(animedb.score);
-    // console.log("newReview",newReview);
+
+    const toBeSavedReview = { ...newReview };
+    delete toBeSavedReview.user;
+    toBeSavedReview.user = props.user._id;
     try {
-      const { data: savedReview } = await saveReview(newReview);
+      const { data: savedReview } = await saveReview(toBeSavedReview);
       // console.log("savedReview", savedReview);
       animedb.reviews.push(savedReview._id);
       // console.log("animedb",animedb);
       const { data: savedAnime } = await saveAnime(animedb);
       // console.log("savedAnime",savedAnime);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleDeleteReview = async () => {
+    if (!props.user) return console.log("Login first dumbass");
+
+    const newReviews = [ ...reviews ];
+    const index = indexOfReviewMadeByCurrentUser();
+    if (index === -1) return console.log("there's no review by the the user to delete.");
+    const reviewToBeDeleted = { ...newReviews[index] };
+    newReviews.splice(index, 1);
+    setReviews(newReviews);
+
+    const animedb = { ...anime };
+    // console.log("newReviews", newReviews);
+    animedb.reviews = newReviews.map(review => review._id);
+    // console.log("animedb", animedb);
+    animedb.score = avgScore(newReviews);
+    setScore(animedb.score);
+
+    try {
+      const { data: savedAnime } = await saveAnime(animedb);
+      // console.log("savedAnime",savedAnime);
+      const { data: deletedReview } = await deleteReview(reviewToBeDeleted);
+      // console.log("deletedReview",deletedReview);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleEditReview = async (e) => {
+    if (!props.user) return console.log("Login first dumbass");
+
+    const newReview = { ...e };
+    newReview.mal_id = id;
+    newReview.user = { ...props.user };
+
+    const newReviews = [ ...reviews ];
+    const index = indexOfReviewMadeByCurrentUser();
+    if (index === -1) return console.log("there's no review by the the user to delete.");
+    newReviews.splice(index, 1,newReview);
+    setReviews(newReviews);
+
+    const animedb = { ...anime };
+    animedb.score = avgScore(newReviews);
+    setScore(animedb.score);
+
+    try {
+      const { data: savedReview } = await saveReview(newReview);
+      const { data: savedAnime } = await saveAnime(animedb);
+      // console.log("savedAnime",savedAnime);
+      // console.log("savedReview",savedAnime);
     } catch (err) {
       console.log(err);
     }
@@ -146,32 +221,39 @@ const Anime = (props) => {
             >
               <i className="fa fa-plus" /> Add Review
             </button>
+            <button
+              className="btn btn-primary position-absolute"
+              style={{ left: 0 }}
+              onClick={handleDeleteReview}
+            >
+              <i className="fa fa-plus" /> Delete Review
+            </button>
           </div>
           {reviews.length !==0 && reviews.map((review) => {
             return (
               <div
-                key={review.username + "anime-review"}
+                key={review.user.name + "anime-review"}
                 className="anime-review d-flex flex-column"
               >
-                <div key={review.username + "user"} className="d-flex flex-row">
+                <div key={review.user.name + "user"} className="d-flex flex-row">
                   <img
-                    key={review.username + "img"}
-                    src="http://placekitten.com/200/300"
+                    key={review.user.name + "img"}
+                    src={review.user.image}
                     className="user-img"
                     alt="User Image"
                   />
                   <div
-                    key={review.username + "div"}
+                    key={review.user.name + "div"}
                     className="user-info d-flex flex-column"
                   >
-                    <strong key={review.username + "strong"}> {review.username}</strong>
-                    <span key={review.username + "span"}>
+                    <strong key={review.user.name + "strong"}> {review.user.name}</strong>
+                    <span key={review.user.name + "span"}>
                       Rated {review.user_rating} out of 10
                     </span>
                   </div>
                 </div>
                 <div
-                  key={review.username + "user-comment"}
+                  key={review.user.name + "user-comment"}
                   className="user-comment"
                 >
                   <ReactReadMoreReadLess
