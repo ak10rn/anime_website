@@ -33,17 +33,25 @@ class AppNavbar extends Component {
 
   render() {
     return (
-      <>
+      <React.Fragment>
         <Navbar color="dark" dark expand="sm" className="sticky-top mb-3">
           <Container>
-            <Link className="navbar-brand" to="/">
+            <Link className="navbar-brand " to="/">
               <span style={{ color: "greenyellow" }}>Animes</span>
+            </Link>
+
+            <Link className="navbar-brand " to="/user">
+              <span style={{ color: "greenyellow" }}>Profile</span>
             </Link>
             <NavbarToggler onClick={this.toggle} />
             <Collapse isOpen={this.state.isOpen} navbar>
               <Nav className="ms-auto" navbar>
                 <NavItem>
-                  <SearchBar placeholder="Search . . ." data={Data} {...this.props}/>
+                  <SearchBar
+                    placeholder="Search . . ."
+                    data={Data}
+                    {...this.props}
+                  />
                 </NavItem>
                 <NavItem style={{ marginLeft: "20px" }}>
                   <NavLink href="https://github.com/demonhue">
@@ -58,7 +66,7 @@ class AppNavbar extends Component {
             </Collapse>
           </Container>
         </Navbar>
-      </>
+      </React.Fragment>
     );
   }
 }

@@ -16,7 +16,8 @@ function SearchBar({ placeholder }) {
     if (!displaySearchItems) setDisplay(true);
     if (event.target.value !== "") {
       const searchedAnimes = await getAnimeBySearchQuery({
-        q: event.target.value, limit: 10,
+        q: event.target.value,
+        limit: 10,
       });
       const newSearchData = searchedAnimes.data.results.map((anime) => {
         return { title: anime.title, id: anime.mal_id };
@@ -28,10 +29,12 @@ function SearchBar({ placeholder }) {
     }
   };
 
-  const debouncedChangeHandler = useMemo(
-    () => debounce(changeHandler, 500),
-    [searchData, setSearchData, query, setQuery]
-  );
+  const debouncedChangeHandler = useMemo(() => debounce(changeHandler, 500), [
+    searchData,
+    setSearchData,
+    query,
+    setQuery,
+  ]);
 
   const clearInput = () => {
     setSearchData([]);

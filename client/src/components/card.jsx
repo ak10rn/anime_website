@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router";
 import "./card.css";
-import RateModal from "./rateModal";
+
 
 const Card = (props) => {
   const [anime, setAnime] = useState({});

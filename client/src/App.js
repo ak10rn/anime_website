@@ -5,6 +5,7 @@ import { ToastContainer } from "react-toastify";
 import AppNavbar from "./components/navbar";
 import Anime from "./components/anime";
 import CardContainer from "./components/cardContainer";
+import User from "./components/user";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
@@ -15,10 +16,11 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
-          <AppNavbar {...this.props}/>
+          <AppNavbar {...this.props} />
           <ToastContainer />
           <main className="container h-100">
             <Switch>
+              <Route path="/user" component={User} />
               <Route path="/anime/:id" component={Anime} />
               <Route exact path="/" component={CardContainer} />
               {/* <Redirect to="/not-found"/> */}
