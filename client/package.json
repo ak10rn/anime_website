@@ -11,6 +11,8 @@
     "axios": "^0.21.1",
     "bootstrap": "^5.0.1",
     "font-awesome": "^4.7.0",
+    "joi-browser": "^13.4.0",
+    "jwt-decode": "^3.1.2",
     "lodash": "^4.17.21",
     "material-ui-search-bar": "^1.0.0",
     "querystring": "^0.2.1",

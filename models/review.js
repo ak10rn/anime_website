@@ -3,9 +3,9 @@ const Schema = mongoose.Schema;
 
 //Create Schema
 const ReviewSchema = new Schema({
-    username: {
-        type: String,
-        default: "default username"
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: 'user'
     },
     mal_id: {
         type: Number

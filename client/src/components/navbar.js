@@ -40,12 +40,37 @@ class AppNavbar extends Component {
               <span style={{ color: "greenyellow" }}>Animes</span>
             </Link>
 
-            <Link className="navbar-brand " to="/user">
-              <span style={{ color: "greenyellow" }}>Profile</span>
-            </Link>
             <NavbarToggler onClick={this.toggle} />
             <Collapse isOpen={this.state.isOpen} navbar>
               <Nav className="ms-auto" navbar>
+                {!this.props.user && (
+                  <React.Fragment>
+                    <NavItem>
+                      <Link className="nav-link" to="/register">
+                        Register
+                      </Link>
+                    </NavItem>
+                    <NavItem>
+                      <Link className="nav-link" to="/login">
+                        Login
+                      </Link>
+                    </NavItem>
+                  </React.Fragment>
+                )}
+                {this.props.user && (
+                  <React.Fragment>
+                    <NavItem>
+                      <Link className="nav-link" to="/profile">
+                        {this.props.user.name}
+                      </Link>
+                    </NavItem>
+                    <NavItem>
+                      <Link className="nav-link" to="/logout">
+                        Logout
+                      </Link>
+                    </NavItem>
+                  </React.Fragment>
+                )}
                 <NavItem>
                   <SearchBar
                     placeholder="Search . . ."

@@ -63,6 +63,7 @@ function SearchBar({ placeholder }) {
           type="text"
           placeholder={placeholder}
           onChange={debouncedChangeHandler}
+          onClick={()=>setDisplay(true)}
         />
         <div className="searchIcon">
           {searchData.length === 0 ? (
