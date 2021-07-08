@@ -12,7 +12,6 @@ function SearchBar({ placeholder }) {
   const [displaySearchItems, setDisplay] = useState(true);
 
   const changeHandler = async (event) => {
-    setQuery(event.target.value);
     if (!displaySearchItems) setDisplay(true);
     if (event.target.value !== "") {
       const searchedAnimes = await getAnimeBySearchQuery({
@@ -22,23 +21,26 @@ function SearchBar({ placeholder }) {
       const newSearchData = searchedAnimes.data.results.map((anime) => {
         return { title: anime.title, id: anime.mal_id };
       });
-      console.log(searchedAnimes);
       setSearchData(newSearchData);
     } else {
       setSearchData([]);
     }
   };
 
-  const debouncedChangeHandler = useMemo(() => debounce(changeHandler, 500), [
-    searchData,
-    setSearchData,
-    query,
-    setQuery,
-  ]);
+  const debouncedChangeHandlerHelper = useMemo(
+    () => debounce(changeHandler, 500),
+    [searchData, setSearchData, query, setQuery]
+  );
+
+  const debouncedChangeHandler = (event) => {
+    setQuery(event.target.value);
+    debouncedChangeHandlerHelper(event);
+  };
 
   const clearInput = () => {
     setSearchData([]);
     setQuery("");
+    setDisplay(false);
   };
 
   const node = useRef();
@@ -50,7 +52,6 @@ function SearchBar({ placeholder }) {
   }, []);
 
   const handleClickOutsideSearchBar = (e) => {
-    console.log(node);
     if (!node.current.contains(e.target)) {
       setDisplay(false);
     }
@@ -62,8 +63,9 @@ function SearchBar({ placeholder }) {
         <input
           type="text"
           placeholder={placeholder}
+          value={query}
           onChange={debouncedChangeHandler}
-          onClick={()=>setDisplay(true)}
+          onClick={() => setDisplay(true)}
         />
         <div className="searchIcon">
           {searchData.length === 0 ? (

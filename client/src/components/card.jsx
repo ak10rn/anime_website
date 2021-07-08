@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router";
 import "./card.css";
 
-
 const Card = (props) => {
   const [anime, setAnime] = useState({});
   const [genres, setGenres] = useState([]);
@@ -11,12 +10,11 @@ const Card = (props) => {
 
   useEffect(() => {
     setAnime(props.anime);
-    const newGenres = props.anime.genres.map(genre => genre.name);
+    const newGenres = props.anime.genres.map((genre) => genre.name);
     setGenres(newGenres);
   }, []);
-  
 
-  function handleClick(e){
+  function handleClick(e) {
     e.preventDefault();
     history.push(`/anime/${anime.mal_id}`);
   }
@@ -43,7 +41,7 @@ const Card = (props) => {
             <div className="card-body">
               <h5 className="card-title">{anime.title}</h5>
               <p className="card-text small">
-                {genres && genres.join(', ')}
+                {genres && genres.join(", ")}
                 <br />
                 <span style={{ color: "#FF355E" }}>
                   {" "}
@@ -65,6 +63,6 @@ const Card = (props) => {
       </div>
     </React.Fragment>
   );
-}
+};
 
 export default Card;
