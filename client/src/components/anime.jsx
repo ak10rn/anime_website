@@ -19,7 +19,7 @@ const Anime = (props) => {
   const [modal, setModal] = useState(false);
   const [sortBy, setSortBy] = useState("-date");
   const [score, setScore] = useState(null);
-  const [userReview, setUserReview] = useState({ value: 0, comment: "" });
+  const [userReview, setUserReview] = useState({ user_rating: 0, comment: "" });
 
   const { id } = useParams();
 
@@ -95,10 +95,12 @@ const Anime = (props) => {
   };
 
   const handleAddReview = () => {
+    // console.log('modal opens')
     handleModal();
   };
 
   const handleNewReview = async (e) => {
+    console.log('temp')
     if (!props.user) return console.log("Login first dumbass");
 
     if (indexOfReviewMadeByCurrentUser() !== -1)
@@ -161,8 +163,9 @@ const Anime = (props) => {
   };
 
   const handleEditReview = async (e) => {
+    setUserReview(e);
     if (!props.user) return console.log("Login first dumbass");
-    console.log(e);
+    console.log('check',e);
 
     const newReview = { ...e };
     newReview.mal_id = id;
@@ -199,7 +202,7 @@ const Anime = (props) => {
         modalState={modal}
         toggle={handleModal}
         newReview={handleNewReview}
-        review={{ value: 0, comment: "Hello" }}
+        review={{ value: userReview.user_rating, comment: userReview.comment }}
       />
       <div className="container text-light d-flex flex-column">
         <div className="title">
