@@ -1,5 +1,5 @@
 import http from "./http";
-const querystring = require('querystring');
+const querystring = require("querystring");
 
 const apiUrl = "/api/animes";
 const reviewUrl = "/api/reviews";
@@ -11,7 +11,9 @@ function animeUrl(id) {
 }
 
 function searchUrl(query) {
-  return `https://blooming-headland-42531.herokuapp.com/${jikanUrl}/search/anime/?${querystring.stringify(query)}`;
+  return `https://blooming-headland-42531.herokuapp.com/${jikanUrl}/search/anime/?${querystring.stringify(
+    query
+  )}`;
 }
 
 export function getAnimes() {
@@ -32,7 +34,7 @@ export function saveReview(review) {
 }
 
 export function deleteReview(review) {
-  return http.delete(reviewUrl,{ data:review });
+  return http.delete(reviewUrl, { data: review });
 }
 
 // to add a review
@@ -55,7 +57,7 @@ export function getAnimeByMalId(id) {
 export function getAnimeBySearchQuery(query) {
   console.log("query", query);
   if (query.length < 3) return [];
-  console.log("searchquery",searchUrl(query));
+  console.log("searchquery", searchUrl(query));
   return http.get(searchUrl(query));
 }
 
@@ -69,5 +71,5 @@ export function saveAnime(anime) {
 }
 
 export function deleteAnime(anime) {
-  return http.delete(animeUrl(anime._id),{ data:anime });
+  return http.delete(animeUrl(anime._id), { data: anime });
 }
