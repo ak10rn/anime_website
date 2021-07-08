@@ -26,11 +26,9 @@ const Anime = (props) => {
     if (!anime.title) {
       try {
         let { data } = await getAnime(id);
-        console.log("first", data);
         if (!data) {
           try {
             const { data: d } = await getAnimeByMalId(id);
-            console.log("second", d);
             data = d;
           } catch (err) {
             console.log(err);
@@ -42,7 +40,6 @@ const Anime = (props) => {
           setAndOrderReviews(data.reviews);
           console.log("reviews", data.reviews);
           delete newAnime.reviews;
-          if(data.reviews.length > 0)setScore(avgScore(data.reviews));
         }
         setAnime(newAnime);
         if (data.reviews.length > 0) setScore(avgScore(data.reviews));

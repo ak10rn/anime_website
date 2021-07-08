@@ -6,45 +6,52 @@
 .title p {
   font-size: 1.6rem;
 }
+.anime-img img {
+  box-shadow: 0 5px 20px -8px #000;
+}
 .anime-details {
   min-width: 225px;
   margin: 10px 20px 10px 0;
+  display: flex;
+  flex-direction: row;
+}
+@media screen and (max-width: 768px) {
+  .anime-details {
+    flex-direction: column !important;
+    justify-content: center;
+    align-items: center;
+  }
+  .anime-img {
+    margin: 30px;
+  }
+  .title {
+    text-align: center;
+  }
 }
 .anime-body {
-  margin: 10px 0 10px 5px;
-}
-.anime-rating {
-  background-color: grey;
-  padding: 5px ;
-  width: 75px;
-  justify-content: center;
-  align-items: center;
+  margin: 0 0 10px 5px;
   border-radius: 10px;
-}
-.anime-rating h5 {
-  text-align: center;
+  box-shadow: 12px 12px 20px 0 rgba(0, 0, 0, 0.25),
+    -8px -8px 12px 0 rgba(97, 97, 97, 0.3);
 }
 .anime-block {
   display: block;
   margin-bottom: 5px;
-}
-.anime-ep span {
-  font-size: large;
-}
-.anime-sypnosis {
-  margin: 8px 0;
 }
 .underlineUnder {
   text-decoration: underline;
   text-underline-position: under;
 }
 .anime-reviews {
-  border-radius: 6px;
-  padding-top: 20px;
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 40px;
+  box-shadow: 12px 12px 20px 0 rgba(0, 0, 0, 0.25),
+    -8px -8px 12px 0 rgba(97, 97, 97, 0.3);
 }
 
 .anime-review {
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid white;
   margin-bottom: 30px;
 }
 
@@ -66,4 +73,25 @@
 }
 .user-comment {
   padding-bottom: 15px;
+}
+
+.anime-sypnosis-content {
+  height: 143px;
+  overflow-y: auto;
+  padding-right: 10px;
+  margin-top: 5px;
+}
+.anime-sypnosis-content::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+}
+.anime-sypnosis-content::-webkit-scrollbar {
+  width: 8px;
+  border-radius: 10px;
+  background-color: #2d3033;
+}
+.anime-sypnosis-content::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #474b4f;
 }
