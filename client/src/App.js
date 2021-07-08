@@ -7,6 +7,7 @@ import auth from "./services/authService";
 import AppNavbar from "./components/navbar";
 import Anime from "./components/anime";
 import CardContainer from "./components/cardContainer";
+import Footer from "./components/footer";
 import RegisterForm from './components/register'
 import LoginForm from './components/login'
 import Logout from './components/logout'
@@ -39,6 +40,7 @@ class App extends Component {
               {/* <Redirect to="/not-found"/> */}
             </Switch>
           </main>
+          <Footer />
         </div>
       </Router>
     );

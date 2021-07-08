@@ -1,9 +1,15 @@
 import React, { Component } from "react";
 import "./anime.css";
 import ReactReadMoreReadLess from "react-read-more-read-less";
-import { useParams } from 'react-router-dom';
+import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { getAnime, getAnimeByMalId, saveAnime, saveReview, deleteReview } from "../services/animeService";
+import {
+  getAnime,
+  getAnimeByMalId,
+  saveAnime,
+  saveReview,
+  deleteReview,
+} from "../services/animeService";
 import RateModal from "./rateModal";
 
 const Anime = (props) => {
@@ -12,7 +18,7 @@ const Anime = (props) => {
   const [modal, setModal] = useState(false);
   const [sortBy, setSortBy] = useState("-date");
   const [score, setScore] = useState(null);
-  
+
   const { id } = useParams();
 
   useEffect(async () => {
@@ -25,29 +31,29 @@ const Anime = (props) => {
             const { data: d } = await getAnimeByMalId(id);
             data = d;
           } catch (err) {
-              console.log(err);
+            console.log(err);
           }
         }
         const newAnime = { ...data };
         console.log(data);
         if (data.reviews) {
           setAndOrderReviews(data.reviews);
-          console.log("reviews",data.reviews);
+          console.log("reviews", data.reviews);
           delete newAnime.reviews;
         }
         setAnime(newAnime);
-        if(data.reviews.length > 0)setScore(avgScore(data.reviews));
-          // console.log("adfasdfadsf",data);
+        if (data.reviews.length > 0) setScore(avgScore(data.reviews));
+        // console.log("adfasdfadsf",data);
       } catch (err) {
-          console.log(err);
-      }   
+        console.log(err);
+      }
     }
-  }, [id])
-  
+  }, [id]);
+
   function avgScore(reviews) {
     if (reviews.length === 0) return -1;
     let sum = 0;
-    for (let i = 0; i < reviews.length; i++){
+    for (let i = 0; i < reviews.length; i++) {
       sum += parseInt(reviews[i].user_rating);
     }
     let avg = sum / reviews.length;
@@ -56,16 +62,24 @@ const Anime = (props) => {
 
   function dynamicSort(property) {
     var sortOrder = 1;
-    if(property[0] === "-") {
-        sortOrder = -1;
-        property = property.substr(1);
+    if (property[0] === "-") {
+      sortOrder = -1;
+      property = property.substr(1);
     }
-    return function (a,b) {
-        var result;
-        if (property === "date") result = (new Date(a.date) < new Date(b.date)) ? -1 : (new Date(a.date) > new Date(b.date)) ? 1 : 0;
-        else result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
-        return result * sortOrder;
-    }
+    return function (a, b) {
+      var result;
+      if (property === "date")
+        result =
+          new Date(a.date) < new Date(b.date)
+            ? -1
+            : new Date(a.date) > new Date(b.date)
+            ? 1
+            : 0;
+      else
+        result =
+          a[property] < b[property] ? -1 : a[property] > b[property] ? 1 : 0;
+      return result * sortOrder;
+    };
   }
   const setAndOrderReviews = (newReviews) => {
     let sortedNewReviews = newReviews.sort(dynamicSort(sortBy));
@@ -75,8 +89,8 @@ const Anime = (props) => {
   const indexOfReviewMadeByCurrentUser = () => {
     //if returns -1, the no review by the user
     if (!props.user) return console.log("Login first dumbass");
-    return reviews.findIndex(review => review.user.name === props.user.name);
-  }
+    return reviews.findIndex((review) => review.user.name === props.user.name);
+  };
 
   const handleAddReview = () => {
     // open modal
@@ -86,10 +100,11 @@ const Anime = (props) => {
   const handleNewReview = async (e) => {
     if (!props.user) return console.log("Login first dumbass");
 
-    if(indexOfReviewMadeByCurrentUser()!==-1)return console.log("theres already a review made by current user");
+    if (indexOfReviewMadeByCurrentUser() !== -1)
+      return console.log("theres already a review made by current user");
 
     const animedb = { ...anime };
-    animedb.reviews = reviews.map(review => review._id);
+    animedb.reviews = reviews.map((review) => review._id);
 
     const newReview = { ...e };
     newReview.mal_id = id;
@@ -119,16 +134,17 @@ const Anime = (props) => {
   const handleDeleteReview = async () => {
     if (!props.user) return console.log("Login first dumbass");
 
-    const newReviews = [ ...reviews ];
+    const newReviews = [...reviews];
     const index = indexOfReviewMadeByCurrentUser();
-    if (index === -1) return console.log("there's no review by the the user to delete.");
+    if (index === -1)
+      return console.log("there's no review by the the user to delete.");
     const reviewToBeDeleted = { ...newReviews[index] };
     newReviews.splice(index, 1);
     setReviews(newReviews);
 
     const animedb = { ...anime };
     // console.log("newReviews", newReviews);
-    animedb.reviews = newReviews.map(review => review._id);
+    animedb.reviews = newReviews.map((review) => review._id);
     // console.log("animedb", animedb);
     animedb.score = avgScore(newReviews);
     setScore(animedb.score);
@@ -150,10 +166,11 @@ const Anime = (props) => {
     newReview.mal_id = id;
     newReview.user = { ...props.user };
 
-    const newReviews = [ ...reviews ];
+    const newReviews = [...reviews];
     const index = indexOfReviewMadeByCurrentUser();
-    if (index === -1) return console.log("there's no review by the the user to delete.");
-    newReviews.splice(index, 1,newReview);
+    if (index === -1)
+      return console.log("there's no review by the the user to delete.");
+    newReviews.splice(index, 1, newReview);
     setReviews(newReviews);
 
     const animedb = { ...anime };
@@ -176,102 +193,125 @@ const Anime = (props) => {
   };
   return (
     <>
-      <RateModal modalState={modal} toggle={handleModal} newReview={handleNewReview}/>
+      <RateModal
+        modalState={modal}
+        toggle={handleModal}
+        newReview={handleNewReview}
+      />
       <div className="container text-light d-flex flex-column">
         <div className="title">
           <p>{anime.title}</p>
         </div>
 
-        <div className="anime-details d-flex flex-row">
+        <div className="anime-details">
           <div className="anime-img">
-            <img src={anime.image_url} alt="img" />
+            <img src={anime.image_url} alt="" />
           </div>
 
-          <div className="anime-body d-flex flex-column">
-            <div className="d-flex flex-row ms-3">
-              <div className="anime-rating">
-                <h5>Rating</h5>
-                <i
-                  className="fa fa-star"
-                  style={{ color: "gold", fontSize: "1.5rem" }}
-                />
-                <span> {score}/10</span>
+          <div className="anime-body bg-dark d-flex flex-column mx-4 px-1 pt-2 w-100">
+            <div className="d-flex flex-column px-2 mx-2">
+              <div className="anime-block pt-2">
+                <span>
+                  <strong>Rating:</strong> {score}/10
+                </span>
               </div>
-            </div>
-            <div className="anime-block mt-3 ms-3">
-              <span>Episodes: {anime.episodes}</span>
-            </div>
-            <div className="anime-block ms-3">
-              {/* <span>Genre: {anime.genres.join(", ")}</span> */}
-            </div>
-            <div className="anime-sypnosis ms-3 ">
-              <h5 className="underlineUnder">Synopsis</h5>
-              <p>{anime.synopsis}</p>
+              <div className="anime-block">
+                <span>
+                  <strong>Episodes:</strong> {anime.episodes}
+                </span>
+              </div>
+              <div className="anime-block">
+                {anime.genres && (
+                  <span>
+                    <strong>Genre:</strong>{" "}
+                    {anime.genres.map((genre) => genre.name).join(", ")}
+                  </span>
+                )}
+              </div>
+              <div className="my-3">
+                <span>
+                  <strong>Synopsis</strong>
+                  <p className="anime-sypnosis-content">{anime.synopsis}</p>
+                </span>
+              </div>
             </div>
           </div>
         </div>
 
-        <div className="anime-reviews d-flex flex-column">
+        <div className="anime-reviews d-flex flex-column bg-dark">
           <div className="d-flex flex-row mb-4 position-relative">
-            <h5 className="underlineUnder">Reviews</h5>
-            <button
-              className="btn btn-primary position-absolute"
+            <strong style={{ fontSize: "1.6rem" }}>Reviews</strong>
+            <div
+              className="position-absolute d-flex flex-row"
               style={{ right: 0 }}
-              onClick={handleAddReview}
             >
-              <i className="fa fa-plus" /> Add Review
-            </button>
-            <button
-              className="btn btn-primary position-absolute"
-              style={{ left: 0 }}
-              onClick={handleDeleteReview}
-            >
-              <i className="fa fa-plus" /> Delete Review
-            </button>
-          </div>
-          {reviews.length !==0 && reviews.map((review) => {
-            return (
-              <div
-                key={review.user.name + "anime-review"}
-                className="anime-review d-flex flex-column"
+              <button
+                className="btn btn-primary mx-2"
+                style={{ right: 0 }}
+                onClick={handleAddReview}
               >
-                <div key={review.user.name + "user"} className="d-flex flex-row">
-                  <img
-                    key={review.user.name + "img"}
-                    src={review.user.image}
-                    className="user-img"
-                    alt="User Image"
-                  />
+                <i className="fa fa-plus" /> Add Review
+              </button>
+              <button
+                className="btn btn-danger mx-2"
+                style={{ left: 0 }}
+                onClick={handleDeleteReview}
+              >
+                <i className="fa fa-minus" /> Delete Review
+              </button>
+            </div>
+          </div>
+          {reviews.length !== 0 &&
+            reviews.map((review) => {
+              return (
+                <div
+                  key={review.user.name + "anime-review"}
+                  className="anime-review d-flex flex-column"
+                >
                   <div
-                    key={review.user.name + "div"}
-                    className="user-info d-flex flex-column"
+                    key={review.user.name + "user"}
+                    className="d-flex flex-row"
                   >
-                    <strong key={review.user.name + "strong"}> {review.user.name}</strong>
-                    <span key={review.user.name + "span"}>
-                      Rated {review.user_rating} out of 10
-                    </span>
+                    <img
+                      key={review.user.name + "img"}
+                      src={review.user.image}
+                      className="user-img"
+                      alt="User Image"
+                    />
+                    <div
+                      key={review.user.name + "div"}
+                      className="user-info d-flex flex-column"
+                    >
+                      <strong key={review.user.name + "strong"}>
+                        {" "}
+                        {review.user.name}
+                      </strong>
+                      <span key={review.user.name + "span"}>
+                        Rated {review.user_rating} out of 10
+                      </span>
+                    </div>
+                  </div>
+                  <div
+                    key={review.user.name + "user-comment"}
+                    className="user-comment"
+                  >
+                    <ReactReadMoreReadLess
+                      charLimit={400}
+                      readMoreText={"Read more ▼"}
+                      readLessText={"Read less ▲"}
+                    >
+                      {review.comment}
+                    </ReactReadMoreReadLess>
                   </div>
                 </div>
-                <div
-                  key={review.user.name + "user-comment"}
-                  className="user-comment"
-                >
-                  <ReactReadMoreReadLess
-                    charLimit={400}
-                    readMoreText={"Read more ▼"}
-                    readLessText={"Read less ▲"}
-                  >
-                    {review.comment}
-                  </ReactReadMoreReadLess>
-                </div>
-              </div>
-            );
-          })}
-          { reviews.length===0 && "No reviews yet, Be the first one to write a review :)" }
+              );
+            })}
+          {reviews.length === 0 &&
+            "No reviews yet, Be the first one to write a review :)"}
         </div>
       </div>
     </>
   );
-}
+};
 
 export default Anime;
