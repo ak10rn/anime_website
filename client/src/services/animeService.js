@@ -32,7 +32,7 @@ export function saveReview(review) {
 }
 
 export function deleteReview(review) {
-  return http.delete(`${reviewUrl}/${review._id}`,{ data:review });
+  return http.delete(reviewUrl,{ data:review });
 }
 
 // to add a review

@@ -60,7 +60,7 @@ router.delete('/:id', async (req, res) => {
 // @access Public
 router.get('/:id', async(req, res) => {
     try {
-        const anime = await Anime.findOne({mal_id: req.params.id}).populate({path: 'reviews', options: { sort: { 'date': -1 } } });
+        const anime = await Anime.findOne({mal_id: req.params.id}).populate({path: 'reviews',populate:{ path: 'user', select: '-password -email' }, options: { sort: { 'date': -1 } } });
         res.json(anime);
     } catch (err) {
         console.log(err);

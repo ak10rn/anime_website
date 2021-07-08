@@ -16,6 +16,7 @@
   "dependencies": {
     "@material-ui/core": "^4.11.4",
     "axios": "^0.21.1",
+    "bcryptjs": "^2.4.3",
     "bootstrap": "^5.0.1",
     "concurrently": "^6.2.0",
     "config": "^3.3.6",
@@ -23,6 +24,7 @@
     "express": "^4.17.1",
     "font-awesome": "^4.7.0",
     "force": "^0.0.3",
+    "jsonwebtoken": "^8.5.1",
     "material-ui-search-bar": "^1.0.0",
     "mongoose": "^5.12.14",
     "readmore-js": "^2.2.1"
