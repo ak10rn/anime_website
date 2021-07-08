@@ -7,7 +7,7 @@
 .search input {
   background-color: white;
   border: 0;
-  border-radius: 2px;
+  border-radius: 5px;
   border-top-right-radius: 0px;
   border-bottom-right-radius: 0px;
   font-size: 18px;
@@ -23,6 +23,9 @@
   background-color: white;
   display: grid;
   place-items: center;
+  border-radius: 5px;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
 }
 
 input:focus {
@@ -43,8 +46,10 @@ input:focus {
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   overflow: hidden;
   overflow-y: auto;
-  border-radius: 3px;
+  border-radius: 5px;
   z-index: 999;
+  transition: height 0.3s ease-in-out;
+  transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
 .dataResult::-webkit-scrollbar {
@@ -68,7 +73,7 @@ input:focus {
   text-decoration: none;
 }
 
-.dataItem:hover {
+.dataItem:hover, .dataItem:focus {
   color: red;
   transition: color 0.3s;
 }
