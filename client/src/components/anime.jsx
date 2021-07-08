@@ -133,32 +133,31 @@ const Anime = (props) => {
   };
 
   const handleDeleteReview = async () => {
-    // if (!props.user) return console.log("Login first dumbass");
+    if (!props.user) return console.log("Login first dumbass");
 
-    // const newReviews = [...reviews];
-    // const index = indexOfReviewMadeByCurrentUser();
-    // if (index === -1)
-    //   return console.log("there's no review by the the user to delete.");
-    // const reviewToBeDeleted = { ...newReviews[index] };
-    // newReviews.splice(index, 1);
-    // setReviews(newReviews);
+    const newReviews = [...reviews];
+    const index = indexOfReviewMadeByCurrentUser();
+    if (index === -1)
+      return console.log("there's no review by the the user to delete.");
+    const reviewToBeDeleted = { ...newReviews[index] };
+    newReviews.splice(index, 1);
+    setReviews(newReviews);
 
-    // const animedb = { ...anime };
-    // // console.log("newReviews", newReviews);
-    // animedb.reviews = newReviews.map((review) => review._id);
-    // // console.log("animedb", animedb);
-    // animedb.score = avgScore(newReviews);
-    // setScore(animedb.score);
+    const animedb = { ...anime };
+    // console.log("newReviews", newReviews);
+    animedb.reviews = newReviews.map((review) => review._id);
+    // console.log("animedb", animedb);
+    animedb.score = avgScore(newReviews);
+    setScore(animedb.score);
 
-    // try {
-    //   const { data: savedAnime } = await saveAnime(animedb);
-    //   // console.log("savedAnime",savedAnime);
-    //   const { data: deletedReview } = await deleteReview(reviewToBeDeleted);
-    //   // console.log("deletedReview",deletedReview);
-    // } catch (err) {
-    //   console.log(err);
-    // }
-    return null;
+    try {
+      const { data: savedAnime } = await saveAnime(animedb);
+      // console.log("savedAnime",savedAnime);
+      const { data: deletedReview } = await deleteReview(reviewToBeDeleted);
+      // console.log("deletedReview",deletedReview);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const handleEditReview = async (e) => {
