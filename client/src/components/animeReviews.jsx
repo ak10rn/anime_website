@@ -5,11 +5,6 @@ const AnimeReviews = (props) => {
   const { reviews, addReview, deleteReview, editReview, user } = props;
 
   const [isReviewed, setReviewed] = useState(false);
-  const [userReview, setReview] = useState({});
-
-  const handleReviewClick = useMemo(() => {
-    return isReviewed ? () => editReview(userReview) : addReview;
-  }, []);
 
   const handledeleteReview = () => {
     setReviewed(false);
@@ -25,7 +20,7 @@ const AnimeReviews = (props) => {
           <button
             className={`btn btn-primary mx-2`}
             style={{ right: 0 }}
-            onClick={handleReviewClick}
+            onClick={isReviewed ? editReview : addReview}
           >
             <i className={`fa fa-${isReviewed ? "pencil" : "plus"}`} />{" "}
             {isReviewed ? "Edit Review" : "Add Review"}
@@ -34,12 +29,14 @@ const AnimeReviews = (props) => {
       </div>
       {reviews.length !== 0 &&
         reviews.map((review) => {
+
           try {
             if (user && !isReviewed && review.user.name === user.name) {
               setReviewed(true);
               setReview(review);
             }
           } catch (e) {}
+
 
           return (
             <AnimeReview
