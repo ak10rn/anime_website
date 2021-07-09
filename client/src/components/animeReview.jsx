@@ -48,7 +48,7 @@ const AnimeReview = (props) => {
             Rated {review.user_rating} out of 10
           </span>
         </div>
-        {review.user.name === user.name && (
+        {user && review.user.name === user.name && (
           <>
             <Button
               className="mx-2 position-absolute"
