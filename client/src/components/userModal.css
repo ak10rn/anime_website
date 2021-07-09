@@ -14,7 +14,11 @@
   padding: 5px 8px;
   outline: none;
   white-space: nowrap;
+
+  user-select: none;
+
   -webkit-user-select: none;
+
   cursor: pointer;
   text-shadow: 1px 1px #fff;
   font-weight: 700;
@@ -30,6 +34,8 @@
   background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
 }
 
-body {
+
+ModalBody  {
+
   padding: 20px;
 }
