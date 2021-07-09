@@ -18,7 +18,9 @@ import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
 
 class App extends Component {
-  state = {};
+  state = {
+    user: {},
+  };
 
   async componentDidMount() {
     const { data: user } = await auth.getCurrentUser();
@@ -43,10 +45,19 @@ class App extends Component {
                   />
                 )}
               />
-              <Route path="/register" component={RegisterForm} />
+              <Route path="/register" component={RegisterForm} s />
               <Route path="/login" component={LoginForm} />
               <Route path="/logout" component={Logout} />
-              <Route path="/profile" component={User} />
+              <Route
+                path="/profile"
+                render={(props) => (
+                  <User
+                    key={this.state.user.name}
+                    user={this.state.user}
+                    {...props}
+                  />
+                )}
+              />
               <Route exact path="/" component={CardContainer} />
               {/* <Redirect to="/not-found"/> */}
             </Switch>

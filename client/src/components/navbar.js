@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import "font-awesome/css/font-awesome.min.css";
 import Data from "../Animes.json";
 import SearchBar from "./SearchBar";
+import logo from "../icons/logo.png";
 
 import {
   Collapse,
@@ -37,7 +38,7 @@ class AppNavbar extends Component {
         <Navbar color="dark" dark expand="sm" className="sticky-top mb-3">
           <Container>
             <Link className="navbar-brand " to="/">
-              <span style={{ color: "greenyellow" }}>Animes</span>
+              <img src={logo} width="150px" height="40px" alt="logo" />
             </Link>
 
             <NavbarToggler onClick={this.toggle} />

@@ -12,14 +12,9 @@ const User = (props) => {
       <UserModal modalState={modal} toggle={handleModal} />
       <div className="container text-light row" style={{ marginTop: "30px" }}>
         <div className="container text-light col-3">
-          <img
-            src="https://www.dpair.com/wp-content/uploads/2017/03/Facebook-Blank-Photo.jpg"
-            width="200"
-            height="200"
-            alt="dp"
-          />
-          <h1> 4v9_Senpai </h1>
-          <p>Joined 01/01/2000</p>
+          <img src={props.user.image} width="200" height="200" alt="dp" />
+          <h1> {props.user.name} </h1>
+          <p>Joined {props.user.register_date.substring(0, 10)}</p>
         </div>
         <div className="container text-light col">
           <div className="container text-light row">

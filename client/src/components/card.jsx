@@ -22,7 +22,7 @@ const Card = (props) => {
   return (
     <React.Fragment>
       <div
-        className="card shadow text-white bg-dark mb-3 ho"
+        className="card shadow text-white bg-dark mb-2 ho"
         style={{ cursor: "pointer" }}
       >
         <div className="middle" onClick={handleClick}>
@@ -34,7 +34,7 @@ const Card = (props) => {
               className="card-img-top"
               src={anime.image_url}
               alt="img"
-              height="100%"
+              height="200px"
               width="100%"
             ></img>
           </div>
@@ -50,14 +50,12 @@ const Card = (props) => {
                 </span>
               </p>
             </div>
-            <div className="card-footer">
-              <p className="card-text">
-                <small className="text-muted">
-                  <span style={{ color: "	#29AB87" }}>
-                    Rated - {anime.score}/10
-                  </span>
-                </small>
-              </p>
+            <div className="card-footer bottom">
+              <small className="text-muted">
+                <span style={{ color: "	#29AB87" }}>
+                  Rated - {anime.score}/10
+                </span>
+              </small>
             </div>
           </div>
         </div>
