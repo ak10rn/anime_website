@@ -95,7 +95,9 @@ const Anime = (props) => {
   };
 
   const handleAddReview = () => {
+
     // console.log('modal opens')
+
     handleModal();
   };
 
