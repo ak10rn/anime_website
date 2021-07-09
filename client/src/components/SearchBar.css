@@ -63,14 +63,7 @@ input:focus {
   display: flex;
   align-items: center;
   color: black;
-}
-
-.dataItem p {
-  margin-left: 10px;
-  margin-top: 15px;
-}
-.dataItem {
-  text-decoration: none;
+  margin: 0.5rem 3px;
 }
 
 .dataItem:hover, .dataItem:focus {
@@ -80,4 +73,13 @@ input:focus {
 
 #clearBtn {
   cursor: pointer;
+}
+.searchSpinner{
+  margin: 10% 45%;
+}
+.dataResult .result-message{
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 20% 10%;
+  color: red;
 }

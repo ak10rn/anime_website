@@ -5,23 +5,25 @@ import "./SearchBar.css";
 import SearchIcon from "@material-ui/icons/Search";
 import CloseIcon from "@material-ui/icons/Close";
 import { getAnimeBySearchQuery } from "../services/animeService";
+import { Spinner, Popover, PopoverHeader, PopoverBody } from "reactstrap";
 
 function SearchBar({ placeholder }) {
   const [query, setQuery] = useState("");
   const [searchData, setSearchData] = useState([]);
   const [displaySearchItems, setDisplay] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   const changeHandler = async (event) => {
     if (!displaySearchItems) setDisplay(true);
     if (event.target.value !== "") {
+      setLoading(true);
       const searchedAnimes = await getAnimeBySearchQuery({
         q: event.target.value,
         limit: 10,
       });
-      const newSearchData = searchedAnimes.data.results.map((anime) => {
-        return { title: anime.title, id: anime.mal_id };
-      });
-      setSearchData(newSearchData);
+      setLoading(false);
+      console.log(searchedAnimes.data.results);
+      setSearchData(searchedAnimes.data.results);
     } else {
       setSearchData([]);
     }
@@ -58,7 +60,7 @@ function SearchBar({ placeholder }) {
   };
 
   return (
-    <div className="search" ref={node}>
+    <div className="search" ref={node} id="searchMessagePopover">
       <div className="searchInputs">
         <input
           type="text"
@@ -78,16 +80,54 @@ function SearchBar({ placeholder }) {
       <div
         className="dataResult"
         style={{
-          height: searchData.length !== 0 && displaySearchItems ? "200px" : "0",
+          alignSelf: "center",
+          height:
+            query.length >= 3 && displaySearchItems
+              ? loading
+                ? "100px"
+                : "520px"
+              : "0",
         }}
       >
-        {searchData.slice(0, 10).map((value) => {
-          return (
-            <Link key={value.id} className="dataItem" to={`/anime/${value.id}`}>
-              <p>{value.title} </p>
+        <Popover
+          placement="bottom"
+          isOpen={query.length > 0 && query.length < 3 && displaySearchItems}
+          target="searchMessagePopover"
+          className='result-message'
+          // toggle={toggle}
+        >
+          <PopoverBody>Enter atleast 3 letters :)</PopoverBody>
+        </Popover>
+
+        {loading && query.length >= 3 && (
+          <Spinner type="grow" color="primary" className="searchSpinner" />
+        )}
+        {!loading &&
+          query.length >= 3 &&
+          searchData.slice(0, 10).map((value) => (
+            <Link
+              key={value.id}
+              className="dataItem"
+              to={`/anime/${value.mal_id}`}
+            >
+              {/* <p>{value.title}</p> */}
+              <div
+                className="d-flex flex-row px-1"
+                style={{
+                  borderBottom: "1px dotted black",
+                  paddingBottom: "0.25rem",
+                }}
+              >
+                <img src={value.image_url} alt width="50px" height="50px" />
+                <div
+                  className="ms-2 align-self-center"
+                  style={{ width: "210px" }}
+                >
+                  {value.title}
+                </div>
+              </div>
             </Link>
-          );
-        })}
+          ))}
       </div>
     </div>
   );
