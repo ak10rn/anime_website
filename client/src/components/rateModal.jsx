@@ -4,8 +4,8 @@ import { Form, FormGroup, Label, Input } from "reactstrap";
 
 class RateModal extends Component {
   state = {
-    value: 0,
-    comment: "",
+    value: this.props.review.value,
+    comment: this.props.review.comment,
   };
 
   handleRatingChange = (e) => {
