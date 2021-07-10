@@ -37,3 +37,8 @@
   transform: translate(-50%, -50%);
   text-align: center;
 }
+
+.b {
+  position: absolute;
+  bottom: 0px;
+}

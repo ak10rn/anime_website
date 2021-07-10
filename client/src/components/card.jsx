@@ -10,19 +10,18 @@ const Card = (props) => {
 
   useEffect(() => {
     setAnime(props.anime);
-    const newGenres = props.anime.genres.map(genre => genre.name);
+    const newGenres = props.anime.genres.map((genre) => genre.name);
     setGenres(newGenres);
   }, []);
-  
 
-  function handleClick(e){
+  function handleClick(e) {
     e.preventDefault();
     history.push(`/anime/${anime.mal_id}`);
   }
   return (
     <React.Fragment>
       <div
-        className="card shadow text-white bg-dark mb-3 ho"
+        className="card shadow text-white bg-dark mb-2 ho"
         style={{ cursor: "pointer" }}
       >
         <div className="middle" onClick={handleClick}>
@@ -34,7 +33,7 @@ const Card = (props) => {
               className="card-img-top"
               src={anime.image_url}
               alt="img"
-              height="100%"
+              height="200px"
               width="100%"
             ></img>
           </div>
@@ -42,7 +41,7 @@ const Card = (props) => {
             <div className="card-body">
               <h5 className="card-title">{anime.title}</h5>
               <p className="card-text small">
-                {genres && genres.join(', ')}
+                {genres && genres.join(", ")}
                 <br />
                 <span style={{ color: "#FF355E" }}>
                   {" "}
@@ -50,20 +49,18 @@ const Card = (props) => {
                 </span>
               </p>
             </div>
-            <div className="card-footer">
-              <p className="card-text">
-                <small className="text-muted">
-                  <span style={{ color: "	#29AB87" }}>
-                    Rated - {anime.score}/10
-                  </span>
-                </small>
-              </p>
+            <div className="b card-footer">
+              <small className="text-muted">
+                <span style={{ color: "	#29AB87" }}>
+                  Rated - {anime.score}/10
+                </span>
+              </small>
             </div>
           </div>
         </div>
       </div>
     </React.Fragment>
   );
-}
+};
 
 export default Card;
