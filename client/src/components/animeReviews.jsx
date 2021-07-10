@@ -30,13 +30,13 @@ const AnimeReviews = (props) => {
       {reviews.length !== 0 &&
         reviews.map((review) => {
 
+
           try {
             if (user && !isReviewed && review.user.name === user.name) {
               setReviewed(true);
               setReview(review);
             }
           } catch (e) {}
-
 
           return (
             <AnimeReview

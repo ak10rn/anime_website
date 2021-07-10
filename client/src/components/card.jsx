@@ -10,12 +10,11 @@ const Card = (props) => {
 
   useEffect(() => {
     setAnime(props.anime);
-    const newGenres = props.anime.genres.map(genre => genre.name);
+    const newGenres = props.anime.genres.map((genre) => genre.name);
     setGenres(newGenres);
   }, []);
-  
 
-  function handleClick(e){
+  function handleClick(e) {
     e.preventDefault();
     history.push(`/anime/${anime.mal_id}`);
   }
@@ -42,7 +41,7 @@ const Card = (props) => {
             <div className="card-body">
               <h5 className="card-title">{anime.title}</h5>
               <p className="card-text small">
-                {genres && genres.join(', ')}
+                {genres && genres.join(", ")}
                 <br />
                 <span style={{ color: "#FF355E" }}>
                   {" "}
@@ -50,7 +49,7 @@ const Card = (props) => {
                 </span>
               </p>
             </div>
-            <div className="card-footer bottom">
+            <div className="b card-footer">
               <small className="text-muted">
                 <span style={{ color: "	#29AB87" }}>
                   Rated - {anime.score}/10
@@ -62,6 +61,6 @@ const Card = (props) => {
       </div>
     </React.Fragment>
   );
-}
+};
 
 export default Card;
