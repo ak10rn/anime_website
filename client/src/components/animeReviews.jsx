@@ -29,7 +29,7 @@ const AnimeReviews = (props) => {
       </div>
       {reviews.length !== 0 &&
         reviews.map((review) => {
-          if (!isReviewed && review.user.name === user.name) {
+          if (user && !isReviewed && review.user.name === user.name) {
             setReviewed(true);
           }
           return (

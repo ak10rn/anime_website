@@ -28,7 +28,7 @@
   border-bottom-left-radius: 0px;
 }
 
-input:focus {
+.search input:focus {
   outline: none;
 }
 .searchIcon svg {

@@ -67,9 +67,13 @@
 .user-info {
   padding: 5px 10px;
 }
-.user-info strong {
+.user-name {
   padding: 5px 0;
   color: yellow;
+  text-decoration: none;
+}
+.user-name:hover {
+  color: yellowgreen;
 }
 .user-info span {
   padding: 10px 0;

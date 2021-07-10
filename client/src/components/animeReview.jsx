@@ -8,18 +8,16 @@ import {
   ModalBody,
   ModalFooter,
 } from "reactstrap";
+import { Link } from "react-router-dom";
 
 const AnimeReview = (props) => {
   const { review, user, deleteReview } = props;
 
   const [tooltipOpen, setTooltipOpen] = useState(false);
-
-  const toggleTooltip = () => setTooltipOpen(!tooltipOpen);
-
   const [modal, setModal] = useState(false);
 
+  const toggleTooltip = () => setTooltipOpen(!tooltipOpen);
   const toggleModal = () => setModal(!modal);
-
   const confirmDelete = () => {
     toggleModal();
     deleteReview();
@@ -43,12 +41,19 @@ const AnimeReview = (props) => {
           key={review.user.name + "div"}
           className="user-info d-flex flex-column"
         >
-          <strong key={review.user.name + "strong"}> {review.user.name}</strong>
+          <strong key={review.user.name + "strong"}>
+            <Link
+              to={`/profile/${review.user.name}`}
+              className='user-name'
+            >
+              {review.user.name}
+            </Link>
+          </strong>
           <span key={review.user.name + "span"}>
             Rated {review.user_rating} out of 10
           </span>
         </div>
-        {review.user.name === user.name && (
+        {user && review.user.name === user.name && (
           <>
             <Button
               className="mx-2 position-absolute"
@@ -56,6 +61,7 @@ const AnimeReview = (props) => {
               style={{ right: 0 }}
               onClick={toggleModal}
               id="deleteTooltip"
+              size="sm"
             >
               <i className="fa fa-times" />
             </Button>

@@ -98,7 +98,7 @@ const Anime = (props) => {
 
     // console.log('modal opens')
 
-    handleModal();
+    toggleModal();
   };
 
   const handleNewReview = async (e) => {
@@ -194,7 +194,7 @@ const Anime = (props) => {
     }
   };
 
-  const handleModal = () => {
+  const toggleModal = () => {
     // const NewModal = !modal;
     setModal(!modal);
   };
@@ -202,7 +202,7 @@ const Anime = (props) => {
     <React.Fragment>
       <RateModal
         modalState={modal}
-        toggle={handleModal}
+        toggle={toggleModal}
         newReview={handleNewReview}
         review={{ value: userReview.user_rating, comment: userReview.comment }}
       />
