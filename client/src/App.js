@@ -12,6 +12,7 @@ import RegisterForm from "./components/register";
 import LoginForm from "./components/login";
 import Logout from "./components/logout";
 import User from "./components/user";
+import Users from "./components/users";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
@@ -49,7 +50,7 @@ class App extends Component {
               <Route path="/login" component={LoginForm} />
               <Route path="/logout" component={Logout} />
               <Route
-                path="/profile"
+                path="/users/:username"
                 render={(props) => (
                   <User
                     key={this.state.user.name}
@@ -58,6 +59,8 @@ class App extends Component {
                   />
                 )}
               />
+              {/* <Route path="/users/:username" component={User} /> */}
+              <Route path="/users" component={Users} />
               <Route exact path="/" component={CardContainer} />
               {/* <Redirect to="/not-found"/> */}
             </Switch>

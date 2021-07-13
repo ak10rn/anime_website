@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import Joi from "joi-browser";
-//import { useHistory } from "react-router";
 import * as userService from "../services/userService";
 import "../App.css";
-import { Button, Form, FormGroup, Label, Input } from "reactstrap";
+import { Form } from "reactstrap";
 import auth from "../services/authService";
 import "./login.css";
 

@@ -5,7 +5,7 @@ import "./SearchBar.css";
 import SearchIcon from "@material-ui/icons/Search";
 import CloseIcon from "@material-ui/icons/Close";
 import { getAnimeBySearchQuery } from "../services/animeService";
-import { Spinner, Popover, PopoverHeader, PopoverBody } from "reactstrap";
+import { Spinner, Popover, PopoverBody } from "reactstrap";
 
 function SearchBar({ placeholder }) {
   const [query, setQuery] = useState("");
@@ -13,25 +13,26 @@ function SearchBar({ placeholder }) {
   const [displaySearchItems, setDisplay] = useState(true);
   const [loading, setLoading] = useState(true);
 
-  const changeHandler = async (event) => {
-    if (!displaySearchItems) setDisplay(true);
-    if (event.target.value !== "") {
-      setLoading(true);
-      const searchedAnimes = await getAnimeBySearchQuery({
-        q: event.target.value,
-        limit: 10,
-      });
-      setLoading(false);
-      console.log(searchedAnimes.data.results);
-      setSearchData(searchedAnimes.data.results);
-    } else {
-      setSearchData([]);
-    }
-  };
+  // const changeHandler = ;
 
   const debouncedChangeHandlerHelper = useMemo(
-    () => debounce(changeHandler, 500),
-    [searchData, setSearchData, query, setQuery]
+    () =>
+      debounce(async (event) => {
+        if (!displaySearchItems) setDisplay(true);
+        if (event.target.value !== "") {
+          setLoading(true);
+          const searchedAnimes = await getAnimeBySearchQuery({
+            q: event.target.value,
+            limit: 10,
+          });
+          setLoading(false);
+          console.log(searchedAnimes.data.results);
+          setSearchData(searchedAnimes.data.results);
+        } else {
+          setSearchData([]);
+        }
+      }, 500),
+    [displaySearchItems]
   );
 
   const debouncedChangeHandler = (event) => {
@@ -45,7 +46,7 @@ function SearchBar({ placeholder }) {
     setDisplay(false);
   };
 
-  const node = useRef();
+  const searchBarRef = useRef();
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutsideSearchBar);
     return () => {
@@ -54,13 +55,13 @@ function SearchBar({ placeholder }) {
   }, []);
 
   const handleClickOutsideSearchBar = (e) => {
-    if (!node.current.contains(e.target)) {
+    if (!searchBarRef.current.contains(e.target)) {
       setDisplay(false);
     }
   };
 
   return (
-    <div className="search" ref={node} id="searchMessagePopover">
+    <div className="search" ref={searchBarRef} id="searchMessagePopover">
       <div className="searchInputs">
         <input
           type="text"
@@ -68,6 +69,7 @@ function SearchBar({ placeholder }) {
           value={query}
           onChange={debouncedChangeHandler}
           onClick={() => setDisplay(true)}
+          spellCheck="false"
         />
         <div className="searchIcon">
           {searchData.length === 0 ? (
@@ -78,7 +80,7 @@ function SearchBar({ placeholder }) {
         </div>
       </div>
       <div
-        className="dataResult"
+        className="dataResult bg-dark"
         style={{
           alignSelf: "center",
           height:
@@ -93,7 +95,7 @@ function SearchBar({ placeholder }) {
           placement="bottom"
           isOpen={query.length > 0 && query.length < 3 && displaySearchItems}
           target="searchMessagePopover"
-          className='result-message'
+          className="result-message"
           // toggle={toggle}
         >
           <PopoverBody>Enter atleast 3 letters :)</PopoverBody>
@@ -110,17 +112,14 @@ function SearchBar({ placeholder }) {
               className="dataItem"
               to={`/anime/${value.mal_id}`}
             >
-              {/* <p>{value.title}</p> */}
-              <div
-                className="d-flex flex-row px-1"
-                style={{
-                  borderBottom: "1px dotted black",
-                  paddingBottom: "0.25rem",
-                }}
-              >
-                <img src={value.image_url} alt width="50px" height="50px" />
+              <div className="d-flex flex-row px-1">
+                <img
+                  src={value.image_url}
+                  alt="img_url"
+                  className="search-result-image"
+                />
                 <div
-                  className="ms-2 align-self-center"
+                  className="ms-2 align-self-center text-light"
                   style={{ width: "210px" }}
                 >
                   {value.title}

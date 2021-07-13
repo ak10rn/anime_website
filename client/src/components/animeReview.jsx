@@ -35,7 +35,7 @@ const AnimeReview = (props) => {
           key={review.user.name + "img"}
           src={review.user.image}
           className="user-img"
-          alt="User Image"
+          alt="User_Image"
         />
         <div
           key={review.user.name + "div"}
@@ -43,8 +43,9 @@ const AnimeReview = (props) => {
         >
           <strong key={review.user.name + "strong"}>
             <Link
+              key={review.user.name + "profile-link"}
               to={`/profile/${review.user.name}`}
-              className='user-name'
+              className="user-name"
             >
               {review.user.name}
             </Link>
@@ -56,6 +57,7 @@ const AnimeReview = (props) => {
         {user && review.user.name === user.name && (
           <>
             <Button
+              key={review.user.name + "delete-button"}
               className="mx-2 position-absolute"
               color="danger"
               style={{ right: 0 }}
@@ -63,9 +65,13 @@ const AnimeReview = (props) => {
               id="deleteTooltip"
               size="sm"
             >
-              <i className="fa fa-times" />
+              <i
+                key={review.user.name + "delete-icon"}
+                className="fa fa-times"
+              />
             </Button>
             <Tooltip
+              key={review.user.name + "delete-button"}
               placement="top"
               isOpen={tooltipOpen}
               target="deleteTooltip"
@@ -73,14 +79,30 @@ const AnimeReview = (props) => {
             >
               Delete Review
             </Tooltip>
-            <Modal isOpen={modal} toggle={toggleModal}>
-              <ModalHeader>Delete Review</ModalHeader>
-              <ModalBody>Are you sure buddy :(</ModalBody>
-              <ModalFooter>
-                <Button color="danger" onClick={confirmDelete}>
+            <Modal
+              key={review.user.name + "delete-modal"}
+              isOpen={modal}
+              toggle={toggleModal}
+            >
+              <ModalHeader key={review.user.name + "delete-modal-header"}>
+                Delete Review
+              </ModalHeader>
+              <ModalBody key={review.user.name + "delete-modal-body"}>
+                Are you sure buddy :(
+              </ModalBody>
+              <ModalFooter key={review.user.name + "delete-modal-footer"}>
+                <Button
+                  key={review.user.name + "delete-modal-button-1"}
+                  color="danger"
+                  onClick={confirmDelete}
+                >
                   Delete
                 </Button>{" "}
-                <Button color="primary" onClick={toggleModal}>
+                <Button
+                  key={review.user.name + "delete-modal-button-2"}
+                  color="primary"
+                  onClick={toggleModal}
+                >
                   Cancel
                 </Button>
               </ModalFooter>
@@ -90,6 +112,7 @@ const AnimeReview = (props) => {
       </div>
       <div key={review.user.name + "user-comment"} className="user-comment">
         <ReactReadMoreReadLess
+          key={review.user.name + "comment-text"}
           charLimit={400}
           readMoreText={"Read more ▼"}
           readLessText={"Read less ▲"}
@@ -97,7 +120,6 @@ const AnimeReview = (props) => {
           {review.comment}
         </ReactReadMoreReadLess>
       </div>
-      {/* {console.log('user:',user)} */}
     </div>
   );
 };
