@@ -1,27 +1,26 @@
 import React, { Component } from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
-import { Form, FormGroup, Label, Input } from "reactstrap";
+import { Form, FormGroup, Input } from "reactstrap";
 import "./userModal.css";
 import dpDock from "../icons/uploaddp.png";
 
 class UserModal extends Component {
   state = {
     userName: "",
-    dp:
-      "https://www.dpair.com/wp-content/uploads/2017/03/Facebook-Blank-Photo.jpg",
+    dp: "https://www.dpair.com/wp-content/uploads/2017/03/Facebook-Blank-Photo.jpg",
     about: "",
   };
 
-  handleUserNameChange = (e) => {};
+  // handleUserNameChange = (e) => {};
 
-  handleDpChange = (e) => {};
+  // handleDpChange = (e) => {};
 
-  handleAboutChange = (e) => {};
+  // handleAboutChange = (e) => {};
 
-  saveEdit = () => {};
+  // saveEdit = () => {};
 
   render() {
-    const { modalState, toggle, user } = this.props;
+    const { modalState, toggle } = this.props;
     return (
       <div>
         <Modal isOpen={modalState} toggle={() => toggle()}>

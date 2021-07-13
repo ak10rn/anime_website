@@ -12,7 +12,7 @@ const Card = (props) => {
     setAnime(props.anime);
     const newGenres = props.anime.genres.map((genre) => genre.name);
     setGenres(newGenres);
-  }, []);
+  }, [props.anime]);
 
   function handleClick(e) {
     e.preventDefault();
@@ -28,14 +28,8 @@ const Card = (props) => {
           <div className="text">Know Me Senpai!</div>
         </div>
         <div className="row no-gutters">
-          <div className="col-md-4">
-            <img
-              className="card-img-top"
-              src={anime.image_url}
-              alt="img"
-              height="200px"
-              width="100%"
-            ></img>
+          <div className="col-md-4 img-temp">
+            <img className="card-img-top" src={anime.image_url} alt="img"></img>
           </div>
           <div className="col-md-8">
             <div className="card-body">

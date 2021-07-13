@@ -20,7 +20,7 @@ const User = (props) => {
           <br />
           <br />
           <h1> {props.user.name} </h1>
-          <p>Joined {props.user.register_date.substring(0, 10)}</p>
+          <p>Joined {props.user.register_date && props.user.register_date.substring(0, 10)}</p>
         </div>
         <div className="container text-light col user-about bg-dark">
           <div className="container text-light row">
