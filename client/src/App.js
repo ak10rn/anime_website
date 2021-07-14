@@ -46,7 +46,7 @@ class App extends Component {
               <Route path="/register" component={RegisterForm} />
               <Route path="/login" component={LoginForm} />
               <Route path="/logout" component={Logout} />
-              <Route path="/profile" component={User} />
+              <Route path="/profile/:id" component={User} />
               <Route exact path="/" component={CardContainer} />
               {/* <Redirect to="/not-found"/> */}
             </Switch>

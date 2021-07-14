@@ -11,6 +11,10 @@ const UserSchema = new Schema({
         type: String,
         default: "http://placekitten.com/200/300"
     },
+    about: {
+        type: String,
+        default: "I am shit."
+    },
     email: {
         type: String,
         required: true,

@@ -1,9 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import ReactReadMoreReadLess from "react-read-more-read-less";
+import { getUserReviews } from "../services/authService";
 import UserModal from "./userModal";
 
 const User = (props) => {
+  const [reviews, setReviews] = useState([]);
   const [modal, setModal] = useState(false);
+
+  const { id } = useParams();
+
+  useEffect(async () => {
+    try {
+      const { data } = await getUserReviews(id);
+      setReviews(Object.values(data));
+      console.log(data);
+    } catch (err) {
+      console.log(err);
+    }
+    
+  }, [id]);
+
   const handleModal = () => {
     setModal(!modal);
   };
@@ -62,7 +79,7 @@ const User = (props) => {
       <div className="container text-light row">
         <div className="container text-light col">
           <img
-            src="https://cdn.myanimelist.net/images/anime/1000/110531.jpg"
+            src={"https://cdn.myanimelist.net/images/anime/1000/110531.jpg"}
             width="50"
             height="50"
             alt="animeimage"

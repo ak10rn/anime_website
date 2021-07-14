@@ -68,11 +68,12 @@ router.delete('/', async (req, res) => {
 });
 
 // @route GET api/reviews/:id
-// @desc Get an review
+// @desc Get all reviews by the user
 // @access Public
 router.get('/:id', async(req, res) => {
     try {
-        const review = await Review.findById(req.params.id).populate({ path: 'user', select: '-password -email' }).sort({ date: -1 });
+        //I should have had anime object instead of mal_id (if I knew I would be doing this, I would have)
+        const review = await Review.find({ user: req.params.id }).populate({ path: 'anime', select: 'title image_url mal_id score' });
         res.json(review);
     } catch (err) {
         console.log(err);

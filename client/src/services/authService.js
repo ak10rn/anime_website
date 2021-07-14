@@ -33,6 +33,14 @@ export async function getCurrentUser() {
   }
 }
 
+export async function getUserReviews(userid) {
+  try {
+    return await http.get(`/api/reviews/${userid}`);
+  } catch (error) {
+    return { data: null };
+  }
+}
+
 export function getJWT() {
   return localStorage.getItem(tokenKey);
 }
