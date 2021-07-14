@@ -1,53 +1,65 @@
 import React, { useState } from "react";
-import Joi from 'joi-browser';
+import Joi from "joi-browser";
 //import { useHistory } from "react-router";
 import { toast } from "react-toastify";
 import "../App.css";
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Form } from "reactstrap";
 import auth from "../services/authService";
+import "./login.css";
 
-function LoginForm({onLogin}) {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    
-    const schema = {
-      email: Joi.string()
-        .email()
-        .required(),
-      password: Joi.string()
-        .min(5)
-        .required(),
-    };
+function LoginForm({ onLogin }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-    const onSubmit = async (e) => {
-        e.preventDefault();
+  const schema = {
+    email: Joi.string().email().required(),
+    password: Joi.string().min(5).required(),
+  };
 
-      try {
-        const result = Joi.validate({ email, password }, schema);
-        if (result.error) throw result.error.details[0].message;
-        await auth.login(email, password);
-        window.location='/';
-      } catch (error) {
-        if (error.response && error.response.status === 400) {
-          toast.error(error.response.data.msg);
-        } else {
-          toast.error(error);
-        }
+  const onSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const result = Joi.validate({ email, password }, schema);
+      if (result.error) throw result.error.details[0].message;
+      await auth.login(email, password);
+      window.location = "/";
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        toast.error(error.response.data.msg);
+      } else {
+        toast.error(error);
       }
-    };
+    }
+  };
 
-    return (
-        <Form onSubmit={onSubmit}>
-        <FormGroup className="mb-1">
-            <Label>Email</Label>
-            <Input type="text" name="email" onChange={e => setEmail(e.target.value)}/>
-        </FormGroup>
-        <FormGroup className="mb-1">
-            <Label>Password</Label>
-            <Input type="password" name="password" onChange={e => setPassword(e.target.value)}/>
-        </FormGroup>
-        <Button>Submit</Button>
-      </Form>  
-    );
+  return (
+    <div className="main">
+      <p className="sign" align="center">
+        Sign In
+      </p>
+      <Form className="form1" onSubmit={onSubmit}>
+        <input
+          className="em"
+          align="center"
+          type="text"
+          name="email"
+          placeholder="email"
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <input
+          type="password"
+          name="password"
+          className="pa"
+          align="center"
+          placeholder="password"
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <br></br>
+        <br></br>
+        <button className="submit">Submit</button>
+      </Form>
+    </div>
+  );
 }
 export default LoginForm;

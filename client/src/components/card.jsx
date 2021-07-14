@@ -12,7 +12,7 @@ const Card = (props) => {
     setAnime(props.anime);
     const newGenres = props.anime.genres.map((genre) => genre.name);
     setGenres(newGenres);
-  }, []);
+  }, [props.anime]);
 
   function handleClick(e) {
     e.preventDefault();
@@ -21,21 +21,15 @@ const Card = (props) => {
   return (
     <React.Fragment>
       <div
-        className="card shadow text-white bg-dark mb-3 ho"
+        className="card shadow text-white bg-dark mb-2 ho"
         style={{ cursor: "pointer" }}
       >
         <div className="middle" onClick={handleClick}>
           <div className="text">Know Me Senpai!</div>
         </div>
         <div className="row no-gutters">
-          <div className="col-md-4">
-            <img
-              className="card-img-top"
-              src={anime.image_url}
-              alt="img"
-              height="100%"
-              width="100%"
-            ></img>
+          <div className="col-md-4 img-temp">
+            <img className="card-img-top" src={anime.image_url} alt="img"></img>
           </div>
           <div className="col-md-8">
             <div className="card-body">
@@ -49,14 +43,12 @@ const Card = (props) => {
                 </span>
               </p>
             </div>
-            <div className="card-footer">
-              <p className="card-text">
-                <small className="text-muted">
-                  <span style={{ color: "	#29AB87" }}>
-                    Rated - {anime.score}/10
-                  </span>
-                </small>
-              </p>
+            <div className="b card-footer">
+              <small className="text-muted">
+                <span style={{ color: "	#29AB87" }}>
+                  Rated - {anime.score}/10
+                </span>
+              </small>
             </div>
           </div>
         </div>

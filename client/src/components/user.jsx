@@ -1,8 +1,14 @@
+<<<<<<< HEAD
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import ReactReadMoreReadLess from "react-read-more-read-less";
 import { getUserReviews } from "../services/authService";
+=======
+import React, { useState } from "react";
+import div from "react-read-more-read-less";
+>>>>>>> f0a6cc0ec77c0db14f745dd2bc48bc88af2ea9a6
 import UserModal from "./userModal";
+import "./user.css";
 
 const User = (props) => {
   const [reviews, setReviews] = useState([]);
@@ -26,19 +32,19 @@ const User = (props) => {
   };
   return (
     <React.Fragment>
-      <UserModal modalState={modal} toggle={handleModal} />
-      <div className="container text-light row" style={{ marginTop: "30px" }}>
-        <div className="container text-light col-3">
-          <img
-            src="https://www.dpair.com/wp-content/uploads/2017/03/Facebook-Blank-Photo.jpg"
-            width="200"
-            height="200"
-            alt="dp"
-          />
-          <h1> 4v9_Senpai </h1>
-          <p>Joined 01/01/2000</p>
+      <UserModal user={props.user} modalState={modal} toggle={handleModal} />
+      <div
+        className="container text-light row "
+        style={{ marginTop: "30px", fontFamily: "monospace" }}
+      >
+        <div className="container text-light col-3" align="center">
+          <img src={props.user.image} width="200" height="200" alt="dp" />
+          <br />
+          <br />
+          <h1> {props.user.name} </h1>
+          <p>Joined {props.user.register_date && props.user.register_date.substring(0, 10)}</p>
         </div>
-        <div className="container text-light col">
+        <div className="container text-light col user-about bg-dark">
           <div className="container text-light row">
             <div className="container text-light col" style={{ padding: "0" }}>
               <h3>About Me</h3>
@@ -51,15 +57,13 @@ const User = (props) => {
               Edit Profile
             </button>
           </div>
-          <ReactReadMoreReadLess
-            charLimit={700}
-            readMoreText={"Read more ▼"}
-            readLessText={"Read less ▲"}
-          >
+          <br></br>
+          <div>
             lorem dadkasndas adasd adjnasd asdasjd asdjadad ajdaida sdasjdasida
             dasidjasdnasjd dhjahs adjasid sdnasd n adnnauisda lorem dadkasndas
             adasd adjnasd asdasjd asdjadad ajdaida sdasjdasida dasidjasdnasjd
             dhjahs adjasid sdnasd n adnnauisda lorem dadkasndas adasd adjnasd
+<<<<<<< HEAD
             asdasjd asdjadad ajdaida sdasjdasida dasidjasdnasjd dhjahs adjasid
             sdnasd n adnnauisda lorem dadkasndas adasd adjnasd asdasjd asdjadad
             ajdaida sdasjdasida dasidjasdnasjd dhjahs adjasid sdnasd n
@@ -91,24 +95,52 @@ const User = (props) => {
         </div>
         <div className="container text-light col">
           <div align="right"> 8.0/10 </div>
+=======
+          </div>
+>>>>>>> f0a6cc0ec77c0db14f745dd2bc48bc88af2ea9a6
         </div>
+        <h2 align="center" className="bottom">
+          {" "}
+          I have watched 2 anime{" "}
+        </h2>
       </div>
+
       <br></br>
-      <div className="container text-light row">
-        <div className="container text-light col">
-          <img
-            src="https://cdn.myanimelist.net/images/anime/1000/110531.jpg"
-            width="50"
-            height="50"
-            alt="animeimage"
-          />
-          <div>Hyuoka</div>
+      <div className="container text-light row user-reviews bg-dark">
+        <div className="container text-light row user-review">
+          <div className="container text-light col">
+            <img
+              src="https://cdn.myanimelist.net/images/anime/1000/110531.jpg"
+              width="50"
+              height="50"
+              alt="animeimage"
+            />
+            <div>Naruto</div>
+          </div>
+          <div className="container text-light col">
+            <div> this is my comment regarding this anime </div>
+          </div>
+          <div className="container text-light col">
+            <div align="right"> 8.0/10 </div>
+          </div>
         </div>
-        <div className="container text-light col">
-          <div> this is my comment regarding this anime </div>
-        </div>
-        <div className="container text-light col">
-          <div align="right"> 8.0/10 </div>
+        <br></br>
+        <div className="container text-light row">
+          <div className="container text-light col">
+            <img
+              src="https://cdn.myanimelist.net/images/anime/1000/110531.jpg"
+              width="50"
+              height="50"
+              alt="animeimage"
+            />
+            <div>Hyuoka</div>
+          </div>
+          <div className="container text-light col">
+            <div> this is my comment regarding this anime </div>
+          </div>
+          <div className="container text-light col">
+            <div align="right"> 8.0/10 </div>
+          </div>
         </div>
       </div>
     </React.Fragment>

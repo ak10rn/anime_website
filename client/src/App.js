@@ -12,13 +12,16 @@ import RegisterForm from "./components/register";
 import LoginForm from "./components/login";
 import Logout from "./components/logout";
 import User from "./components/user";
+import Users from "./components/users";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
 
 class App extends Component {
-  state = {};
+  state = {
+    user: {},
+  };
 
   async componentDidMount() {
     const { data: user } = await auth.getCurrentUser();
@@ -43,10 +46,25 @@ class App extends Component {
                   />
                 )}
               />
-              <Route path="/register" component={RegisterForm} />
+              <Route path="/register" component={RegisterForm} s />
               <Route path="/login" component={LoginForm} />
               <Route path="/logout" component={Logout} />
+<<<<<<< HEAD
               <Route path="/profile/:id" component={User} />
+=======
+              <Route
+                path="/users/:username"
+                render={(props) => (
+                  <User
+                    key={this.state.user.name}
+                    user={this.state.user}
+                    {...props}
+                  />
+                )}
+              />
+              {/* <Route path="/users/:username" component={User} /> */}
+              <Route path="/users" component={Users} />
+>>>>>>> f0a6cc0ec77c0db14f745dd2bc48bc88af2ea9a6
               <Route exact path="/" component={CardContainer} />
               {/* <Redirect to="/not-found"/> */}
             </Switch>

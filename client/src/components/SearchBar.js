@@ -5,31 +5,34 @@ import "./SearchBar.css";
 import SearchIcon from "@material-ui/icons/Search";
 import CloseIcon from "@material-ui/icons/Close";
 import { getAnimeBySearchQuery } from "../services/animeService";
+import { Spinner, Popover, PopoverBody } from "reactstrap";
 
 function SearchBar({ placeholder }) {
   const [query, setQuery] = useState("");
   const [searchData, setSearchData] = useState([]);
   const [displaySearchItems, setDisplay] = useState(true);
+  const [loading, setLoading] = useState(true);
 
-  const changeHandler = async (event) => {
-    if (!displaySearchItems) setDisplay(true);
-    if (event.target.value !== "") {
-      const searchedAnimes = await getAnimeBySearchQuery({
-        q: event.target.value,
-        limit: 10,
-      });
-      const newSearchData = searchedAnimes.data.results.map((anime) => {
-        return { title: anime.title, id: anime.mal_id };
-      });
-      setSearchData(newSearchData);
-    } else {
-      setSearchData([]);
-    }
-  };
+  // const changeHandler = ;
 
   const debouncedChangeHandlerHelper = useMemo(
-    () => debounce(changeHandler, 500),
-    [searchData, setSearchData, query, setQuery]
+    () =>
+      debounce(async (event) => {
+        if (!displaySearchItems) setDisplay(true);
+        if (event.target.value !== "") {
+          setLoading(true);
+          const searchedAnimes = await getAnimeBySearchQuery({
+            q: event.target.value,
+            limit: 10,
+          });
+          setLoading(false);
+          console.log(searchedAnimes.data.results);
+          setSearchData(searchedAnimes.data.results);
+        } else {
+          setSearchData([]);
+        }
+      }, 500),
+    [displaySearchItems]
   );
 
   const debouncedChangeHandler = (event) => {
@@ -43,7 +46,7 @@ function SearchBar({ placeholder }) {
     setDisplay(false);
   };
 
-  const node = useRef();
+  const searchBarRef = useRef();
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutsideSearchBar);
     return () => {
@@ -52,13 +55,13 @@ function SearchBar({ placeholder }) {
   }, []);
 
   const handleClickOutsideSearchBar = (e) => {
-    if (!node.current.contains(e.target)) {
+    if (!searchBarRef.current.contains(e.target)) {
       setDisplay(false);
     }
   };
 
   return (
-    <div className="search" ref={node}>
+    <div className="search" ref={searchBarRef} id="searchMessagePopover">
       <div className="searchInputs">
         <input
           type="text"
@@ -66,6 +69,7 @@ function SearchBar({ placeholder }) {
           value={query}
           onChange={debouncedChangeHandler}
           onClick={() => setDisplay(true)}
+          spellCheck="false"
         />
         <div className="searchIcon">
           {searchData.length === 0 ? (
@@ -76,18 +80,53 @@ function SearchBar({ placeholder }) {
         </div>
       </div>
       <div
-        className="dataResult"
+        className="dataResult bg-dark"
         style={{
-          height: searchData.length !== 0 && displaySearchItems ? "200px" : "0",
+          alignSelf: "center",
+          height:
+            query.length >= 3 && displaySearchItems
+              ? loading
+                ? "100px"
+                : "520px"
+              : "0",
         }}
       >
-        {searchData.slice(0, 10).map((value) => {
-          return (
-            <Link key={value.id} className="dataItem" to={`/anime/${value.id}`}>
-              <p>{value.title} </p>
+        <Popover
+          placement="bottom"
+          isOpen={query.length > 0 && query.length < 3 && displaySearchItems}
+          target="searchMessagePopover"
+          className="result-message"
+          // toggle={toggle}
+        >
+          <PopoverBody>Enter atleast 3 letters :)</PopoverBody>
+        </Popover>
+
+        {loading && query.length >= 3 && (
+          <Spinner type="grow" color="primary" className="searchSpinner" />
+        )}
+        {!loading &&
+          query.length >= 3 &&
+          searchData.slice(0, 10).map((value) => (
+            <Link
+              key={value.id}
+              className="dataItem"
+              to={`/anime/${value.mal_id}`}
+            >
+              <div className="d-flex flex-row px-1">
+                <img
+                  src={value.image_url}
+                  alt="img_url"
+                  className="search-result-image"
+                />
+                <div
+                  className="ms-2 align-self-center text-light"
+                  style={{ width: "210px" }}
+                >
+                  {value.title}
+                </div>
+              </div>
             </Link>
-          );
-        })}
+          ))}
       </div>
     </div>
   );

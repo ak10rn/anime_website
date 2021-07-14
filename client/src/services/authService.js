@@ -1,16 +1,16 @@
-import http from './http';
+import http from "./http";
 import jwtDecode from "jwt-decode";
 
 const apiUrl = "/api/auth";
 const tokenKey = "token";
 
-setTimeout(() => {  
+setTimeout(() => {
   http.setJWT(getJWT());
 }, 1000);
 
 export async function login(email, password) {
-    const res = await http.post(apiUrl, { email, password });
-    const token = res.headers['x-auth-token'];
+  const res = await http.post(apiUrl, { email, password });
+  const token = res.headers["x-auth-token"];
 
   localStorage.setItem(tokenKey, token);
 }
@@ -45,10 +45,12 @@ export function getJWT() {
   return localStorage.getItem(tokenKey);
 }
 
-export default {
+const exportVar = {
   login,
   loginWithJWT,
   logout,
   getCurrentUser,
-  getJWT
+  getJWT,
 };
+
+export default exportVar;
