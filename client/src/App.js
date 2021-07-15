@@ -25,7 +25,7 @@ class App extends Component {
 
   async componentDidMount() {
     const { data: user } = await auth.getCurrentUser();
-    console.log(user);
+    // console.log(user);
     this.setState({ user });
   }
   render() {

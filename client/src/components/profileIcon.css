@@ -27,8 +27,24 @@
 .profile-dropdown-item a {
   color: #fff;
   text-decoration: none;
+  position: relative;
 }
 .profile-dropdown-item a:hover {
   color: #fff;
-  opacity: 0.6;
+}
+.profile-dropdown-item a:after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 2px;
+  bottom: -3px;
+  left: 0;
+  background: linear-gradient(4deg, turquoise, darkorchid, deeppink, orange);
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+.profile-dropdown-item a:hover:after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
 }
