@@ -100,6 +100,12 @@ const Anime = (props) => {
         comment: user_review.comment,
       });
       // console.log(userReview);
+    } else {
+      setUserReview({
+        check: false,
+        value: 0,
+        comment: "",
+      });
     }
   }, [reviews]);
 
