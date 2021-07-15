@@ -36,7 +36,7 @@ router.post('/', async (req, res) => {
 // @access Private and isAuthor
 router.put('/:id', async (req, res) => {
     try {
-        review = await Review.findByIdAndUpdate(req.params.id);
+        review = await Review.findByIdAndUpdate(req.params.id,req.body,{new: true});
         res.json(review);
     } catch (err) {
         console.log(err);

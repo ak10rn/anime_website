@@ -26,6 +26,7 @@ export function getAnime(mal_id) {
 
 export function saveReview(review) {
   if (review._id) {
+    console.log("reviewservice", review);
     const body = { ...review };
     delete body._id;
     return http.put(`${reviewUrl}/${review._id}`, body);

@@ -57,7 +57,24 @@ const Anime = (props) => {
       }
     }
     fun();
-  }, [id, anime.title, sortBy, setSortBy]);
+    const index = indexOfReviewMadeByCurrentUser();
+    if (index !== -1) {
+      const user_review = reviews[index];
+      setUserReview({
+        check: true,
+        value: user_review.user_rating,
+        comment: user_review.comment,
+        id: user_review._id
+      });
+      // console.log(userReview);
+    } else {
+      setUserReview({
+        check: false,
+        value: 0,
+        comment: "",
+      });
+    }
+  }, [id]);
 
   function avgScore(reviews) {
     if (reviews.length === 0) return -1;
@@ -99,24 +116,25 @@ const Anime = (props) => {
 
   const handleReview = () => toggleModal();
 
-  useMemo(() => {
-    const index = indexOfReviewMadeByCurrentUser();
-    if (index !== -1) {
-      const user_review = reviews[index];
-      setUserReview({
-        check: true,
-        value: user_review.user_rating,
-        comment: user_review.comment,
-      });
-      // console.log(userReview);
-    } else {
-      setUserReview({
-        check: false,
-        value: 0,
-        comment: "",
-      });
-    }
-  }, [reviews]);
+  // useMemo(() => {
+  //   const index = indexOfReviewMadeByCurrentUser();
+  //   if (index !== -1) {
+  //     const user_review = reviews[index];
+  //     setUserReview({
+  //       check: true,
+  //       value: user_review.user_rating,
+  //       comment: user_review.comment,
+  //       id: user_review._id
+  //     });
+  //     // console.log(userReview);
+  //   } else {
+  //     setUserReview({
+  //       check: false,
+  //       value: 0,
+  //       comment: "",
+  //     });
+  //   }
+  // }, [reviews]);
 
   const handleNewReview = async (e) => {
     setUserReview({ check: true, value: e.user_rating, comment: e.comment });
@@ -145,6 +163,12 @@ const Anime = (props) => {
     try {
       const { data: savedReview } = await saveReview(toBeSavedReview);
       console.log("savedReview", savedReview);
+      setUserReview({
+        check: true,
+        value: savedReview.user_rating,
+        comment: savedReview.comment,
+        id: savedReview._id
+      })
       animedb.reviews.push(savedReview._id);
       console.log("animedb", animedb);
       const { data: savedAnime } = await saveAnime(animedb);
@@ -190,7 +214,15 @@ const Anime = (props) => {
     const newReview = { ...e };
     newReview.mal_id = id;
     newReview.user = { ...props.user };
-
+    newReview._id = userReview.id;
+    console.log("newReview", newReview);
+    setUserReview({
+      check: true,
+      value: newReview.user_rating,
+      comment: newReview.comment,
+      id: newReview._id
+    })
+    
     const newReviews = [...reviews];
     const index = indexOfReviewMadeByCurrentUser();
     if (index === -1)
@@ -200,14 +232,15 @@ const Anime = (props) => {
 
     const animedb = { ...anime };
     animedb.reviews = newReviews.map((review) => review._id);
+    animedb.reviews[index] = userReview.id;
     animedb.score = avgScore(newReviews);
     setScore(animedb.score);
-
+    console.log("editanimedb", animedb);
     try {
       const { data: savedReview } = await saveReview(newReview);
       const { data: savedAnime } = await saveAnime(animedb);
-      console.log("savedAnime", savedAnime);
-      console.log("savedReview", savedReview);
+      console.log("editsavedAnime", savedAnime);
+      console.log("editsavedReview", savedReview);
     } catch (err) {
       console.log(err);
     }

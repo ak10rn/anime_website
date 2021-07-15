@@ -32,8 +32,9 @@ const RateModal = (props) => {
     const user = {
       comment: comment,
       user_rating: value,
-      date: new Date(),
+      // date: new Date(),
     };
+    if (!props.review.check) user.date = new Date();
     newReview(user);
     toggle();
   };
