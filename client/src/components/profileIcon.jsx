@@ -38,7 +38,7 @@ const ProfileIcon = ({ user }) => {
           </Link>
         </div>
         <div className="profile-dropdown-item">
-          <Link to="/logout" onClick={toggleUserDropdown}>
+          <Link to="/logout" onClick={toggleUserDropdown} style={{color:'#FF004D'}}>
             <i className="fa fa-sign-out" /> Logout
           </Link>
         </div>

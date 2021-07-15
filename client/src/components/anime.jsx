@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import "./anime.css";
 import { useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
 import {
   getAnime,
   getAnimeByMalId,
@@ -19,12 +18,12 @@ const Anime = (props) => {
   const [modal, setModal] = useState(false);
   const [sortBy, setSortBy] = useState("");
   const [score, setScore] = useState(null);
-  const [userReview, setUserReview] = useState({ user_rating: 0, comment: "" });
+  const [userReview, setUserReview] = useState({});
 
   const { id } = useParams();
+  const toggleModal = () => setModal(!modal);
 
-  useEffect(() => {
-    // console.log(props.user);
+  useEffect(async () => {
     setSortBy("-date");
     async function fun() {
       if (!anime.title) {
@@ -47,7 +46,7 @@ const Anime = (props) => {
             setReviews(sortedNewReviews);
             // console.log("reviews", data.reviews);
             delete newAnime.reviews;
-            if (data.reviews.length > 0) setScore(avgScore(data.reviews));
+            // if (data.reviews.length > 0) setScore(avgScore(data.reviews));
           }
           setAnime(newAnime);
           if (data.reviews.length > 0) setScore(avgScore(data.reviews));
@@ -98,13 +97,29 @@ const Anime = (props) => {
     return reviews.findIndex((review) => review.user.name === props.user.name);
   };
 
-  const handleAddReview = () => {
-    // console.log('modal opens')
+  const handleReview = () => toggleModal();
 
-    toggleModal();
-  };
+  useMemo(() => {
+    const index = indexOfReviewMadeByCurrentUser();
+    if (index !== -1) {
+      const user_review = reviews[index];
+      setUserReview({
+        check: true,
+        value: user_review.user_rating,
+        comment: user_review.comment,
+      });
+      // console.log(userReview);
+    } else {
+      setUserReview({
+        check: false,
+        value: 0,
+        comment: "",
+      });
+    }
+  }, [reviews]);
 
   const handleNewReview = async (e) => {
+    setUserReview({ check: true, value: e.user_rating, comment: e.comment });
     console.log("temp");
     if (!props.user) return console.log("Login first dumbass");
 
@@ -165,12 +180,12 @@ const Anime = (props) => {
     } catch (err) {
       console.log(err);
     }
+    setUserReview({ check: false, value: 0, comment: "" });
   };
 
   const handleEditReview = async (e) => {
-    setUserReview(e);
     if (!props.user) return console.log("Login first dumbass");
-    console.log("check", e);
+    // console.log("check", e);
 
     const newReview = { ...e };
     newReview.mal_id = id;
@@ -198,17 +213,14 @@ const Anime = (props) => {
     }
   };
 
-  const toggleModal = () => {
-    // const NewModal = !modal;
-    setModal(!modal);
-  };
+  const handleReturnValueOfModal = (e) => userReview.check ? handleEditReview(e) : handleNewReview(e);
   return (
     <React.Fragment>
       <RateModal
         modalState={modal}
         toggle={toggleModal}
-        newReview={handleNewReview}
-        review={{ value: userReview.user_rating, comment: userReview.comment }}
+        newReview={handleReturnValueOfModal}
+        review={userReview}
       />
       <div className="container text-light d-flex flex-column">
         <div className="title">
@@ -217,9 +229,8 @@ const Anime = (props) => {
         <AnimeContent anime={anime} score={score} />
         <AnimeReviews
           reviews={reviews}
-          addReview={handleAddReview}
+          addReview={handleReview}
           deleteReview={handleDeleteReview}
-          editReview={handleEditReview}
           user={props.user}
         />
       </div>
