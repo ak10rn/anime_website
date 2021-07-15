@@ -71,7 +71,7 @@ const AnimeReview = (props) => {
               />
             </Button>
             <Tooltip
-              key={review.user.name + "delete-button"}
+              key={review.user.name + "delete-button-tooltip"}
               placement="top"
               isOpen={tooltipOpen}
               target="deleteTooltip"

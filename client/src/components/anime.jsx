@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import "./anime.css";
 import { useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
 import {
   getAnime,
   getAnimeByMalId,
@@ -19,12 +18,12 @@ const Anime = (props) => {
   const [modal, setModal] = useState(false);
   const [sortBy, setSortBy] = useState("");
   const [score, setScore] = useState(null);
-  const [userReview, setUserReview] = useState({ user_rating: 0, comment: "" });
+  const [userReview, setUserReview] = useState({});
 
   const { id } = useParams();
+  const toggleModal = () => setModal(!modal);
 
   useEffect(async () => {
-    // console.log(props.user);
     setSortBy("-date");
     if (!anime.title) {
       try {
@@ -38,16 +37,13 @@ const Anime = (props) => {
           }
         }
         const newAnime = { ...data };
-        // console.log(data);
         if (data.reviews) {
           let sortedNewReviews = data.reviews.sort(dynamicSort(sortBy));
           setReviews(sortedNewReviews);
-          // console.log("reviews", data.reviews);
           delete newAnime.reviews;
         }
         setAnime(newAnime);
         if (data.reviews.length > 0) setScore(avgScore(data.reviews));
-        // console.log("adfasdfadsf",data);
       } catch (err) {
         console.log(err);
       }
@@ -92,13 +88,23 @@ const Anime = (props) => {
     return reviews.findIndex((review) => review.user.name === props.user.name);
   };
 
-  const handleAddReview = () => {
-    // console.log('modal opens')
+  const handleReview = () => toggleModal();
 
-    toggleModal();
-  };
+  useMemo(() => {
+    const index = indexOfReviewMadeByCurrentUser();
+    if (index !== -1) {
+      const user_review = reviews[index];
+      setUserReview({
+        check: true,
+        value: user_review.user_rating,
+        comment: user_review.comment,
+      });
+      // console.log(userReview);
+    }
+  }, [reviews]);
 
   const handleNewReview = async (e) => {
+    setUserReview({ check: true, value: e.user_rating, comment: e.comment });
     console.log("temp");
     if (!props.user) return console.log("Login first dumbass");
 
@@ -159,12 +165,12 @@ const Anime = (props) => {
     } catch (err) {
       console.log(err);
     }
+    setUserReview({ check: false, value: 0, comment: "" });
   };
 
   const handleEditReview = async (e) => {
-    setUserReview(e);
     if (!props.user) return console.log("Login first dumbass");
-    console.log("check", e);
+    // console.log("check", e);
 
     const newReview = { ...e };
     newReview.mal_id = id;
@@ -177,31 +183,28 @@ const Anime = (props) => {
     newReviews.splice(index, 1, newReview);
     setReviews(newReviews);
 
-    const animedb = { ...anime };
-    animedb.score = avgScore(newReviews);
-    setScore(animedb.score);
-
-    try {
-      const { data: savedReview } = await saveReview(newReview);
-      const { data: savedAnime } = await saveAnime(animedb);
-      console.log("savedAnime", savedAnime);
-      console.log("savedReview", savedReview);
-    } catch (err) {
-      console.log(err);
-    }
+    // const animedb = { ...anime };
+    // animedb.reviews = newReviews.map((review) => review._id);
+    // animedb.score = avgScore(newReviews);
+    // setScore(animedb.score);
+    // try {
+    //   const { data: savedReview } = await saveReview(newReview);
+    //   const { data: savedAnime } = await saveAnime(animedb);
+    //   console.log("savedAnime", savedAnime);
+    //   console.log("savedReview", savedReview);
+    // } catch (err) {
+    //   console.log(err);
+    // }
   };
 
-  const toggleModal = () => {
-    // const NewModal = !modal;
-    setModal(!modal);
-  };
+  const handleReturnValueOfModal = (e) => userReview.check ? handleEditReview(e) : handleNewReview(e);
   return (
     <React.Fragment>
       <RateModal
         modalState={modal}
         toggle={toggleModal}
-        newReview={handleNewReview}
-        review={{ value: userReview.user_rating, comment: userReview.comment }}
+        newReview={handleReturnValueOfModal}
+        review={userReview}
       />
       <div className="container text-light d-flex flex-column">
         <div className="title">
@@ -210,9 +213,8 @@ const Anime = (props) => {
         <AnimeContent anime={anime} score={score} />
         <AnimeReviews
           reviews={reviews}
-          addReview={handleAddReview}
+          addReview={handleReview}
           deleteReview={handleDeleteReview}
-          editReview={handleEditReview}
           user={props.user}
         />
       </div>
