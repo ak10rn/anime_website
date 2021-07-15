@@ -49,11 +49,8 @@ class App extends Component {
               <Route path="/register" component={RegisterForm} s />
               <Route path="/login" component={LoginForm} />
               <Route path="/logout" component={Logout} />
-<<<<<<< HEAD
-              <Route path="/profile/:id" component={User} />
-=======
               <Route
-                path="/users/:username"
+                path="/users/:id"
                 render={(props) => (
                   <User
                     key={this.state.user.name}
@@ -64,7 +61,6 @@ class App extends Component {
               />
               {/* <Route path="/users/:username" component={User} /> */}
               <Route path="/users" component={Users} />
->>>>>>> f0a6cc0ec77c0db14f745dd2bc48bc88af2ea9a6
               <Route exact path="/" component={CardContainer} />
               {/* <Redirect to="/not-found"/> */}
             </Switch>

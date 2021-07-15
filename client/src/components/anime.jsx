@@ -23,38 +23,41 @@ const Anime = (props) => {
 
   const { id } = useParams();
 
-  useEffect(async () => {
+  useEffect(() => {
     // console.log(props.user);
     setSortBy("-date");
-    if (!anime.title) {
-      try {
-        let { data } = await getAnime(id);
-        console.log("first", data);
-        if (!data) {
-          try {
-            const { data: d } = await getAnimeByMalId(id);
-            console.log("second", d);
-            data = d;
-          } catch (err) {
-            console.log(err);
+    async function fun() {
+      if (!anime.title) {
+        try {
+          let { data } = await getAnime(id);
+          console.log("first", data);
+          if (!data) {
+            try {
+              const { data: d } = await getAnimeByMalId(id);
+              console.log("second", d);
+              data = d;
+            } catch (err) {
+              console.log(err);
+            }
           }
+          const newAnime = { ...data };
+          // console.log(data);
+          if (data.reviews) {
+            let sortedNewReviews = data.reviews.sort(dynamicSort(sortBy));
+            setReviews(sortedNewReviews);
+            // console.log("reviews", data.reviews);
+            delete newAnime.reviews;
+            if (data.reviews.length > 0) setScore(avgScore(data.reviews));
+          }
+          setAnime(newAnime);
+          if (data.reviews.length > 0) setScore(avgScore(data.reviews));
+          // console.log("adfasdfadsf",data);
+        } catch (err) {
+          console.log(err);
         }
-        const newAnime = { ...data };
-        // console.log(data);
-        if (data.reviews) {
-          let sortedNewReviews = data.reviews.sort(dynamicSort(sortBy));
-          setReviews(sortedNewReviews);
-          // console.log("reviews", data.reviews);
-          delete newAnime.reviews;
-          if(data.reviews.length > 0)setScore(avgScore(data.reviews));
-        }
-        setAnime(newAnime);
-        if (data.reviews.length > 0) setScore(avgScore(data.reviews));
-        // console.log("adfasdfadsf",data);
-      } catch (err) {
-        console.log(err);
       }
     }
+    fun();
   }, [id, anime.title, sortBy, setSortBy]);
 
   function avgScore(reviews) {
@@ -176,11 +179,12 @@ const Anime = (props) => {
     const newReviews = [...reviews];
     const index = indexOfReviewMadeByCurrentUser();
     if (index === -1)
-      return console.log("there's no review by the the user to delete.");
+      return console.log("there's no review by the the user to edit.");
     newReviews.splice(index, 1, newReview);
     setReviews(newReviews);
 
     const animedb = { ...anime };
+    animedb.reviews = newReviews.map((review) => review._id);
     animedb.score = avgScore(newReviews);
     setScore(animedb.score);
 

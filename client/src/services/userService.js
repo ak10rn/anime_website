@@ -9,3 +9,7 @@ export function register(user) {
     name: user.name
   });
 }
+
+export function getUser(user_id) {
+  return http.get(`${apiUrl}/${user_id}`);
+}
