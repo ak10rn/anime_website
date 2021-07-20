@@ -13,7 +13,8 @@
   font-size: 18px;
   padding: 15px;
   height: 30px;
-  width: 250px;
+  width: 90%;
+  align-self: center;
 }
 
 .searchIcon {

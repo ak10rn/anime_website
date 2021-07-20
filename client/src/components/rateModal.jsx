@@ -16,10 +16,6 @@ const RateModal = (props) => {
     setComment(comment);
   };
 
-  const reset = () => {
-    setValue(0);
-    setComment("");
-  };
   useEffect(() => {
     const { value, comment } = props.review;
     setValue(value);
@@ -29,6 +25,7 @@ const RateModal = (props) => {
   const { modalState, toggle, className, newReview } = props;
   // console.log(props.review);
   const saveComment = () => {
+    if (comment === "") return alert("Please write something :)");
     const user = {
       comment: comment,
       user_rating: value,
@@ -40,7 +37,7 @@ const RateModal = (props) => {
   };
   return (
     <div>
-      <Modal isOpen={modalState} toggle={() => toggle()} className={className}>
+      <Modal isOpen={modalState} toggle={toggle} className={className}>
         <ModalHeader>Rate Me Senpai! UwU</ModalHeader>
         <ModalBody>
           <Form>
@@ -69,7 +66,7 @@ const RateModal = (props) => {
                 min="0"
                 max="10"
                 value={value}
-                onChange={(event) => handleRatingChange(event)}
+                onChange={handleRatingChange}
                 id="rating"
               />
             </div>
@@ -84,16 +81,16 @@ const RateModal = (props) => {
                 id="exampleText"
                 spellCheck="false"
                 value={comment}
-                onChange={(event) => handleCommentChange(event)}
+                onChange={handleCommentChange}
               />
             </FormGroup>
           </Form>
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={() => saveComment()}>
+          <Button color="primary" onClick={saveComment}>
             Hai
           </Button>{" "}
-          <Button color="secondary" onClick={() => toggle()}>
+          <Button color="secondary" onClick={toggle}>
             Cancel
           </Button>
         </ModalFooter>

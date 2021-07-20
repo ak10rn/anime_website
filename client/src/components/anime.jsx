@@ -18,25 +18,31 @@ const Anime = (props) => {
   const [modal, setModal] = useState(false);
   const [sortBy, setSortBy] = useState("");
   const [score, setScore] = useState(null);
-  const [userReview, setUserReview] = useState({});
+  const [userReview, setUserReview] = useState({
+    check: false,
+    value: 0,
+    comment: "",
+  });
 
   const { id } = useParams();
   const toggleModal = () => setModal(!modal);
 
   useEffect(async () => {
     setSortBy("-date");
+    // let z=[];
     async function fun() {
       if (!anime.title) {
         try {
           let { data } = await getAnime(id);
-          console.log("first", data);
+          // console.log("first", data);
           if (!data) {
             try {
               const { data: d } = await getAnimeByMalId(id);
-              console.log("second", d);
+              // console.log("second", d);
               data = d;
             } catch (err) {
               console.log(err);
+              props.history.push("/not-found");
             }
           }
           const newAnime = { ...data };
@@ -44,8 +50,26 @@ const Anime = (props) => {
           if (data.reviews) {
             let sortedNewReviews = data.reviews.sort(dynamicSort(sortBy));
             setReviews(sortedNewReviews);
-            // console.log("reviews", data.reviews);
             delete newAnime.reviews;
+            const index = data.reviews.findIndex(
+              (review) => review.user.name === props.user.name
+            );
+            if (index !== -1) {
+              const user_review = { ...data.reviews[index] };
+              setUserReview({
+                check: true,
+                value: user_review.user_rating,
+                comment: user_review.comment,
+                id: user_review._id,
+              });
+              // console.log(userReview);
+            } else {
+              setUserReview({
+                check: false,
+                value: 0,
+                comment: "",
+              });
+            }
             // if (data.reviews.length > 0) setScore(avgScore(data.reviews));
           }
           setAnime(newAnime);
@@ -57,24 +81,7 @@ const Anime = (props) => {
       }
     }
     fun();
-    const index = indexOfReviewMadeByCurrentUser();
-    if (index !== -1) {
-      const user_review = reviews[index];
-      setUserReview({
-        check: true,
-        value: user_review.user_rating,
-        comment: user_review.comment,
-        id: user_review._id
-      });
-      // console.log(userReview);
-    } else {
-      setUserReview({
-        check: false,
-        value: 0,
-        comment: "",
-      });
-    }
-  }, [id]);
+  }, [id, props]);
 
   function avgScore(reviews) {
     if (reviews.length === 0) return -1;
@@ -114,7 +121,17 @@ const Anime = (props) => {
     return reviews.findIndex((review) => review.user.name === props.user.name);
   };
 
-  const handleReview = () => toggleModal();
+  const handleReview = () => {
+    if (!props.user) {
+      // do not delete below comment ~~~#important~~~
+      // eslint-disable-next-line no-restricted-globals
+      const retval = confirm("Login first dumbass");
+      if (retval) {
+        props.history.push("/login");
+      } else return;
+    }
+    toggleModal();
+  };
 
   // useMemo(() => {
   //   const index = indexOfReviewMadeByCurrentUser();
@@ -138,8 +155,6 @@ const Anime = (props) => {
 
   const handleNewReview = async (e) => {
     setUserReview({ check: true, value: e.user_rating, comment: e.comment });
-    console.log("temp");
-    if (!props.user) return console.log("Login first dumbass");
 
     if (indexOfReviewMadeByCurrentUser() !== -1)
       return console.log("theres already a review made by current user");
@@ -167,8 +182,8 @@ const Anime = (props) => {
         check: true,
         value: savedReview.user_rating,
         comment: savedReview.comment,
-        id: savedReview._id
-      })
+        id: savedReview._id,
+      });
       animedb.reviews.push(savedReview._id);
       console.log("animedb", animedb);
       const { data: savedAnime } = await saveAnime(animedb);
@@ -179,8 +194,6 @@ const Anime = (props) => {
   };
 
   const handleDeleteReview = async () => {
-    if (!props.user) return console.log("Login first dumbass");
-
     const newReviews = [...reviews];
     const index = indexOfReviewMadeByCurrentUser();
     if (index === -1)
@@ -208,9 +221,6 @@ const Anime = (props) => {
   };
 
   const handleEditReview = async (e) => {
-    if (!props.user) return console.log("Login first dumbass");
-    // console.log("check", e);
-
     const newReview = { ...e };
     newReview.mal_id = id;
     newReview.user = { ...props.user };
@@ -220,9 +230,9 @@ const Anime = (props) => {
       check: true,
       value: newReview.user_rating,
       comment: newReview.comment,
-      id: newReview._id
-    })
-    
+      id: newReview._id,
+    });
+
     const newReviews = [...reviews];
     const index = indexOfReviewMadeByCurrentUser();
     if (index === -1)
@@ -246,7 +256,8 @@ const Anime = (props) => {
     }
   };
 
-  const handleReturnValueOfModal = (e) => userReview.check ? handleEditReview(e) : handleNewReview(e);
+  const handleReturnValueOfModal = (e) =>
+    userReview.check ? handleEditReview(e) : handleNewReview(e);
   return (
     <React.Fragment>
       <RateModal

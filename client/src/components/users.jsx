@@ -1,106 +1,114 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import "./users.css";
+import _ from "lodash";
 import { Link } from "react-router-dom";
+import Moment from "moment";
 
-const Users = () => {
-  const users = [
+const Users = (props) => {
+  const [users, setUsers] = useState([]);
+  const [sortBy, setSortBy] = useState("name");
+  const [order, setOrder] = useState("asc");
+  const allUsers = [
     {
-      image: "http://placekitten.com/200/300",
-      name: "akk",
-      register_date: "2021-07-08T14:56:16.767Z",
-      __v: 0,
+      image: "http://placekitten.com/300/300",
+      name: "akk1",
+      register_date: "2020-07-03T14:56:16.767Z",
       _id: "60e71210c78sdfbc524bc14aa46",
+      noOfAnimeWatched: 10,
     },
     {
-      image: "http://placekitten.com/200/300",
-      name: "akk",
-      register_date: "2021-07-08T14:56:16.767Z",
-      __v: 0,
+      image: "http://placekitten.com/300/300",
+      name: "akk2",
+      register_date: "2021-07-07T14:56:16.767Z",
       _id: "fsd",
+      noOfAnimeWatched: 102,
     },
     {
-      image: "http://placekitten.com/200/300",
-      name: "akk",
-      register_date: "2021-07-08T14:56:16.767Z",
-      __v: 0,
+      image: "http://placekitten.com/300/300",
+      name: "akk3",
+      register_date: "2029-07-09T14:56:16.767Z",
       _id: "60e71210c78bcsdfsdf524bc14aa46",
+      noOfAnimeWatched: 5,
     },
   ];
-
-  const manageDate = (date) => {
-    console.log(date);
-    return date;
+  const getSortedUsersData = (sortBy, order) => {
+    const sortedData = _.orderBy(allUsers, sortBy, order);
+    setUsers(sortedData);
   };
+  useEffect(() => getSortedUsersData(sortBy, order), [sortBy, order]);
+
+  const handleDateFormat = (date) =>
+    Moment(date).format("MMMM Do YYYY, h:mm:ss a");
+
   return (
-    <div
-      key={"01"}
-      className="container d-flex flex-column bg-dark text-light"
-      style={{
-        borderRadius: "20px",
-        boxShadow:
-          "12px 12px 20px 0 rgba(0, 0, 0, 0.25),-8px -8px 12px 0 rgba(0, 0, 0, 0.3)",
-      }}
-    >
-      {/* Replace this shit with a table. */}
-      <div key={"02"} className="text-center h1 pt-3">
-        <p key={"1001012"}>All Users</p>
-      </div>
-      <div
-        key={"03"}
-        className="d-flex flex-row justify-content-between h3 mx-5"
-      >
-        <div key={"04"} className="">
-          User
-        </div>
-        <div key={"05"} className="">
-          Date Joined
-        </div>
-        <div key={"06"} className="">
-          Others
-        </div>
-      </div>
-      <div key={"07"} className="d-flex flex-column">
-        {users &&
-          users.map((user) => {
-            return (
-              <div
-                key={user._id + "1"}
-                className="d-flex flex-row justify-content-between mx-5 my-3"
-              >
-                <div key={user._id + "2"} className="d-flex flex-row">
-                  <div key={user._id + "3"}>
-                    <Link key={user._id + "4"} to={`/users/${user.name}`}>
-                      <img
-                        key={user._id + "5"}
-                        src={user.image}
-                        style={{
-                          borderRadius: "50%",
-                          height: "3rem",
-                          width: "3rem",
-                          marginRight: "1.5rem",
-                        }}
-                        alt="usr_img"
-                      />
-                    </Link>
-                  </div>
-                  <Link
-                    key={user._id + "6"}
-                    to={`/users/${user.name}`}
-                    style={{
-                      margin: "auto",
-                      textDecoration: "none",
-                      color: "yellow",
-                    }}
-                  >
-                    <div key={user._id + "7"}>{user.name}</div>
-                  </Link>
-                </div>
-                <div key={user._id + "8"}>{manageDate(user.register_date)}</div>
-                <div key={user._id + "9"}>{user._id}</div>
-              </div>
-            );
-          })}
-      </div>
-    </div>
+    <table className="table caption-top table-dark users-table">
+      <caption style={{ textAlign: "center", fontSize: "2rem" }}>
+        Leaderboard
+      </caption>
+      <thead>
+        <tr>
+          <th>
+            <span
+              onClick={() => {
+                setOrder(order === "asc" ? "desc" : "asc");
+                setSortBy("name");
+              }}
+            >
+              Users{" "}
+              {sortBy === "name" && (
+                <i
+                  className={`fa fa-chevron-${order === "asc" ? "down" : "up"}`}
+                />
+              )}
+            </span>
+          </th>
+          <th>
+            <span
+              onClick={() => {
+                setOrder(order === "asc" ? "desc" : "asc");
+                setSortBy("register_date");
+              }}
+            >
+              Date Joined{" "}
+              {sortBy === "register_date" && (
+                <i
+                  className={`fa fa-chevron-${order === "asc" ? "down" : "up"}`}
+                />
+              )}
+            </span>
+          </th>
+          <th>
+            <span
+              onClick={() => {
+                setOrder(order === "asc" ? "desc" : "asc");
+                setSortBy("noOfAnimeWatched");
+              }}
+            >
+              No. of Anime's Watched{" "}
+              {sortBy === "noOfAnimeWatched" && (
+                <i
+                  className={`fa fa-chevron-${order === "asc" ? "down" : "up"}`}
+                />
+              )}
+            </span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {users.map((user) => (
+          <tr key={user._id}>
+            <td>
+              <Link to={`/users/${user.name}`}>
+                <img src={user.image} alt={user.name} className="user-img" />{" "}
+                <span>{user.name}</span>
+              </Link>
+            </td>
+            <td>{handleDateFormat(user.register_date)}</td>
+            <td>{user.noOfAnimeWatched}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
   );
 };
 
