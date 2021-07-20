@@ -11,6 +11,7 @@
   flex-direction: column;
   position: absolute;
   width: 130px;
+  right: 0;
   padding-bottom: 20px;
   padding-top: 5px;
   border-radius: 10px;
