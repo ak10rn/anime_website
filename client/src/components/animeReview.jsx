@@ -31,7 +31,11 @@ const AnimeReview = (props) => {
         <img src={review.user.image} className="user-img" alt="User_Image" />
         <div className="user-info d-flex flex-column">
           <strong key={review.user.name + "strong"}>
-            <Link to={`/users/${review.user.name}`} className="user-name">
+            <Link
+              key={review.user.name + "profile-link"}
+              to={`/users/${review.user._id}`}
+              className="user-name"
+            >
               {review.user.name}
             </Link>
           </strong>

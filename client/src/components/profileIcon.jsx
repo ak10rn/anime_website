@@ -42,7 +42,7 @@ const ProfileIcon = ({ user }) => {
         className="profile-dropdown"
       >
         <div className="profile-dropdown-item">
-          <Link to={`/users/${user.name}`} onClick={toggleUserDropdown}>
+          <Link to={`/users/${user._id}`} onClick={toggleUserDropdown}>
             <i className="fa fa-user" /> Profile
           </Link>
         </div>

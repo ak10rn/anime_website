@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { getUserReviews } from "../services/authService";
+import { saveUser } from "../services/userService";
 import { getUser } from "../services/userService";
 import UserModal from "./userModal";
 import "./user.css";
@@ -34,13 +35,35 @@ const User = (props) => {
   const handleModal = () => {
     setModal(!modal);
   };
+
+  // const imgup = async (info) => {
+  //   const newUser = { ...user };
+  //   newUser.image = info.cdnUrl;
+  //   setUser(newUser);
+  //   console.log('Upload completed:', info);
+  //   console.log("newUser", newUser);
+  //   const savedUser = await saveUser(newUser);
+  //   console.log("savedUser", savedUser);
+  // }
+
+  const handleEdit = async (newUser) => {
+    const toBeSavedUser = { ...user };
+    toBeSavedUser.image = newUser.image;
+    toBeSavedUser.about = newUser.about;
+    toBeSavedUser.name = newUser.name;
+    setUser(toBeSavedUser);
+    console.log("toBeSavedUser", toBeSavedUser);
+    const savedUser = await saveUser(toBeSavedUser);
+    console.log("savedUser", savedUser);
+  }
+
   return (
     <>
       {loading ? (
         <CircularSpinner />
       ) : (
         <>
-          <UserModal user={user} modalState={modal} toggle={handleModal} />
+          <UserModal user={user} modalState={modal} toggle={handleModal}  edit={handleEdit}  />
           <div
             className="container text-light row "
             style={{ marginTop: "30px", fontFamily: "monospace" }}

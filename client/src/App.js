@@ -37,12 +37,31 @@ class App extends Component {
           <ToastContainer />
           <main className="container h-100">
             <Switch>
-              <Route exact path="/anime/:id" render={(props) => (<Anime key={props.match.params.id} user={this.state.user} {...props}/>)}/>
-              <Route exact path="/register" component={RegisterForm} s />
-              <Route exact path="/login" component={LoginForm} />
-              <Route exact path="/logout" component={Logout} />
-              <Route exact path="/users/:id" render={(props) => (<User key={this.state.user.name} user={this.state.user} {...props}/>)}/>
-              <Route exact path="/users" component={Users} />
+              <Route
+                path="/anime/:id"
+                render={(props) => (
+                  <Anime
+                    key={props.match.params.id}
+                    user={this.state.user}
+                    {...props}
+                  />
+                )}
+              />
+              <Route path="/register" component={RegisterForm} s />
+              <Route path="/login" component={LoginForm} />
+              <Route path="/logout" component={Logout} />
+              <Route
+                path="/users/:id"
+                render={(props) => (
+                  <User
+                    key={props.match.params.id}
+                    user={this.state.user}
+                    {...props}
+                  />
+                )}
+              />
+              {/* <Route path="/users/:username" component={User} /> */}
+              <Route path="/users" component={Users} />
               <Route exact path="/" component={CardContainer} />
               <Route path='/not-found' component={NotFound} />
               <Redirect to="/not-found"/>

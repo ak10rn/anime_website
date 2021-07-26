@@ -27,6 +27,10 @@ const UserSchema = new Schema({
     register_date: {
         type: Date,
         default: Date.now
+    },
+    watched: {
+        type: Number,
+        default: 0
     }
 });
 

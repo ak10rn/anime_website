@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-// const auth = require('../../middleware/auth');
-// const isAuthor = require('../../middleware/isAuthor');
+const auth = require('../../middleware/auth');
+const isAuthor = require('../../middleware/isAuthor');
 
 //Article Model
 const Anime = require('../../models/anime.js');
@@ -21,7 +21,7 @@ router.get('/', async(req, res) => {
 // @route POST api/animes
 // @desc Create An anime
 // @access Private
-router.post('/', async (req, res) => {
+router.post('/', [auth], async (req, res) => {
     //console.log("post",req.body);
     try {
         const newAnime = new Anime(req.body);
@@ -34,7 +34,7 @@ router.post('/', async (req, res) => {
 // @route PUT api/animes
 // @desc Update An anime
 // @access Private and isAuthor
-router.put('/:id', async (req, res) => {
+router.put('/:id', [auth], async (req, res) => {
     try {
         anime = await Anime.findByIdAndUpdate(req.params.id,req.body);
         res.json(anime);
@@ -46,14 +46,14 @@ router.put('/:id', async (req, res) => {
 // @route DELETE api/animes/:id
 // @desc Delete An anime
 // @access Private and isAuthor////////////////////////////////////
-router.delete('/:id', async (req, res) => {
-    try {
-        anime = await Anime.findByIdAndDelete(req.params.id);
-        res.json(anime);
-    } catch (err) {
-        console.log(err);
-    }
-});
+// router.delete('/:id', async (req, res) => {
+//     try {
+//         anime = await Anime.findByIdAndDelete(req.params.id);
+//         res.json(anime);
+//     } catch (err) {
+//         console.log(err);
+//     }
+// });
 
 // @route GET api/animes/:id
 // @desc Get an Anime
