@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-// const auth = require('../../middleware/auth');
-// const isAuthor = require('../../middleware/isAuthor');
+const auth = require('../../middleware/auth');
+const isAuthor = require('../../middleware/isAuthor');
 
 //Article Model
 const Anime = require('../../models/anime.js');
@@ -21,7 +21,7 @@ router.get('/', async(req, res) => {
 // @route POST api/animes
 // @desc Create An anime
 // @access Private
-router.post('/', async (req, res) => {
+router.post('/', [auth], async (req, res) => {
     //console.log("post",req.body);
     try {
         const newAnime = new Anime(req.body);

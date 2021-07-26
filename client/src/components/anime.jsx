@@ -25,6 +25,7 @@ const Anime = (props) => {
 
   useEffect(async () => {
     setSortBy("-date");
+    // let z=[];
     async function fun() {
       if (!anime.title) {
         try {
@@ -44,12 +45,28 @@ const Anime = (props) => {
           if (data.reviews) {
             let sortedNewReviews = data.reviews.sort(dynamicSort(sortBy));
             setReviews(sortedNewReviews);
-            // console.log("reviews", data.reviews);
             delete newAnime.reviews;
+            const index = data.reviews.findIndex((review) => review.user.name === props?.user?.name);
+            if (index !== -1) {
+              const user_review = { ...data.reviews[index] };
+              setUserReview({
+                check: true,
+                value: user_review.user_rating,
+                comment: user_review.comment,
+                id: user_review._id
+              });
+              // console.log(userReview);
+            } else {
+              setUserReview({
+                check: false,
+                value: 0,
+                comment: "",
+              });
+            }
             // if (data.reviews.length > 0) setScore(avgScore(data.reviews));
           }
           setAnime(newAnime);
-          if (data.reviews.length > 0) setScore(avgScore(data.reviews));
+          if (data?.reviews?.length > 0) setScore(avgScore(data.reviews));
           // console.log("adfasdfadsf",data);
         } catch (err) {
           console.log(err);
@@ -57,24 +74,7 @@ const Anime = (props) => {
       }
     }
     fun();
-    const index = indexOfReviewMadeByCurrentUser();
-    if (index !== -1) {
-      const user_review = reviews[index];
-      setUserReview({
-        check: true,
-        value: user_review.user_rating,
-        comment: user_review.comment,
-        id: user_review._id
-      });
-      // console.log(userReview);
-    } else {
-      setUserReview({
-        check: false,
-        value: 0,
-        comment: "",
-      });
-    }
-  }, [id]);
+  }, [id,props?.user?.name]);
 
   function avgScore(reviews) {
     if (reviews.length === 0) return -1;

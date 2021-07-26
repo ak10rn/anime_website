@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
-// const auth = require('../../middleware/auth');
-// const isAuthor = require('../../middleware/isAuthor');
+const auth = require('../../middleware/auth');
+const isAuthor = require('../../middleware/isAuthor');
 
 //Article Model
 const Review = require('../../models/review.js');
+const User = require('../../models/user.js');
 
 // @route GET api/reviews
 // @desc Get All reviews
@@ -21,9 +22,9 @@ router.get('/', async(req, res) => {
 // @route POST api/reviews
 // @desc Create An review
 // @access Private
-router.post('/', async (req, res) => {
-    //console.log("post",req.body);
+router.post('/', [auth], async (req, res) => {
     try {
+        await User.findByIdAndUpdate(req.body.user, { $inc: { watched: 1 } });
         const newReview = new Review(req.body);
         await newReview.save().then(review => res.json(review));
     } catch (err) {
@@ -34,7 +35,7 @@ router.post('/', async (req, res) => {
 // @route PUT api/reviews
 // @desc Update An review
 // @access Private and isAuthor
-router.put('/:id', async (req, res) => {
+router.put('/:id', [auth,isAuthor], async (req, res) => {
     try {
         review = await Review.findByIdAndUpdate(req.params.id,req.body,{new: true});
         res.json(review);
@@ -45,8 +46,9 @@ router.put('/:id', async (req, res) => {
 
 // @route DELETE api/reviews/:id
 // @desc Delete An review
-// @access Private and isAuthor////////////////////////////////////
-router.delete('/:id', async (req, res) => {
+// @access Private and isAuthor////////////////////////////////////I dont know what it is
+router.delete('/:id', [auth,isAuthor], async (req, res) => {
+    console.log("delete",req.body);
     try {
         review = await Review.findByIdAndDelete(req.params.id);
         res.json(review);
@@ -57,9 +59,10 @@ router.delete('/:id', async (req, res) => {
 
 // @route DELETE api/reviews/:id
 // @desc Delete An review
-// @access Private and isAuthor////////////////////////////////////
-router.delete('/', async (req, res) => {
+// @access Private and isAuthor////////////////////////////////////HERE DELETE ACTUALLY OCCURS
+router.delete('/', [auth,isAuthor], async (req, res) => {
     try {
+        await User.findByIdAndUpdate(req.body.user._id, { $inc: { watched: -1 } });
         review = await Review.findOneAndDelete({ user:req.body.user._id, mal_id:req.body.mal_id });
         res.json(review);
     } catch (err) {

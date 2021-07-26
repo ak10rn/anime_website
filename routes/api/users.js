@@ -3,6 +3,8 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const config = require('config');
 const jwt = require('jsonwebtoken');
+const auth = require('../../middleware/auth');
+const isAuthor = require('../../middleware/isAuthor');
 
 //Article Model
 const User = require('../../models/user');
@@ -58,6 +60,21 @@ router.get('/:id', async (req, res) => {
     try {
         const user = await User.findById(req.params.id).select('-password -email');
         res.json(user);
+    } catch (err) {
+        console.log(err);
+    }
+});
+
+router.put('/:id', [auth,isAuthor],async (req, res) => {
+    console.log(req.body);
+    try {
+        user = await User.findByIdAndUpdate(
+            req.params.id,
+            {
+                $set: req.body
+            }
+        );
+        res.json(req.body);
     } catch (err) {
         console.log(err);
     }

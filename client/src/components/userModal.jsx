@@ -1,95 +1,118 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import { Widget } from "@uploadcare/react-widget";
 import { Form, FormGroup, Input } from "reactstrap";
 import "./userModal.css";
 import dpDock from "../icons/uploaddp.png";
 
-class UserModal extends Component {
-  state = {
-    userName: "",
-    dp: "https://www.dpair.com/wp-content/uploads/2017/03/Facebook-Blank-Photo.jpg",
-    about: "",
+const UserModal = (props) => {
+  const [name, setName] = useState('');
+  const [about, setAbout] = useState('');
+  const [image, setImage] = useState('');
+
+  useEffect(() => {
+    const { name, about, image } = props.user;
+    setAbout(about);
+    setImage(image);
+    setName(name);
+  }, [props]);
+
+  const { modalState, toggle, edit } = props;
+
+  const handleNameChange = (e) => {
+    const name = e.target.value;
+    setName(name);
   };
 
-  // handleUserNameChange = (e) => {};
+  const handleImageChange = (info) => {
+    const image = info.cdnUrl;
+    setImage(image);
+  };
 
-  // handleDpChange = (e) => {};
+  const handleAboutChange = (e) => {
+    const about = e.target.value;
+    setAbout(about);
+  };
 
-  // handleAboutChange = (e) => {};
-
-  // saveEdit = () => {};
-
-  render() {
-    const { modalState, toggle } = this.props;
-    return (
-      <div>
-        <Modal isOpen={modalState} toggle={() => toggle()}>
-          <div className="">
-            <ModalHeader>Update Your Info</ModalHeader>
-            <ModalBody>
-              <Form>
-                <FormGroup align="center">
-                  <div className="row m-2">
-                    <img
-                      src={this.state.dp}
-                      alt="current dp"
-                      height="150"
-                      width="150"
-                      className="col-5"
-                    ></img>
-                    <div className="upload-btn-wrapper col">
-                      <button className="btn">
-                        <img
-                          src={dpDock}
-                          style={{ opacity: "0.5" }}
-                          alt="dock"
-                          height="150px"
-                          width="150px"
-                        />
-                      </button>
-                      <input type="file" name="myfile" />
-                    </div>
-                  </div>
-                </FormGroup>
-                <p align="center" style={{ fontFamily: "monospace" }}>
-                  Click or Drag and drop on dock to change your Avatar
-                </p>
-                <br />
-                <FormGroup>
-                  <Input
-                    type="text"
-                    name="text"
-                    placeholder="username"
-                    id="exampleText"
-                    value={this.state.userName}
-                    //onChange={(event) => this.handleUsernameChange(event)}
-                  />
-                  <br />
-
-                  <Input
-                    type="textarea"
-                    name="text"
-                    placeholder="About yourself in 600 characters or less...  "
-                    id="exampleText"
-                    value={this.state.comment}
-                    //onChange={(event) => this.handleAboutChange(event)}
-                  />
-                </FormGroup>
-              </Form>
-            </ModalBody>
-            <ModalFooter>
-              <Button color="primary" onClick={() => this.saveEdit()}>
-                Save
-              </Button>{" "}
-              <Button color="secondary" onClick={() => toggle()}>
-                Cancel
-              </Button>
-            </ModalFooter>
-          </div>
-        </Modal>
-      </div>
-    );
+  const saveEdit = () => {
+    const newUser = {
+      name: name,
+      image: image,
+      about: about
+    };
+    edit(newUser);
+    toggle();
   }
+
+  return (
+    <div>
+      <Modal isOpen={modalState} toggle={() => toggle()}>
+        <div className="">
+          <ModalHeader>Update Your Info</ModalHeader>
+          <ModalBody>
+            <Form>
+              <FormGroup align="center">
+                <div className="row m-2">
+                  <img
+                    src={image}
+                    alt="current dp"
+                    height="150"
+                    width="150"
+                    className="col-5"
+                  ></img>
+                  <div className="upload-btn-wrapper col">
+                    <button className="btn">
+                      <img
+                        src={dpDock}
+                        style={{ opacity: "0.5" }}
+                        alt="dock"
+                        height="150px"
+                        width="150px"
+                      />
+                    </button>
+                    <input type="file" name="myfile" />
+                  </div>
+                </div>
+              </FormGroup>
+              <p>
+                <label htmlFor='file'>edit image:</label>{' '}
+                <Widget onChange={(info) => handleImageChange(info)} publicKey='08beda5d9c305076f509' id='file' imagesOnly={true} previewStep={true} crop={'1:1'} imageShrink={"1024x1024"}/>
+              </p>
+              <br />
+              <FormGroup>
+                <Input
+                  type="text"
+                  name="text"
+                  placeholder="name"
+                  id="exampleText"
+                  value={name}
+                  onChange={(event) => handleNameChange(event)}
+                />
+                <br />
+
+                <Input
+                  type="textarea"
+                  name="text"
+                  placeholder="About yourself in 600 characters or less...  "
+                  id="exampleText"
+                  value={about}
+                  onChange={(event) => handleAboutChange(event)}
+                />
+              </FormGroup>
+            </Form>
+          </ModalBody>
+          <ModalFooter>
+            <Button color="primary" onClick={() => saveEdit()}>
+              Save
+            </Button>{" "}
+            <Button color="secondary" onClick={() => toggle()}>
+              Cancel
+            </Button>
+          </ModalFooter>
+        </div>
+      </Modal>
+    </div>
+  );
 }
 
 export default UserModal;

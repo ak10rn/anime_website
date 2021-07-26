@@ -53,7 +53,7 @@ class App extends Component {
                 path="/users/:id"
                 render={(props) => (
                   <User
-                    key={this.state.user.name}
+                    key={props.match.params.id}
                     user={this.state.user}
                     {...props}
                   />

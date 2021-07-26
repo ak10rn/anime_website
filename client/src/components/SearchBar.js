@@ -113,6 +113,7 @@ function SearchBar({ placeholder }) {
               key={value.id}
               className="dataItem"
               to={`/anime/${value.mal_id}`}
+              onClick={()=>setDisplay(false)}
             >
               <div className="d-flex flex-row px-1">
                 <img
