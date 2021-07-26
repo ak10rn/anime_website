@@ -3,11 +3,13 @@ import "./users.css";
 import _ from "lodash";
 import { Link } from "react-router-dom";
 import Moment from "moment";
+import CircularSpinner from "./circularSpinner";
 
 const Users = (props) => {
   const [users, setUsers] = useState([]);
   const [sortBy, setSortBy] = useState("name");
   const [order, setOrder] = useState("asc");
+  const loading = false;
   const allUsers = [
     {
       image: "http://placekitten.com/300/300",
@@ -41,74 +43,90 @@ const Users = (props) => {
     Moment(date).format("MMMM Do YYYY, h:mm:ss a");
 
   return (
-    <table className="table caption-top table-dark users-table">
-      <caption style={{ textAlign: "center", fontSize: "2rem" }}>
-        Leaderboard
-      </caption>
-      <thead>
-        <tr>
-          <th>
-            <span
-              onClick={() => {
-                setOrder(order === "asc" ? "desc" : "asc");
-                setSortBy("name");
-              }}
-            >
-              Users{" "}
-              {sortBy === "name" && (
-                <i
-                  className={`fa fa-chevron-${order === "asc" ? "down" : "up"}`}
-                />
-              )}
-            </span>
-          </th>
-          <th>
-            <span
-              onClick={() => {
-                setOrder(order === "asc" ? "desc" : "asc");
-                setSortBy("register_date");
-              }}
-            >
-              Date Joined{" "}
-              {sortBy === "register_date" && (
-                <i
-                  className={`fa fa-chevron-${order === "asc" ? "down" : "up"}`}
-                />
-              )}
-            </span>
-          </th>
-          <th>
-            <span
-              onClick={() => {
-                setOrder(order === "asc" ? "desc" : "asc");
-                setSortBy("noOfAnimeWatched");
-              }}
-            >
-              No. of Anime's Watched{" "}
-              {sortBy === "noOfAnimeWatched" && (
-                <i
-                  className={`fa fa-chevron-${order === "asc" ? "down" : "up"}`}
-                />
-              )}
-            </span>
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        {users.map((user) => (
-          <tr key={user._id}>
-            <td>
-              <Link to={`/users/${user.name}`}>
-                <img src={user.image} alt={user.name} className="user-img" />{" "}
-                <span>{user.name}</span>
-              </Link>
-            </td>
-            <td>{handleDateFormat(user.register_date)}</td>
-            <td>{user.noOfAnimeWatched}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+    <>
+      {loading ? (
+        <CircularSpinner />
+      ) : (
+        <table className="table caption-top table-dark users-table">
+          <caption style={{ textAlign: "center", fontSize: "2rem" }}>
+            Leaderboard
+          </caption>
+          <thead>
+            <tr>
+              <th>
+                <span
+                  onClick={() => {
+                    setOrder(order === "asc" ? "desc" : "asc");
+                    setSortBy("name");
+                  }}
+                >
+                  Users{" "}
+                  {sortBy === "name" && (
+                    <i
+                      className={`fa fa-chevron-${
+                        order === "asc" ? "down" : "up"
+                      }`}
+                    />
+                  )}
+                </span>
+              </th>
+              <th>
+                <span
+                  onClick={() => {
+                    setOrder(order === "asc" ? "desc" : "asc");
+                    setSortBy("register_date");
+                  }}
+                >
+                  Date Joined{" "}
+                  {sortBy === "register_date" && (
+                    <i
+                      className={`fa fa-chevron-${
+                        order === "asc" ? "down" : "up"
+                      }`}
+                    />
+                  )}
+                </span>
+              </th>
+              <th>
+                <span
+                  onClick={() => {
+                    setOrder(order === "asc" ? "desc" : "asc");
+                    setSortBy("noOfAnimeWatched");
+                  }}
+                >
+                  No. of Anime's Watched{" "}
+                  {sortBy === "noOfAnimeWatched" && (
+                    <i
+                      className={`fa fa-chevron-${
+                        order === "asc" ? "down" : "up"
+                      }`}
+                    />
+                  )}
+                </span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {users.map((user) => (
+              <tr key={user._id}>
+                <td>
+                  <Link to={`/users/${user.name}`}>
+                    <img
+                      src={user.image}
+                      alt={user.name}
+                      className="user-img"
+                    />{" "}
+                    <span>{user.name}</span>
+                  </Link>
+                </td>
+                <td>{handleDateFormat(user.register_date)}</td>
+                <td>{user.noOfAnimeWatched}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+    </>
   );
 };
 

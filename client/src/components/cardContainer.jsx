@@ -2,14 +2,18 @@ import React, { Component } from "react";
 import Card from "./card";
 import Info from "./info";
 import { getAnimes } from "../services/animeService";
+import CircularSpinner from "./circularSpinner";
 
 class CardContainer extends Component {
   state = {
     animes: [],
+    loading: false,
   };
   async componentDidMount() {
     //console.log("test", props);
+    this.setState({ loading: true });
     const { data } = await getAnimes();
+    this.setState({ loading: false });
     try {
       this.setState({
         animes: Object.values(data).filter((anime) => anime.reviews.length > 0),
@@ -31,14 +35,20 @@ class CardContainer extends Component {
     };
     const { animes } = this.state;
     return (
-      <React.Fragment>
-        <Info numberOfAnimes={this.state.animes.length} />
-        <div className="" style={containerStyle}>
-          {animes.map((anime) => (
-            <Card key={anime._id} anime={anime} {...this.props} />
-          ))}
-        </div>
-      </React.Fragment>
+      <>
+        {this.state.loading ? (
+          <CircularSpinner />
+        ) : (
+          <>
+            <Info numberOfAnimes={this.state.animes.length} />
+            <div className="" style={containerStyle}>
+              {animes.map((anime) => (
+                <Card key={anime._id} anime={anime} {...this.props} />
+              ))}
+            </div>
+          </>
+        )}
+      </>
     );
   }
 }
