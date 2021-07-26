@@ -34,7 +34,7 @@ router.post('/', [auth], async (req, res) => {
 // @route PUT api/animes
 // @desc Update An anime
 // @access Private and isAuthor
-router.put('/:id', async (req, res) => {
+router.put('/:id', [auth], async (req, res) => {
     try {
         anime = await Anime.findByIdAndUpdate(req.params.id,req.body);
         res.json(anime);
@@ -46,14 +46,14 @@ router.put('/:id', async (req, res) => {
 // @route DELETE api/animes/:id
 // @desc Delete An anime
 // @access Private and isAuthor////////////////////////////////////
-router.delete('/:id', async (req, res) => {
-    try {
-        anime = await Anime.findByIdAndDelete(req.params.id);
-        res.json(anime);
-    } catch (err) {
-        console.log(err);
-    }
-});
+// router.delete('/:id', async (req, res) => {
+//     try {
+//         anime = await Anime.findByIdAndDelete(req.params.id);
+//         res.json(anime);
+//     } catch (err) {
+//         console.log(err);
+//     }
+// });
 
 // @route GET api/animes/:id
 // @desc Get an Anime

@@ -47,15 +47,15 @@ router.put('/:id', [auth,isAuthor], async (req, res) => {
 // @route DELETE api/reviews/:id
 // @desc Delete An review
 // @access Private and isAuthor////////////////////////////////////I dont know what it is
-router.delete('/:id', [auth,isAuthor], async (req, res) => {
-    console.log("delete",req.body);
-    try {
-        review = await Review.findByIdAndDelete(req.params.id);
-        res.json(review);
-    } catch (err) {
-        console.log(err);
-    }
-});
+// router.delete('/:id', [auth,isAuthor], async (req, res) => {
+//     console.log("delete",req.body);
+//     try {
+//         review = await Review.findByIdAndDelete(req.params.id);
+//         res.json(review);
+//     } catch (err) {
+//         console.log(err);
+//     }
+// });
 
 // @route DELETE api/reviews/:id
 // @desc Delete An review

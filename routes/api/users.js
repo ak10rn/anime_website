@@ -80,4 +80,13 @@ router.put('/:id', [auth,isAuthor],async (req, res) => {
     }
 });
 
+router.get('/', async (req, res) => {
+    try {
+        const user = await User.find().select('-password -email');
+        res.json(user);
+    } catch (err) {
+        console.log(err);
+    }
+});
+
 module.exports = router;

@@ -13,8 +13,6 @@ function SearchBar({ placeholder }) {
   const [displaySearchItems, setDisplay] = useState(true);
   const [loading, setLoading] = useState(true);
 
-  // const changeHandler = ;
-
   const debouncedChangeHandlerHelper = useMemo(
     () =>
       debounce(async (event) => {
@@ -110,7 +108,7 @@ function SearchBar({ placeholder }) {
           query.length >= 3 &&
           searchData.slice(0, 10).map((value) => (
             <Link
-              key={value.id}
+              key={value.mal_id}
               className="dataItem"
               to={`/anime/${value.mal_id}`}
               onClick={()=>setDisplay(false)}

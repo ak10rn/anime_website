@@ -25,7 +25,9 @@ const Card = (props) => {
         style={{ cursor: "pointer" }}
       >
         <div className="middle" onClick={handleClick}>
-          <div className="text">Know Me Senpai!</div>
+          <div className="text" style={{ fontWeight: "bold" }}>
+            Know Me Senpai!
+          </div>
         </div>
         <div className="row no-gutters">
           <div className="col-md-4 img-temp">

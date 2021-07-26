@@ -44,7 +44,7 @@ const AnimeReview = (props) => {
           <strong key={review.user.name + "strong"}>
             <Link
               key={review.user.name + "profile-link"}
-              to={`/profile/${review.user.name}`}
+              to={`/users/${review.user._id}`}
               className="user-name"
             >
               {review.user.name}

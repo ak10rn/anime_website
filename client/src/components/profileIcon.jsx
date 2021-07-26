@@ -16,9 +16,23 @@ const ProfileIcon = ({ user }) => {
   };
   return (
     <div className="profile-icon" ref={profileRef}>
-      <div onClick={toggleUserDropdown} style={{ cursor: "pointer" }}>
+      <div
+        className="d-flex flex-row"
+        onClick={toggleUserDropdown}
+        style={{ cursor: "pointer" }}
+      >
         <img src={user.image} alt="usr_img" />{" "}
-        <i className="fa fa-chevron-down" style={{ color: "grey" }} />
+        <div style={{ margin: "auto 5px" }}>
+          <span style={{ color: "yellow" }}>{user.name}</span>{" "}
+          <i
+            className="fa fa-chevron-down"
+            style={{
+              color: "grey",
+              transition: "transform 0.15s ease-in-out",
+              transform: showProfileDropdown ? "rotateZ(180deg)" : "rotateZ(0)",
+            }}
+          />
+        </div>
       </div>
       <div
         style={{
@@ -28,7 +42,7 @@ const ProfileIcon = ({ user }) => {
         className="profile-dropdown"
       >
         <div className="profile-dropdown-item">
-          <Link to={`/users/${user.name}`} onClick={toggleUserDropdown}>
+          <Link to={`/users/${user._id}`} onClick={toggleUserDropdown}>
             <i className="fa fa-user" /> Profile
           </Link>
         </div>
@@ -38,7 +52,11 @@ const ProfileIcon = ({ user }) => {
           </Link>
         </div>
         <div className="profile-dropdown-item">
-          <Link to="/logout" onClick={toggleUserDropdown} style={{color:'#FF004D'}}>
+          <Link
+            to="/logout"
+            onClick={toggleUserDropdown}
+            style={{ color: "#FF004D" }}
+          >
             <i className="fa fa-sign-out" /> Logout
           </Link>
         </div>

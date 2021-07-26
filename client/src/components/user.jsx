@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import div from "react-read-more-read-less";
 import { getUserReviews } from "../services/authService";
 import { saveUser } from "../services/userService";
 import { getUser } from "../services/userService";
@@ -13,7 +12,7 @@ const User = (props) => {
   const [user, setUser] = useState({});
 
   const { id } = useParams();
-  
+
   useEffect(() => {
     async function fun() {
       try {
@@ -25,7 +24,8 @@ const User = (props) => {
         console.log(data);
       } catch (err) {
         console.log(err);
-      } 
+        props.history.push("/not-found");
+      }
     }
     fun();
   }, [id]);
@@ -67,7 +67,9 @@ const User = (props) => {
           <br />
           <br />
           <h1> {user.name} </h1>
-          <p>Joined {user.register_date && user.register_date.substring(0, 10)}</p>
+          <p>
+            Joined {user.register_date && user.register_date.substring(0, 10)}
+          </p>
         </div>
         <div className="container text-light col user-about bg-dark">
           <div className="container text-light row">
@@ -83,9 +85,7 @@ const User = (props) => {
             </button>
           </div>
           <br></br>
-          <div>
-            {user.about}
-          </div>
+          <div>{user.about}</div>
         </div>
         <h2 align="center" className="bottom">
           {" "}
@@ -95,32 +95,31 @@ const User = (props) => {
 
       <br></br>
       <div className="container text-light row user-reviews bg-dark">
-      {reviews.map(review => (
-        <React.Fragment>
-        <div className="container text-light row user-review">
-          <div className="container text-light col">
-            <img
-              src={review.anime.image_url}
-              width="50"
-              height="50"
-              alt="animeimage"
-            />
-            <div>{review.anime.title}</div>
-          </div>
-          <div className="container text-light col">
-            <div> {review.comment} </div>
-          </div>
-          <div className="container text-light col">
-              <div align="right"> {review.anime.score}/10 </div>
-          </div>
-          <div className="container text-light col">
-              <div align="right"> My rating {review.user_rating}/10 </div>
-          </div>
-        </div>
-        <br></br>
-        </React.Fragment>
-      ))
-      }
+        {reviews.map((review) => (
+          <React.Fragment>
+            <div className="container text-light row user-review">
+              <div className="container text-light col">
+                <img
+                  src={review.anime.image_url}
+                  width="50"
+                  height="50"
+                  alt="animeimage"
+                />
+                <div>{review.anime.title}</div>
+              </div>
+              <div className="container text-light col">
+                <div> {review.comment} </div>
+              </div>
+              <div className="container text-light col">
+                <div align="right"> {review.anime.score}/10 </div>
+              </div>
+              <div className="container text-light col">
+                <div align="right"> My rating {review.user_rating}/10 </div>
+              </div>
+            </div>
+            <br></br>
+          </React.Fragment>
+        ))}
       </div>
     </React.Fragment>
   );

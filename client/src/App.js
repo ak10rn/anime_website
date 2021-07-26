@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
 import auth from "./services/authService";
@@ -17,6 +17,7 @@ import Users from "./components/users";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
+import NotFound from "./components/notFound";
 
 class App extends Component {
   state = {
@@ -62,7 +63,8 @@ class App extends Component {
               {/* <Route path="/users/:username" component={User} /> */}
               <Route path="/users" component={Users} />
               <Route exact path="/" component={CardContainer} />
-              {/* <Redirect to="/not-found"/> */}
+              <Route path='/not-found' component={NotFound} />
+              <Redirect to="/not-found"/>
             </Switch>
           </main>
           <Footer />

@@ -2,6 +2,7 @@
   height: 50px;
   justify-content: center;
   align-content: center;
+  margin-left: 20px;
 }
 .title p {
   font-size: 1.6rem;

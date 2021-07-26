@@ -14,6 +14,10 @@ export function getUser(user_id) {
   return http.get(`${apiUrl}/${user_id}`);
 }
 
+export function getUsers() {
+  return http.get(`${apiUrl}/`);
+}
+
 export function saveUser(user) {
   if (user._id) {
     const body = { ...user };
