@@ -49,3 +49,8 @@
   transform: scaleX(1);
   transform-origin: bottom left;
 }
+@media screen and (max-width: 576px) {
+  .profile-dropdown {
+    left: 0 !important;
+  }
+}
