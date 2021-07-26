@@ -35,9 +35,14 @@ const AnimeReviews = (props) => {
       </div>
       {reviews.length !== 0 &&
         reviews.map((review) => {
-          if (user && !isReviewed && review.user.name === user.name) {
-            setReviewed(true);
-          }
+
+          try {
+            if (user && !isReviewed && review.user.name === user.name) {
+              setReviewed(true);
+            }
+          } catch (e) {}
+
+
           return (
             <AnimeReview
               key={review.date}
