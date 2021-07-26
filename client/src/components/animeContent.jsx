@@ -12,7 +12,7 @@ const AnimeContent = (props) => {
         <div className="d-flex flex-column px-2 mx-2">
           <div className="anime-block pt-2">
             <span>
-              <strong>Rating:</strong> {score}/10
+              <strong>Rating:</strong> {score || 0}/10
             </span>
           </div>
           <div className="anime-block">

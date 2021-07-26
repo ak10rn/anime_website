@@ -23,7 +23,7 @@ const AppNavbar = (props) => {
   const toggleNavbarDropdown = () => setNavDropdown(!isNavDropdownOpen);
 
   return (
-    <React.Fragment>
+    <>
       <Navbar color="dark" dark expand="sm" className="sticky-top mb-3">
         <Container>
           <Link className="navbar-brand " to="/">
@@ -43,27 +43,27 @@ const AppNavbar = (props) => {
                 </NavLink>
               </NavItem>
               {!user && (
-                <React.Fragment>
+                <>
                   <NavItem>
-                    <Link className="nav-link" to="/register">
-                      <Button color="success">Register</Button>
-                    </Link>
+                    <div className="d-flex flex-row">
+                      <Link className="nav-link px-2" to="/register">
+                        <Button color="success">Register</Button>
+                      </Link>
+                      <Link className="nav-link pe-2" to="/login">
+                        <Button color="info" outline>
+                          Login
+                        </Button>
+                      </Link>
+                    </div>
                   </NavItem>
-                  <NavItem>
-                    <Link className="nav-link" to="/login">
-                      <Button color="info" outline>
-                        Login
-                      </Button>
-                    </Link>
-                  </NavItem>
-                </React.Fragment>
+                </>
               )}
               {user && <ProfileIcon user={user} />}
             </Nav>
           </Collapse>
         </Container>
       </Navbar>
-    </React.Fragment>
+    </>
   );
 };
 
