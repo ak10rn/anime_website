@@ -22,7 +22,7 @@ router.post('/', async (req, res) => {
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) throw Error('Invalid credentials');
     
-        const token = jwt.sign({ id: user._id, email:user.email, name:user.name }, config.get('jwtSecret'), { expiresIn: 3600 });
+        const token = jwt.sign({ id: user._id, email:user.email, name:user.name }, config.get('jwtSecret'));
         if (!token) throw Error('Couldnt sign the token');
     
         res.header("x-auth-token", token)
