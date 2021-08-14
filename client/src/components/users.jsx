@@ -10,8 +10,10 @@ const Users = (props) => {
   const [users, setUsers] = useState([]);
   const [sortBy, setSortBy] = useState("name");
   const [order, setOrder] = useState("asc");
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
-    async function fun (){
+    async function fun() {
+      setLoading(true);
       const { data } = await getUsers();
       try {
         setUsers(Object.values(data));
@@ -19,10 +21,11 @@ const Users = (props) => {
       } catch (err) {
         console.log(err);
       }
+      setLoading(false);
     }
     fun();
-  }, []);
-  const loading = false;
+    getSortedUsersData(sortBy, order);
+  }, [sortBy, order]);
   // const allUsers = [
   //   {
   //     image: "http://placekitten.com/300/300",
@@ -50,10 +53,9 @@ const Users = (props) => {
     const sortedData = _.orderBy(users, sortBy, order);
     setUsers(sortedData);
   };
-  useEffect(() => getSortedUsersData(sortBy, order), [sortBy, order]);
+  // useEffect(() => , []);
 
-  const handleDateFormat = (date) =>
-    Moment(date).format("MMMM Do YYYY, h:mm:ss a");
+  const handleDateFormat = (date) => Moment(date).format("MMMM Do, YYYY"); //MMMM Do, YYYY, h:mm:ss a
 
   return (
     <>
@@ -122,8 +124,11 @@ const Users = (props) => {
           <tbody>
             {users.map((user) => (
               <tr key={user._id}>
-                <td>
-                  <Link to={`/users/${user._id}`}>
+                <td style={{ textAlign: "left" }}>
+                  <Link
+                    to={`/users/${user._id}`}
+                    style={{ paddingLeft: "30px" }}
+                  >
                     <img
                       src={user.image}
                       alt={user.name}

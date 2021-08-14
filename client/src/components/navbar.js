@@ -38,9 +38,15 @@ const AppNavbar = (props) => {
               </NavItem>
               <NavItem style={{ marginLeft: "20px" }}>
                 <NavLink href="https://github.com/demonhue">
-                  <i className="fa fa-github" style={{ fontSize: "2rem" }}></i>
+                  <i className="fa fa-github" style={{ fontSize: "2rem" }} />
                   {/* Github */}
                 </NavLink>
+              </NavItem>
+              <NavItem style={{ margin: "auto 5px" }}>
+                <Link to="/users" className="nav-link">
+                  <i className="fa fa-users" style={{ fontSize: "1.4rem" }} />{" "}
+                  All Users
+                </Link>
               </NavItem>
               {!user && (
                 <>

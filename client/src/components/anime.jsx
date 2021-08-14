@@ -32,8 +32,8 @@ const Anime = (props) => {
   useEffect(() => {
     setSortBy("-date");
     async function fun() {
+      setLoading(true);
       if (!anime.title) {
-        setLoading(true);
         try {
           let { data } = await getAnime(id);
           if (!data) {
@@ -81,7 +81,7 @@ const Anime = (props) => {
       // }, 5000);
     }
     fun();
-  }, [id, props?.user?.name, props?.history]);
+  }, [id, props?.user?.name, props?.history, anime.title, sortBy]);
 
   function avgScore(reviews) {
     if (reviews.length === 0) return -1;

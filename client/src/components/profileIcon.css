@@ -1,5 +1,6 @@
 .profile-icon {
   margin: auto 20px;
+  margin-left: 10px;
   position: relative;
 }
 .profile-icon img {
@@ -48,4 +49,9 @@
 .profile-dropdown-item a:hover:after {
   transform: scaleX(1);
   transform-origin: bottom left;
+}
+@media screen and (max-width: 576px) {
+  .profile-dropdown {
+    left: 0 !important;
+  }
 }
