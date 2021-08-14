@@ -28,21 +28,19 @@ const AnimeReviews = (props) => {
             style={{ right: 0 }}
             onClick={addReview}
           >
-            <i key="6ascasdfad" className={`fa fa-${isReviewed ? "pencil" : "plus"}`} />{" "}
+            <i
+              key="6ascasdfad"
+              className={`fa fa-${isReviewed ? "pencil" : "plus"}`}
+            />{" "}
             {isReviewed ? "Edit Review" : "Add Review"}
           </button>
         </div>
       </div>
       {reviews.length !== 0 &&
         reviews.map((review) => {
-
-          try {
-            if (user && !isReviewed && review.user.name === user.name) {
-              setReviewed(true);
-            }
-          } catch (e) {}
-
-
+          if (user && !isReviewed && review.user.name === user.name) {
+            setReviewed(true);
+          }
           return (
             <AnimeReview
               key={review.date}
@@ -52,8 +50,11 @@ const AnimeReviews = (props) => {
             />
           );
         })}
-      {reviews.length === 0 &&
-        "No reviews yet, Be the first one to write a review :)"}
+      {reviews.length === 0 && (
+        <p className="mb-4">
+          No reviews yet, Be the first one to write a review :)
+        </p>
+      )}
     </div>
   );
 };

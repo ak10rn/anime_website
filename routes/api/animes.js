@@ -21,7 +21,7 @@ router.get('/', async(req, res) => {
 // @route POST api/animes
 // @desc Create An anime
 // @access Private
-router.post('/', [auth], async (req, res) => {
+router.post('/', async (req, res) => {
     //console.log("post",req.body);
     try {
         const newAnime = new Anime(req.body);

@@ -6,9 +6,9 @@ import "./userModal.css";
 import dpDock from "../icons/uploaddp.png";
 
 const UserModal = (props) => {
-  const [name, setName] = useState('');
-  const [about, setAbout] = useState('');
-  const [image, setImage] = useState('');
+  const [name, setName] = useState("");
+  const [about, setAbout] = useState("");
+  const [image, setImage] = useState("");
 
   useEffect(() => {
     const { name, about, image } = props.user;
@@ -38,11 +38,11 @@ const UserModal = (props) => {
     const newUser = {
       name: name,
       image: image,
-      about: about
+      about: about,
     };
     edit(newUser);
     toggle();
-  }
+  };
 
   return (
     <div>
@@ -52,7 +52,7 @@ const UserModal = (props) => {
           <ModalBody>
             <Form>
               <FormGroup align="center">
-                <div className="row m-2">
+                <div className="row m-2 pb-3">
                   <img
                     src={image}
                     alt="current dp"
@@ -60,36 +60,27 @@ const UserModal = (props) => {
                     width="150"
                     className="col-5"
                   ></img>
-                  <div className="upload-btn-wrapper col">
-                    <button className="btn">
-                      <img
-                        src={dpDock}
-                        style={{ opacity: "0.5" }}
-                        alt="dock"
-                        height="150px"
-                        width="150px"
-                      />
-                    </button>
-                    <input type="file" name="myfile" />
+                  <div className="upload-btn-wrapper col d-flex justify-content-start align-items-center">
+                    <Widget
+                      onChange={(info) => handleImageChange(info)}
+                      publicKey="08beda5d9c305076f509"
+                      id="file"
+                      imagesOnly={true}
+                      previewStep={true}
+                      crop={"1:1"}
+                      imageShrink={"1024x1024"}
+                    />
                   </div>
                 </div>
-              </FormGroup>
-              <p>
-                <label htmlFor='file'>edit image:</label>{' '}
-                <Widget onChange={(info) => handleImageChange(info)} publicKey='08beda5d9c305076f509' id='file' imagesOnly={true} previewStep={true} crop={'1:1'} imageShrink={"1024x1024"}/>
-              </p>
-              <br />
-              <FormGroup>
                 <Input
                   type="text"
                   name="text"
-                  placeholder="name"
+                  placeholder="username"
                   id="exampleText"
                   value={name}
                   onChange={(event) => handleNameChange(event)}
+                  className="mb-3"
                 />
-                <br />
-
                 <Input
                   type="textarea"
                   name="text"
@@ -113,6 +104,6 @@ const UserModal = (props) => {
       </Modal>
     </div>
   );
-}
+};
 
 export default UserModal;

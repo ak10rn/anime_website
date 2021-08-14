@@ -28,7 +28,7 @@ const RateModal = (props) => {
     if (comment === "") return alert("Please write something :)");
     const user = {
       comment: comment,
-      user_rating: value,
+      user_rating: value || 0,
       // date: new Date(),
     };
     if (!props.review.check) user.date = new Date();
@@ -37,7 +37,12 @@ const RateModal = (props) => {
   };
   return (
     <div>
-      <Modal isOpen={modalState} toggle={toggle} className={className}>
+      <Modal
+        isOpen={modalState}
+        toggle={toggle}
+        className={className}
+        autoFocus={false}
+      >
         <ModalHeader>Rate Me Senpai! UwU</ModalHeader>
         <ModalBody>
           <Form>
@@ -82,6 +87,7 @@ const RateModal = (props) => {
                 spellCheck="false"
                 value={comment}
                 onChange={handleCommentChange}
+                autoFocus
               />
             </FormGroup>
           </Form>

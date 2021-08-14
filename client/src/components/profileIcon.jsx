@@ -28,7 +28,7 @@ const ProfileIcon = ({ user }) => {
             className="fa fa-chevron-down"
             style={{
               color: "grey",
-              transition: "transform 0.15s ease-in-out",
+              transition: "transform 0.15s cubic-bezier(0.1, -1.0, 0.365, 1.7)",
               transform: showProfileDropdown ? "rotateZ(180deg)" : "rotateZ(0)",
             }}
           />
@@ -44,11 +44,6 @@ const ProfileIcon = ({ user }) => {
         <div className="profile-dropdown-item">
           <Link to={`/users/${user._id}`} onClick={toggleUserDropdown}>
             <i className="fa fa-user" /> Profile
-          </Link>
-        </div>
-        <div className="profile-dropdown-item">
-          <Link to="/users" onClick={toggleUserDropdown}>
-            <i className="fa fa-users" /> All Users
           </Link>
         </div>
         <div className="profile-dropdown-item">

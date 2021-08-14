@@ -96,7 +96,6 @@ function SearchBar({ placeholder }) {
           isOpen={query.length > 0 && query.length < 3 && displaySearchItems}
           target="searchMessagePopover"
           className="result-message"
-          // toggle={toggle}
         >
           <PopoverBody>Enter atleast 3 letters :)</PopoverBody>
         </Popover>
