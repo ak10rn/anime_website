@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { getUserReviews } from "../services/authService";
 import { saveUser } from "../services/userService";
 import { getUser } from "../services/userService";
@@ -7,6 +7,7 @@ import Moment from "moment";
 import UserModal from "./userModal";
 import "./user.css";
 import CircularSpinner from "./circularSpinner";
+import ReactReadMoreReadLess from "react-read-more-read-less";
 
 const User = (props) => {
   const [reviews, setReviews] = useState([]);
@@ -23,8 +24,8 @@ const User = (props) => {
         setReviews(Object.values(data));
         const { data: userData } = await getUser(id);
         setUser(userData);
-        console.log("userData", userData);
-        console.log(data);
+        // console.log("userData", userData);
+        // console.log(data);
       } catch (err) {
         console.log(err);
         props.history.push("/not-found");
@@ -52,9 +53,9 @@ const User = (props) => {
     toBeSavedUser.about = newUser.about;
     toBeSavedUser.name = newUser.name;
     setUser(toBeSavedUser);
-    console.log("toBeSavedUser", toBeSavedUser);
-    const savedUser = await saveUser(toBeSavedUser);
-    console.log("savedUser", savedUser);
+    // console.log("toBeSavedUser", toBeSavedUser);
+    /*const savedUser = */ await saveUser(toBeSavedUser);
+    // console.log("savedUser", savedUser);
     window.location.reload();
   };
 
@@ -115,34 +116,32 @@ const User = (props) => {
               I have watched {reviews.length} anime{" "}
             </h2>
           </div>
-
-          <br></br>
           <div className="container text-light row user-reviews bg-dark">
             {reviews.map((review) => (
-              <>
-                <div className="container text-light row user-review">
-                  <div className="container text-light col">
+              <div className="container text-light row user-review">
+                <div className="container text-light col">
+                  <Link to={`/anime/${review.anime.mal_id}`}>
                     <img
                       src={review.anime.image_url}
                       width="50"
                       height="50"
                       alt="animeimage"
+                      className="mb-1"
                     />
                     <div>{review.anime.title}</div>
-                  </div>
-                  <div className="container text-light col">
-                    <div> {review.comment} </div>
-                  </div>
-                  <div className="container text-light col">
-                    <div align="right"> {review.anime.score}/10 </div>
-                  </div>
-
-                  <div className="container text-light col">
-                    <div align="right"> My rating {review.user_rating}/10 </div>
-                  </div>
+                  </Link>
                 </div>
-                <br></br>
-              </>
+                <div className="container text-light col">
+                  <div> {review.comment} </div>
+                </div>
+                <div className="container text-light col">
+                  <div align="right"> {review.anime.score}/10 </div>
+                </div>
+
+                <div className="container text-light col">
+                  <div align="right"> My rating {review.user_rating}/10 </div>
+                </div>
+              </div>
             ))}
           </div>
         </>

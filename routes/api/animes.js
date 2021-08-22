@@ -1,46 +1,46 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const auth = require('../../middleware/auth');
-const isAuthor = require('../../middleware/isAuthor');
+const auth = require("../../middleware/auth");
+const isAuthor = require("../../middleware/isAuthor");
 
 //Article Model
-const Anime = require('../../models/anime.js');
+const Anime = require("../../models/anime.js");
 
 // @route GET api/animes
 // @desc Get All Animes
 // @access Public
-router.get('/', async(req, res) => {
-    try {
-        const animes = await Anime.find().sort({ date: -1 });
-        res.json(animes);
-    } catch (err) {
-        console.log(err);
-    }
+router.get("/", async (req, res) => {
+  try {
+    const animes = await Anime.find().sort({ date: -1 });
+    res.json(animes);
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 // @route POST api/animes
 // @desc Create An anime
 // @access Private
-router.post('/', async (req, res) => {
-    //console.log("post",req.body);
-    try {
-        const newAnime = new Anime(req.body);
-        await newAnime.save().then(anime => res.json(anime));
-    } catch (err) {
-        console.log(err);
-    }
+router.post("/", async (req, res) => {
+  //console.log("post",req.body);
+  try {
+    const newAnime = new Anime(req.body);
+    await newAnime.save().then((anime) => res.json(anime));
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 // @route PUT api/animes
 // @desc Update An anime
 // @access Private and isAuthor
-router.put('/:id', [auth], async (req, res) => {
-    try {
-        anime = await Anime.findByIdAndUpdate(req.params.id,req.body);
-        res.json(anime);
-    } catch (err) {
-        console.log(err);
-    }
+router.put("/:id", [auth], async (req, res) => {
+  try {
+    anime = await Anime.findByIdAndUpdate(req.params.id, req.body);
+    res.json(anime);
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 // @route DELETE api/animes/:id
@@ -58,13 +58,17 @@ router.put('/:id', [auth], async (req, res) => {
 // @route GET api/animes/:id
 // @desc Get an Anime
 // @access Public
-router.get('/:id', async(req, res) => {
-    try {
-        const anime = await Anime.findOne({mal_id: req.params.id}).populate({path: 'reviews',populate:{ path: 'user', select: '-password -email' }, options: { sort: { 'date': -1 } } });
-        res.json(anime);
-    } catch (err) {
-        console.log(err);
-    }
+router.get("/:id", async (req, res) => {
+  try {
+    const anime = await Anime.findOne({ mal_id: req.params.id }).populate({
+      path: "reviews",
+      populate: { path: "user", select: "-password -email" },
+      options: { sort: { date: -1 } },
+    });
+    res.json(anime);
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 // // @route POST api/articles

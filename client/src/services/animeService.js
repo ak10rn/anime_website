@@ -26,7 +26,7 @@ export function getAnime(mal_id) {
 
 export function saveReview(review) {
   if (review._id) {
-    console.log("reviewservice", review);
+    // console.log("reviewservice", review);
     const body = { ...review };
     delete body._id;
     return http.put(`${reviewUrl}/${review._id}`, body);
@@ -56,9 +56,9 @@ export function getAnimeByMalId(id) {
 }
 
 export function getAnimeBySearchQuery(query) {
-  console.log("query", query);
+  // console.log("query", query);
   if (query.length < 3) return [];
-  console.log("searchquery", searchUrl(query));
+  // console.log("searchquery", searchUrl(query));
   return http.get(searchUrl(query));
 }
 

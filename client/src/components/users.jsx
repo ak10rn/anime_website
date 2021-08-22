@@ -17,7 +17,7 @@ const Users = (props) => {
       const { data } = await getUsers();
       try {
         setUsers(Object.values(data));
-        console.log("users", data);
+        // console.log("users", data);
       } catch (err) {
         console.log(err);
       }
@@ -53,7 +53,6 @@ const Users = (props) => {
     const sortedData = _.orderBy(users, sortBy, order);
     setUsers(sortedData);
   };
-  // useEffect(() => , []);
 
   const handleDateFormat = (date) => Moment(date).format("MMMM Do, YYYY"); //MMMM Do, YYYY, h:mm:ss a
 

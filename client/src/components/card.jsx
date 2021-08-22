@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router";
-import "./card.css";
 
 const Card = (props) => {
   const [anime, setAnime] = useState({});
