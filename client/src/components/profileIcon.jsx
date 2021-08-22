@@ -22,7 +22,7 @@ const ProfileIcon = ({ user }) => {
         style={{ cursor: "pointer" }}
       >
         <img src={user.image} alt="usr_img" />{" "}
-        <div style={{ margin: "auto 5px" }}>
+        <div style={{ margin: "auto 5px", whiteSpace: "nowrap" }}>
           <span style={{ color: "yellow" }}>{user.name}</span>{" "}
           <i
             className="fa fa-chevron-down"

@@ -3,7 +3,6 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { Widget } from "@uploadcare/react-widget";
 import { Form, FormGroup, Input } from "reactstrap";
 import "./userModal.css";
-import dpDock from "../icons/uploaddp.png";
 
 const UserModal = (props) => {
   const [name, setName] = useState("");
@@ -46,7 +45,7 @@ const UserModal = (props) => {
 
   return (
     <div>
-      <Modal isOpen={modalState} toggle={() => toggle()}>
+      <Modal isOpen={modalState} toggle={() => toggle()} autoFocus={false}>
         <div className="">
           <ModalHeader>Update Your Info</ModalHeader>
           <ModalBody>
@@ -80,6 +79,7 @@ const UserModal = (props) => {
                   value={name}
                   onChange={(event) => handleNameChange(event)}
                   className="mb-3"
+                  autoFocus
                 />
                 <Input
                   type="textarea"

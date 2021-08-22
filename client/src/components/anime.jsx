@@ -52,14 +52,16 @@ const Anime = (props) => {
             let sortedNewReviews = data.reviews.sort(dynamicSort(sortBy));
             setReviews(sortedNewReviews);
             delete newAnime.reviews;
-            const index = data.reviews.findIndex((review) => review.user.name === props?.user?.name);
+            const index = data.reviews.findIndex(
+              (review) => review.user.name === props?.user?.name
+            );
             if (index !== -1) {
               const user_review = { ...data.reviews[index] };
               setUserReview({
                 check: true,
                 value: user_review.user_rating,
                 comment: user_review.comment,
-                id: user_review._id
+                id: user_review._id,
               });
             } else {
               setUserReview({
@@ -157,7 +159,7 @@ const Anime = (props) => {
     toBeSavedReview.user = props.user._id;
     try {
       const { data: savedReview } = await saveReview(toBeSavedReview);
-      console.log("savedReview", savedReview);
+      // console.log("savedReview", savedReview);
       setUserReview({
         check: true,
         value: savedReview.user_rating,
@@ -165,9 +167,9 @@ const Anime = (props) => {
         id: savedReview._id,
       });
       animedb.reviews.push(savedReview._id);
-      console.log("animedb", animedb);
-      const { data: savedAnime } = await saveAnime(animedb);
-      console.log("savedAnime", savedAnime);
+      // console.log("animedb", animedb);
+      /*const { data: savedAnime } = */ await saveAnime(animedb);
+      // console.log("savedAnime", savedAnime);
     } catch (err) {
       console.log(err);
     }
@@ -190,10 +192,12 @@ const Anime = (props) => {
     setScore(animedb.score);
 
     try {
-      const { data: savedAnime } = await saveAnime(animedb);
-      console.log("savedAnime", savedAnime);
-      const { data: deletedReview } = await deleteReview(reviewToBeDeleted);
-      console.log("deletedReview", deletedReview);
+      /*const { data: savedAnime } = */ await saveAnime(animedb);
+      // console.log("savedAnime", savedAnime);
+      /*const { data: deletedReview } = */ await deleteReview(
+        reviewToBeDeleted
+      );
+      // console.log("deletedReview", deletedReview);
     } catch (err) {
       console.log(err);
     }
@@ -227,10 +231,10 @@ const Anime = (props) => {
     setScore(animedb.score);
     // console.log("editanimedb", animedb);
     try {
-      const { data: savedReview } = await saveReview(newReview);
-      const { data: savedAnime } = await saveAnime(animedb);
-      console.log("editsavedAnime", savedAnime);
-      console.log("editsavedReview", savedReview);
+      /*const { data: savedReview } = */ await saveReview(newReview);
+      /*const { data: savedAnime } = */ await saveAnime(animedb);
+      // console.log("editsavedAnime", savedAnime);
+      // console.log("editsavedReview", savedReview);
     } catch (err) {
       console.log(err);
     }
@@ -256,6 +260,7 @@ const Anime = (props) => {
             </div>
             <AnimeContent anime={anime} score={score} loading={loading} />
             <AnimeReviews
+              id={id}
               reviews={reviews}
               addReview={handleReview}
               deleteReview={handleDeleteReview}

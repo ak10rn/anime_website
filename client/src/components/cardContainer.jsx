@@ -3,6 +3,7 @@ import Card from "./card";
 import Info from "./info";
 import { getAnimes } from "../services/animeService";
 import CircularSpinner from "./circularSpinner";
+import "./card.css";
 
 class CardContainer extends Component {
   state = {
@@ -18,21 +19,12 @@ class CardContainer extends Component {
       this.setState({
         animes: Object.values(data).filter((anime) => anime.reviews.length > 0),
       });
-      console.log(this.state.animes);
+      // console.log(this.state.animes);
     } catch (err) {
       console.log(err);
     }
   }
   render() {
-    const containerStyle = {
-      display: "grid",
-      width: "100%",
-      maxWidth: "80rem",
-      gridTemplateColumns: "repeat(auto-fit, minmax(20rem, 1fr))",
-      gridGap: "0.75rem",
-      gap: "0.75rem",
-      padding: "1.5rem",
-    };
     const { animes } = this.state;
     return (
       <>
@@ -40,8 +32,8 @@ class CardContainer extends Component {
           <CircularSpinner />
         ) : (
           <>
-            <Info numberOfAnimes={this.state.animes.length} />
-            <div className="" style={containerStyle}>
+            <Info numberOfAnimes={animes.length} />
+            <div className="card-container">
               {animes.map((anime) => (
                 <Card key={anime._id} anime={anime} {...this.props} />
               ))}
