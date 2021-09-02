@@ -84,7 +84,10 @@
   border-bottom: 1px solid white;
   margin-bottom: 30px;
 }
-
+.anime-review:last-child {
+  border-bottom: none;
+  margin-bottom: -10px;
+}
 .user-img {
   padding: 6px;
   border-radius: 20%;

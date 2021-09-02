@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import AnimeReview from "./animeReview";
 
 const AnimeReviews = (props) => {
-  const { reviews, addReview, deleteReview, user, id } = props;
+  const { reviews, addReview, deleteReview, user } = props;
   const [isReviewed, setReviewed] = useState(false);
 
   const handledeleteReview = () => {
@@ -11,7 +11,7 @@ const AnimeReviews = (props) => {
   };
 
   return (
-    <div key={id} className="anime-reviews d-flex flex-column bg-dark">
+    <div className="anime-reviews d-flex flex-column bg-dark position-relative">
       <div className="d-flex flex-row mb-4 position-relative">
         <strong className="reviews-heading">Reviews</strong>
 
@@ -26,20 +26,19 @@ const AnimeReviews = (props) => {
           </button>
         </div>
       </div>
-      {reviews.length !== 0 &&
-        reviews.map((review) => {
-          if (user && !isReviewed && review.user.name === user.name) {
-            setReviewed(true);
-          }
-          return (
-            <AnimeReview
-              key={review.date + review.comment}
-              review={review}
-              user={user}
-              deleteReview={handledeleteReview}
-            />
-          );
-        })}
+      {reviews.map((review) => {
+        if (user && !isReviewed && review.user.name === user.name) {
+          setReviewed(true);
+        }
+        return (
+          <AnimeReview
+            key={review.date + review.comment}
+            review={review}
+            user={user}
+            deleteReview={handledeleteReview}
+          />
+        );
+      })}
       {reviews.length === 0 && (
         <p className="mb-4">
           No reviews yet, Be the first one to write a review :)

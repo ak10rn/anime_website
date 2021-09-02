@@ -56,7 +56,8 @@ const User = (props) => {
     // console.log("toBeSavedUser", toBeSavedUser);
     /*const savedUser = */ await saveUser(toBeSavedUser);
     // console.log("savedUser", savedUser);
-    window.location.reload();
+
+    // window.location.reload(); // when changing user name, name in navbar doesn't changed
   };
 
   const handleDateFormat = (date) => Moment(date).format("MMMM Do, YYYY");
@@ -73,76 +74,80 @@ const User = (props) => {
             toggle={handleModal}
             edit={handleEdit}
           />
-          <div
-            className="container text-light row "
-            style={{ marginTop: "30px", fontFamily: "monospace" }}
-          >
-            <div className="container text-light col-3" align="center">
-              <img
-                src={user.image}
-                width="200"
-                height="200"
-                alt="dp"
-                className="pb-2"
-              />
-              <h1> {user.name} </h1>
-              <p>Joined {handleDateFormat(user.register_date)}</p>
+          <div className="container text-light user-container d-flex flex-column">
+            <div className="user-details">
+              <div className="user-info">
+                <img src={user.image} alt="dp" className="user-image" />
+                <h1> {user.name} </h1>
+                <p>Joined {handleDateFormat(user.register_date)}</p>
+              </div>
+              <div className="user-about bg-dark">
+                <div className="d-flex flex-row">
+                  <span>
+                    <h3>About</h3>
+                  </span>
+                  {props.user && user._id === props.user._id && (
+                    <button
+                      className="btn btn-warning ms-4"
+                      onClick={handleModal}
+                    >
+                      <i className="fa fa-pencil" /> Edit
+                    </button>
+                  )}
+                </div>
+                <div className="user-about0">{user.about}</div>
+              </div>
             </div>
-            <div className="container text-light col user-about bg-dark">
-              <div className="container text-light row ">
-                <div
-                  className="container text-light col"
-                  style={{ padding: "0" }}
+            <div className="user-reviews bg-dark">
+              {reviews.length !== 0 && (
+                <span
+                  style={{
+                    fontSize: "1.5rem",
+                    marginBottom: "1.5rem",
+                  }}
                 >
-                  <h3>{`About${
-                    props.user && user._id === props.user._id ? " Me" : ""
-                  }`}</h3>
+                  I have reviewed {reviews.length} anime
+                </span>
+              )}
+              {reviews.map((review) => (
+                <div className="user-review" key={review._id}>
+                  <div className="d-flex flex-row">
+                    <div>
+                      <Link
+                        to={`/anime/${review.anime.mal_id}`}
+                        className="d-flex flex-column review-detail"
+                      >
+                        <img
+                          src={review.anime.image_url}
+                          alt="animeimage"
+                          className="review-image"
+                        />
+                        <span>{review.anime.title}</span>
+                      </Link>
+                    </div>
+                    <div className="d-flex flex-column ms-3 mt-2">
+                      <div className="d-flex flex-row gap-4 ratings-det">
+                        <div>Global Rating: {review.anime.score}</div>
+                        <div>User Rating: {review.user_rating}</div>
+                      </div>
+                      <div className="mt-2">
+                        {" "}
+                        <ReactReadMoreReadLess
+                          charLimit={400}
+                          readMoreText={"Read more ▼"}
+                          readLessText={"Read less ▲"}
+                        >
+                          {review.comment}
+                        </ReactReadMoreReadLess>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                {props.user && user._id === props.user._id && (
-                  <button
-                    type="button"
-                    className="btn btn-warning col-2"
-                    onClick={handleModal}
-                  >
-                    <i className="fas fa-user-edit" />
-                    Edit Profile
-                  </button>
-                )}
-              </div>
-              <div>{user.about}</div>
+              ))}
+              {reviews.length === 0 && (
+                <p className="mb-4">No reviews yet :(</p>
+              )}
             </div>
-            <h2 align="center" className="bottom">
-              {" "}
-              I have watched {reviews.length} anime{" "}
-            </h2>
-          </div>
-          <div className="container text-light row user-reviews bg-dark">
-            {reviews.map((review) => (
-              <div className="container text-light row user-review">
-                <div className="container text-light col">
-                  <Link to={`/anime/${review.anime.mal_id}`}>
-                    <img
-                      src={review.anime.image_url}
-                      width="50"
-                      height="50"
-                      alt="animeimage"
-                      className="mb-1"
-                    />
-                    <div>{review.anime.title}</div>
-                  </Link>
-                </div>
-                <div className="container text-light col">
-                  <div> {review.comment} </div>
-                </div>
-                <div className="container text-light col">
-                  <div align="right"> {review.anime.score}/10 </div>
-                </div>
-
-                <div className="container text-light col">
-                  <div align="right"> My rating {review.user_rating}/10 </div>
-                </div>
-              </div>
-            ))}
           </div>
         </>
       )}

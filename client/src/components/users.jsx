@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import "./users.css";
 import { getUsers } from "../services/userService";
 import _ from "lodash";
@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import Moment from "moment";
 import CircularSpinner from "./circularSpinner";
 
-const Users = (props) => {
+const Users = () => {
   const [users, setUsers] = useState([]);
   const [sortBy, setSortBy] = useState("name");
   const [order, setOrder] = useState("asc");
@@ -24,35 +24,11 @@ const Users = (props) => {
       setLoading(false);
     }
     fun();
-    getSortedUsersData(sortBy, order);
-  }, [sortBy, order]);
-  // const allUsers = [
-  //   {
-  //     image: "http://placekitten.com/300/300",
-  //     name: "akk1",
-  //     register_date: "2020-07-03T14:56:16.767Z",
-  //     _id: "60e71210c78sdfbc524bc14aa46",
-  //     watched: 10,
-  //   },
-  //   {
-  //     image: "http://placekitten.com/300/300",
-  //     name: "akk2",
-  //     register_date: "2021-07-07T14:56:16.767Z",
-  //     _id: "fsd",
-  //     watched: 102,
-  //   },
-  //   {
-  //     image: "http://placekitten.com/300/300",
-  //     name: "akk3",
-  //     register_date: "2029-07-09T14:56:16.767Z",
-  //     _id: "60e71210c78bcsdfsdf524bc14aa46",
-  //     watched: 5,
-  //   },
-  // ];
-  const getSortedUsersData = (sortBy, order) => {
+  }, []);
+  useMemo(() => {
     const sortedData = _.orderBy(users, sortBy, order);
     setUsers(sortedData);
-  };
+  }, [sortBy, order]);
 
   const handleDateFormat = (date) => Moment(date).format("MMMM Do, YYYY"); //MMMM Do, YYYY, h:mm:ss a
 
@@ -67,57 +43,34 @@ const Users = (props) => {
           </caption>
           <thead>
             <tr>
-              <th>
-                <span
-                  onClick={() => {
-                    setOrder(order === "asc" ? "desc" : "asc");
-                    setSortBy("name");
+              {[
+                { property: "name", header: "Users" },
+                { property: "register_date", header: "Date Joined" },
+                { property: "watched", header: "No. of Anime's Watched" },
+              ].map(({ property, header }) => (
+                <th
+                  key={property}
+                  style={{
+                    textAlign: `${property === "name" ? "left" : "center"}`,
                   }}
                 >
-                  Users{" "}
-                  {sortBy === "name" && (
+                  <span
+                    onClick={() => {
+                      setOrder(order === "asc" ? "desc" : "asc");
+                      setSortBy(property);
+                    }}
+                  >
+                    {header}{" "}
                     <i
                       className={`fa fa-chevron-${
                         order === "asc" ? "down" : "up"
+                      }${
+                        sortBy !== property ? " users-table-transparent" : ""
                       }`}
                     />
-                  )}
-                </span>
-              </th>
-              <th>
-                <span
-                  onClick={() => {
-                    setOrder(order === "asc" ? "desc" : "asc");
-                    setSortBy("register_date");
-                  }}
-                >
-                  Date Joined{" "}
-                  {sortBy === "register_date" && (
-                    <i
-                      className={`fa fa-chevron-${
-                        order === "asc" ? "down" : "up"
-                      }`}
-                    />
-                  )}
-                </span>
-              </th>
-              <th>
-                <span
-                  onClick={() => {
-                    setOrder(order === "asc" ? "desc" : "asc");
-                    setSortBy("watched");
-                  }}
-                >
-                  No. of Anime's Watched{" "}
-                  {sortBy === "watched" && (
-                    <i
-                      className={`fa fa-chevron-${
-                        order === "asc" ? "down" : "up"
-                      }`}
-                    />
-                  )}
-                </span>
-              </th>
+                  </span>
+                </th>
+              ))}
             </tr>
           </thead>
           <tbody>
