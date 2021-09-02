@@ -7,7 +7,7 @@
   width: 230px;
   height: 230px;
 }
-.user-info {
+.user-info0 {
   font-family: monospace;
   display: flex;
   flex-direction: column;
@@ -96,7 +96,7 @@
     justify-content: center;
     align-items: center;
   }
-  .user-info {
+  .user-info0 {
     align-items: center;
   }
   .user-image {
