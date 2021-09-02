@@ -76,7 +76,7 @@ const User = (props) => {
           />
           <div className="container text-light user-container d-flex flex-column">
             <div className="user-details">
-              <div className="user-info">
+              <div className="user-info0">
                 <img src={user.image} alt="dp" className="user-image" />
                 <h1> {user.name} </h1>
                 <p>Joined {handleDateFormat(user.register_date)}</p>
