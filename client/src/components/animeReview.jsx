@@ -23,20 +23,12 @@ const AnimeReview = (props) => {
     deleteReview();
   };
   return (
-    <div
-      key={review.user.name + "anime-review"}
-      className="anime-review d-flex flex-column"
-      id={review._id}
-    >
+    <div className="anime-review d-flex flex-column" id={review._id}>
       <div className="d-flex flex-row position-relative">
         <img src={review.user.image} className="user-img" alt="User_Image" />
         <div className="user-info d-flex flex-column">
-          <strong key={review.user.name + "strong"}>
-            <Link
-              key={review.user.name + "profile-link"}
-              to={`/users/${review.user._id}`}
-              className="user-name"
-            >
+          <strong>
+            <Link to={`/users/${review.user._id}`} className="user-name">
               {review.user.name}
             </Link>
           </strong>
@@ -45,7 +37,6 @@ const AnimeReview = (props) => {
         {user && review.user.name === user.name && (
           <>
             <Button
-              key={review.user.name + "delete-button"}
               className="mx-2 position-absolute"
               color="danger"
               style={{ right: 0 }}

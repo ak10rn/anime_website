@@ -261,6 +261,7 @@ const Anime = (props) => {
             <AnimeContent anime={anime} score={score} loading={loading} />
             <AnimeReviews
               id={id}
+              key={id}
               reviews={reviews}
               addReview={handleReview}
               deleteReview={handleDeleteReview}
