@@ -23,10 +23,10 @@ function SearchBar({ placeholder }) {
             q: event.target.value,
             limit: 10,
             order_by: "title",
-            sort: "asc"
+            sort: "asc",
           });
           setLoading(false);
-          console.log(searchedAnimes.data.results);
+          // console.log(searchedAnimes.data.results);
           setSearchData(searchedAnimes.data.results);
         } else {
           setSearchData([]);
@@ -96,7 +96,6 @@ function SearchBar({ placeholder }) {
           isOpen={query.length > 0 && query.length < 3 && displaySearchItems}
           target="searchMessagePopover"
           className="result-message"
-          // toggle={toggle}
         >
           <PopoverBody>Enter atleast 3 letters :)</PopoverBody>
         </Popover>
@@ -111,7 +110,7 @@ function SearchBar({ placeholder }) {
               key={value.mal_id}
               className="dataItem"
               to={`/anime/${value.mal_id}`}
-              onClick={()=>setDisplay(false)}
+              onClick={() => setDisplay(false)}
             >
               <div className="d-flex flex-row px-1">
                 <img

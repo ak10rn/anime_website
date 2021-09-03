@@ -24,7 +24,7 @@ const AppNavbar = (props) => {
 
   return (
     <>
-      <Navbar color="dark" dark expand="sm" className="sticky-top mb-3">
+      <Navbar color="dark" dark expand="md" className="sticky-top mb-3">
         <Container>
           <Link className="navbar-brand " to="/">
             <img src={logo} width="150px" height="40px" alt="logo" />
@@ -36,11 +36,17 @@ const AppNavbar = (props) => {
               <NavItem>
                 <SearchBar placeholder="Search . . ." {...props} />
               </NavItem>
-              <NavItem style={{ marginLeft: "20px" }}>
-                <NavLink href="https://github.com/demonhue">
-                  <i className="fa fa-github" style={{ fontSize: "2rem" }}></i>
+              <NavItem>
+                <NavLink href="https://github.com/demonhue/anime_website">
+                  <i className="fa fa-github" style={{ fontSize: "2rem" }} />
                   {/* Github */}
                 </NavLink>
+              </NavItem>
+              <NavItem>
+                <Link to="/users" className="nav-link text-nowrap">
+                  <i className="fa fa-users" style={{ fontSize: "1.4rem" }} />{" "}
+                  All Users
+                </Link>
               </NavItem>
               {!user && (
                 <>
@@ -58,7 +64,11 @@ const AppNavbar = (props) => {
                   </NavItem>
                 </>
               )}
-              {user && <ProfileIcon user={user} />}
+              {user && (
+                <NavItem>
+                  <ProfileIcon user={user} />
+                </NavItem>
+              )}
             </Nav>
           </Collapse>
         </Container>

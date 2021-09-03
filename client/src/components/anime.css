@@ -23,10 +23,34 @@
     align-items: center;
   }
   .anime-img {
-    margin: 30px;
+    margin: 30px !important;
   }
   .title {
     text-align: center;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .anime-details {
+    margin: 0.1rem !important;
+    font-size: smaller !important;
+  }
+  .anime-body {
+    margin: 0 0.5rem !important;
+  }
+  .anime-sypnosis-content,
+  .review-btn {
+    font-size: 0.67rem !important;
+  }
+  .anime-reviews {
+    font-size: 0.75rem !important;
+  }
+  .reviews-heading {
+    font-size: 1.1rem !important;
+  }
+  .user-img {
+    height: 60px !important;
+    width: 60px !important;
   }
 }
 .anime-body {
@@ -53,7 +77,9 @@
   box-shadow: 12px 12px 20px 0 rgba(0, 0, 0, 0.25),
     -8px -8px 12px 0 rgba(0, 0, 0, 0.3);
 }
-
+.reviews-heading {
+  font-size: 1.6rem;
+}
 .anime-review {
   border-bottom: 1px solid white;
   margin-bottom: 30px;

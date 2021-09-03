@@ -1,12 +1,12 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const bcrypt = require('bcryptjs');
-const config = require('config');
-const jwt = require('jsonwebtoken');
+const bcrypt = require("bcryptjs");
+const config = require("config");
+const jwt = require("jsonwebtoken");
 // const auth = require('../../middleware/auth');
 
 //Article Model
-const User = require('../../models/user');
+const User = require("../../models/user");
 
 // @route POST api/auth
 // @desc Login user with email password
@@ -42,10 +42,10 @@ router.post('/', async (req, res) => {
 // @route GET api/auth
 // @desc get the user
 // @access Public
-router.get('/user', (req, res) => {
-    User.findById(req.user.id)
-        .select('-password')
-        .then(user => res.json(user));
-})
+router.get("/user", (req, res) => {
+  User.findById(req.user.id)
+    .select("-password")
+    .then((user) => res.json(user));
+});
 
 module.exports = router;
