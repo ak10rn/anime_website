@@ -7,11 +7,11 @@ const reviewUrl = "/api/reviews";
 const jikanUrl = "https://api.jikan.moe/v3";
 
 function animeUrl(id) {
-  return `https://blooming-headland-42531.herokuapp.com/${jikanUrl}/anime/${id}`;
+  return `${jikanUrl}/anime/${id}`;
 }
 
 function searchUrl(query) {
-  return `https://blooming-headland-42531.herokuapp.com/${jikanUrl}/search/anime/?${querystring.stringify(
+  return `${jikanUrl}/search/anime/?${querystring.stringify(
     query
   )}`;
 }
