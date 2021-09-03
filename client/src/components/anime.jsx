@@ -17,7 +17,7 @@ const Anime = (props) => {
   const [anime, setAnime] = useState({});
   const [reviews, setReviews] = useState([]);
   const [modal, setModal] = useState(false);
-  const [sortBy, setSortBy] = useState("");
+  const [sortBy, setSortBy] = useState("-date");
   const [score, setScore] = useState(null);
   const [loading, setLoading] = useState(false);
   const [userReview, setUserReview] = useState({
@@ -30,50 +30,54 @@ const Anime = (props) => {
   const toggleModal = () => setModal(!modal);
 
   useEffect(() => {
-    setSortBy("-date");
+    if (!props?.user?.name || !props?.history) return;
+    // console.log("useeffect",id, props?.user?.name, props?.history);
+    // setSortBy("-date");
     async function fun() {
       setLoading(true);
       if (!anime.title) {
         try {
           let { data } = await getAnime(id);
           if (!data) {
+            console.log("notdata");
             try {
               const { data: d } = await getAnimeByMalId(id);
               const { data: dd } = await saveAnime(d);
-              // console.log("second", d);
-              data = dd;
+              setAnime(dd);
             } catch (err) {
               console.log(err);
               props.history.push("/not-found");
+              setLoading(false);
             }
           }
-          const newAnime = { ...data };
-          if (data.reviews) {
-            let sortedNewReviews = data.reviews.sort(dynamicSort(sortBy));
-            setReviews(sortedNewReviews);
-            delete newAnime.reviews;
-            const index = data.reviews.findIndex(
-              (review) => review.user.name === props?.user?.name
-            );
-            if (index !== -1) {
-              const user_review = { ...data.reviews[index] };
-              setUserReview({
-                check: true,
-                value: user_review.user_rating,
-                comment: user_review.comment,
-                id: user_review._id,
-              });
-            } else {
-              setUserReview({
-                check: false,
-                value: 0,
-                comment: "",
-              });
+          else {
+            const newAnime = { ...data };
+            if (data.reviews) {
+              let sortedNewReviews = data.reviews.sort(dynamicSort(sortBy));
+              setReviews(sortedNewReviews);
+              delete newAnime.reviews;
+              const index = data.reviews.findIndex(
+                (review) => review.user.name === props?.user?.name
+              );
+              if (index !== -1) {
+                const user_review = { ...data.reviews[index] };
+                setUserReview({
+                  check: true,
+                  value: user_review.user_rating,
+                  comment: user_review.comment,
+                  id: user_review._id,
+                });
+              } else {
+                setUserReview({
+                  check: false,
+                  value: 0,
+                  comment: "",
+                });
+              }
             }
+            setAnime(newAnime);
+            if (data?.reviews?.length > 0) setScore(avgScore(data.reviews));
           }
-          setAnime(newAnime);
-          if (data?.reviews?.length > 0) setScore(avgScore(data.reviews));
-          // console.log("adfasdfadsf",data);
         } catch (err) {
           console.log(err);
         }
@@ -83,7 +87,7 @@ const Anime = (props) => {
       // }, 5000);
     }
     fun();
-  }, [id, props?.user?.name, props?.history, anime.title, sortBy]);
+  }, [id, props?.user?.name, props?.history, sortBy]);
 
   function avgScore(reviews) {
     if (reviews.length === 0) return -1;
@@ -261,6 +265,7 @@ const Anime = (props) => {
             <AnimeContent anime={anime} score={score} loading={loading} />
             <AnimeReviews
               id={id}
+              key={id}
               reviews={reviews}
               addReview={handleReview}
               deleteReview={handleDeleteReview}

@@ -31,9 +31,13 @@ class App extends Component {
 
   async componentDidMount() {
     const { data: user } = await auth.getCurrentUser();
-    // console.log(user);
     this.setState({ user });
   }
+
+  handleChangeUser = (newUser) => {
+    this.setState({ user:newUser });
+  }
+
   render() {
     return (
       <Router>
@@ -62,11 +66,12 @@ class App extends Component {
                     key={props.match.params.id}
                     user={this.state.user}
                     {...props}
+                    changeUser={ this.handleChangeUser }
                   />
                 )}
               />
               {/* <Route path="/users/:username" component={User} /> */}
-              <Route path="/users" component={Users} />
+              <Route path="/users" component={Users}/>
               <Route exact path="/" component={CardContainer} />
               <Route path="/not-found" component={NotFound} />
               <Redirect to="/not-found" />
