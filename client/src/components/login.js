@@ -42,6 +42,7 @@ function LoginForm({ onLogin }) {
         <input
           className="em"
           align="center"
+          spellCheck={false}
           type="text"
           name="email"
           placeholder="email"

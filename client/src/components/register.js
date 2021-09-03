@@ -47,12 +47,14 @@ function RegisterForm() {
         className="em"
         align="center"
         placeholder="Username"
+        spellCheck={false}
         onChange={(e) => setName(e.target.value)}
       />
       <input
         className="em"
         align="center"
         type="text"
+        spellCheck={false}
         name="email"
         placeholder="email"
         onChange={(e) => setEmail(e.target.value)}
