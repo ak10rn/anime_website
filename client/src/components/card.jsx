@@ -28,8 +28,8 @@ const Card = (props) => {
             Know Me Senpai!
           </div>
         </div>
-        <div className="row no-gutters">
-          <div className="col-md-4 img-temp">
+        <div className="row no-gutters" style={{ height: "100%" }}>
+          <div className="col-md-4" style={{ height: "100%" }}>
             <img className="card-img-top" src={anime.image_url} alt="img"></img>
           </div>
           <div className="col-md-8">

@@ -31,7 +31,7 @@ const Anime = (props) => {
   const toggleModal = () => setModal(!modal);
 
   useEffect(() => {
-    if (!props?.user?.name || !props?.history) return;
+    // if (!props?.user?.name || !props?.history) return;
     // console.log("useeffect",id, props?.user?.name, props?.history);
     // setSortBy("-date");
     async function fun() {
@@ -89,7 +89,6 @@ const Anime = (props) => {
     }
     fun();
   }, [id, props?.user?.name, props?.history, anime]);
-  // }, [id, props?.user?.name, props?.history, sortBy]);
 
   function avgScore(reviews) {
     if (reviews.length === 0) return -1;

@@ -1,24 +1,43 @@
 import React, { useState } from "react";
 import Joi from "joi-browser";
-//import { useHistory } from "react-router";
 import { toast } from "react-toastify";
-import "../App.css";
-import { Form } from "reactstrap";
+import { Link as RouterLink } from "react-router-dom";
 import auth from "../services/authService";
-import "./login.css";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import {
+  makeStyles,
+  createTheme,
+  withStyles,
+  responsiveFontSizes,
+} from "@material-ui/core/styles";
+import { ThemeProvider } from "@material-ui/styles";
+import {
+  Avatar,
+  Button,
+  CssBaseline,
+  TextField,
+  // FormControlLabel,
+  // Checkbox,
+  Link,
+  Grid,
+  Typography,
+  Container,
+  CircularProgress,
+} from "@material-ui/core";
+import { blue, pink } from "@material-ui/core/colors";
 
-function LoginForm({ onLogin }) {
+const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const [loading, setLoading] = useState(false);
   const schema = {
     email: Joi.string().email().required(),
     password: Joi.string().min(5).required(),
   };
 
   const onSubmit = async (e) => {
+    setLoading(true);
     e.preventDefault();
-
     try {
       const result = Joi.validate({ email, password }, schema);
       if (result.error) throw result.error.details[0].message;
@@ -31,36 +50,122 @@ function LoginForm({ onLogin }) {
         toast.error(error);
       }
     }
+    setLoading(false);
   };
+  const theme = responsiveFontSizes(
+    createTheme({
+      palette: {
+        primary: {
+          main: blue[200],
+        },
+        secondary: {
+          main: pink[200],
+        },
+        type: "dark",
+      },
+    })
+  );
+  const useStyles = makeStyles((theme) => ({
+    paper: {
+      marginTop: theme.spacing(8),
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+    },
+    avatar: {
+      margin: theme.spacing(1),
+      backgroundColor: theme.palette.secondary.main,
+    },
+    form: {
+      width: "100%", // Fix IE 11 issue.
+      marginTop: theme.spacing(1),
+    },
+    submit: {
+      margin: theme.spacing(3, 0, 2),
+    },
+  }));
+  const classes = useStyles();
+
+  const styles = {
+    root: {
+      marginLeft: 5,
+    },
+  };
+  const SpinnerAdornment = withStyles(styles)((props) => (
+    <CircularProgress
+      className={props.classes.spinner}
+      size={20}
+      color="black"
+    />
+  ));
 
   return (
-    <div className="main">
-      <p className="sign" align="center">
-        Sign In
-      </p>
-      <Form className="form1" onSubmit={onSubmit}>
-        <input
-          className="em"
-          align="center"
-          spellCheck={false}
-          type="text"
-          name="email"
-          placeholder="email"
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input
-          type="password"
-          name="password"
-          className="pa"
-          align="center"
-          placeholder="password"
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <br></br>
-        <br></br>
-        <button className="submit">Submit</button>
-      </Form>
-    </div>
+    <ThemeProvider theme={theme}>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign in
+          </Typography>
+          <form className={classes.form} noValidate>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              label="Email Address"
+              name="email"
+              autoFocus
+              spellCheck="false"
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              autoComplete="current-password"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            {/* <FormControlLabel
+              control={<Checkbox value="remember" color="primary" />}
+              label="Remember me"
+            /> */}
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              onClick={onSubmit}
+              disabled={loading}
+            >
+              {loading ? <SpinnerAdornment /> : "Sign In"}
+            </Button>
+            <Grid container>
+              {/* <Grid item xs>
+                <Link to="/reset-password" variant="body2" component={RouterLink}>
+                  Forgot password?
+                </Link>
+              </Grid> */}
+              <Grid container justifyContent="flex-end">
+                <Grid item>
+                  <Link to="/register" variant="body2" component={RouterLink}>
+                    {"Don't have an account? Sign Up"}
+                  </Link>
+                </Grid>
+              </Grid>
+            </Grid>
+          </form>
+        </div>
+      </Container>
+    </ThemeProvider>
   );
-}
+};
 export default LoginForm;

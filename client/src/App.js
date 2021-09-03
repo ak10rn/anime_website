@@ -70,7 +70,6 @@ class App extends Component {
                   />
                 )}
               />
-              {/* <Route path="/users/:username" component={User} /> */}
               <Route path="/users" component={Users}/>
               <Route exact path="/" component={CardContainer} />
               <Route path="/not-found" component={NotFound} />
