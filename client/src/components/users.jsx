@@ -16,7 +16,9 @@ const Users = () => {
       setLoading(true);
       const { data } = await getUsers();
       try {
-        setUsers(Object.values(data));
+        let users = Object.values(data);
+        users = _.orderBy(users, "name", "asc");
+        setUsers(users);
         // console.log("users", data);
       } catch (err) {
         console.log(err);

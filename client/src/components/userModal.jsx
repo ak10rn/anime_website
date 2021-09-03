@@ -79,6 +79,7 @@ const UserModal = (props) => {
                   value={name}
                   onChange={(event) => handleNameChange(event)}
                   className="mb-3"
+                  spellCheck={false}
                   autoFocus
                 />
                 <Input

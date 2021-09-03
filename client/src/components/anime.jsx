@@ -12,12 +12,13 @@ import RateModal from "./rateModal";
 import AnimeReviews from "./animeReviews";
 import AnimeContent from "./animeContent";
 import CircularSpinner from "./circularSpinner";
+import _ from "lodash";
 
 const Anime = (props) => {
   const [anime, setAnime] = useState({});
   const [reviews, setReviews] = useState([]);
   const [modal, setModal] = useState(false);
-  const [sortBy, setSortBy] = useState("-date");
+  // const [sortBy, setSortBy] = useState("-date");
   const [score, setScore] = useState(null);
   const [loading, setLoading] = useState(false);
   const [userReview, setUserReview] = useState({
@@ -49,11 +50,11 @@ const Anime = (props) => {
               props.history.push("/not-found");
               setLoading(false);
             }
-          }
-          else {
+          } else {
             const newAnime = { ...data };
             if (data.reviews) {
-              let sortedNewReviews = data.reviews.sort(dynamicSort(sortBy));
+              // let sortedNewReviews = data.reviews.sort(dynamicSort(sortBy));
+              let sortedNewReviews = _.orderBy(data.reviews, "date", "desc");
               setReviews(sortedNewReviews);
               delete newAnime.reviews;
               const index = data.reviews.findIndex(
@@ -87,7 +88,7 @@ const Anime = (props) => {
       // }, 5000);
     }
     fun();
-  }, [id, props?.user?.name, props?.history, sortBy, anime.title]);
+  }, [id, props?.user?.name, props?.history, anime]);
 
   function avgScore(reviews) {
     if (reviews.length === 0) return -1;
@@ -99,27 +100,27 @@ const Anime = (props) => {
     return avg.toFixed(2);
   }
 
-  function dynamicSort(property) {
-    var sortOrder = 1;
-    if (property[0] === "-") {
-      sortOrder = -1;
-      property = property.substr(1);
-    }
-    return function (a, b) {
-      var result;
-      if (property === "date")
-        result =
-          new Date(a.date) < new Date(b.date)
-            ? -1
-            : new Date(a.date) > new Date(b.date)
-            ? 1
-            : 0;
-      else
-        result =
-          a[property] < b[property] ? -1 : a[property] > b[property] ? 1 : 0;
-      return result * sortOrder;
-    };
-  }
+  // function dynamicSort(property) {
+  //   var sortOrder = 1;
+  //   if (property[0] === "-") {
+  //     sortOrder = -1;
+  //     property = property.substr(1);
+  //   }
+  //   return function (a, b) {
+  //     var result;
+  //     if (property === "date")
+  //       result =
+  //         new Date(a.date) < new Date(b.date)
+  //           ? -1
+  //           : new Date(a.date) > new Date(b.date)
+  //           ? 1
+  //           : 0;
+  //     else
+  //       result =
+  //         a[property] < b[property] ? -1 : a[property] > b[property] ? 1 : 0;
+  //     return result * sortOrder;
+  //   };
+  // }
 
   const indexOfReviewMadeByCurrentUser = () => {
     //if returns -1, the no review by the user

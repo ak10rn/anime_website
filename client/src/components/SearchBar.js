@@ -69,7 +69,7 @@ function SearchBar({ placeholder }) {
           value={query}
           onChange={debouncedChangeHandler}
           onClick={() => setDisplay(true)}
-          spellCheck="false"
+          spellCheck={false}
         />
         <div className="searchIcon">
           {searchData.length === 0 ? (
