@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import ReactReadMoreReadLess from "react-read-more-read-less";
 import { useParams, Link } from "react-router-dom";
 import { getUserReviews } from "../services/authService";
 import { saveUser } from "../services/userService";
@@ -7,7 +8,6 @@ import Moment from "moment";
 import UserModal from "./userModal";
 import "./user.css";
 import CircularSpinner from "./circularSpinner";
-import ReactReadMoreReadLess from "react-read-more-read-less";
 
 const User = (props) => {
   const [reviews, setReviews] = useState([]);
@@ -33,7 +33,7 @@ const User = (props) => {
       setLoading(false);
     }
     fun();
-  }, [id, props]);
+  }, [id, props?.history]);
 
   const handleModal = () => setModal(!modal);
 
@@ -57,6 +57,7 @@ const User = (props) => {
     /*const savedUser = */ await saveUser(toBeSavedUser);
     // console.log("savedUser", savedUser);
 
+    props.changeUser(toBeSavedUser);
     // window.location.reload(); // when changing user name, name in navbar doesn't changed
   };
 

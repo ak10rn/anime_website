@@ -37,7 +37,7 @@ const AppNavbar = (props) => {
                 <SearchBar placeholder="Search . . ." {...props} />
               </NavItem>
               <NavItem>
-                <NavLink href="https://github.com/demonhue">
+                <NavLink href="https://github.com/demonhue/anime_website">
                   <i className="fa fa-github" style={{ fontSize: "2rem" }} />
                   {/* Github */}
                 </NavLink>

@@ -21,14 +21,14 @@ router.get("/", async (req, res) => {
 // @route POST api/animes
 // @desc Create An anime
 // @access Private
-router.post("/", async (req, res) => {
-  //console.log("post",req.body);
-  try {
-    const newAnime = new Anime(req.body);
-    await newAnime.save().then((anime) => res.json(anime));
-  } catch (err) {
-    console.log(err);
-  }
+router.post('/', async (req, res) => {
+    // console.log("post",req.body);
+    try {
+        const newAnime = new Anime(req.body);
+        await newAnime.save().then(anime => res.json(anime));
+    } catch (err) {
+        console.log(err);
+    }
 });
 
 // @route PUT api/animes
