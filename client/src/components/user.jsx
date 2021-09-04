@@ -115,7 +115,7 @@ const User = (props) => {
                   <div className="d-flex flex-row">
                     <div>
                       <Link
-                        to={`/anime/${review.anime.mal_id}`}
+                        to={`/anime/${review.anime.mal_id}#${review._id}`}
                         className="d-flex flex-column review-detail"
                       >
                         <img

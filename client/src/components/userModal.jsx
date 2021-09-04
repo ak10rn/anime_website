@@ -75,7 +75,7 @@ const UserModal = (props) => {
                   type="text"
                   name="text"
                   placeholder="username"
-                  id="exampleText"
+                  id="changeusername"
                   value={name}
                   onChange={(event) => handleNameChange(event)}
                   className="mb-3"
@@ -86,7 +86,7 @@ const UserModal = (props) => {
                   type="textarea"
                   name="text"
                   placeholder="About yourself in 600 characters or less...  "
-                  id="exampleText"
+                  id="changeabout"
                   value={about}
                   onChange={(event) => handleAboutChange(event)}
                 />

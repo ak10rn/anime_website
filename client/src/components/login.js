@@ -7,7 +7,6 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import {
   makeStyles,
   createTheme,
-  withStyles,
   responsiveFontSizes,
 } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
@@ -24,7 +23,7 @@ import {
   Container,
   CircularProgress,
 } from "@material-ui/core";
-import { blue, pink } from "@material-ui/core/colors";
+import { blue } from "@material-ui/core/colors";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
@@ -58,9 +57,6 @@ const LoginForm = () => {
         primary: {
           main: blue[200],
         },
-        secondary: {
-          main: pink[200],
-        },
         type: "dark",
       },
     })
@@ -82,22 +78,16 @@ const LoginForm = () => {
     },
     submit: {
       margin: theme.spacing(3, 0, 2),
+      position: "relative",
+    },
+    submitSpinner: {
+      position: "absolute",
+      display: "flex",
+      justifySelf: "center",
+      alignSelf: "center",
     },
   }));
   const classes = useStyles();
-
-  const styles = {
-    root: {
-      marginLeft: 5,
-    },
-  };
-  const SpinnerAdornment = withStyles(styles)((props) => (
-    <CircularProgress
-      className={props.classes.spinner}
-      size={20}
-      color="black"
-    />
-  ));
 
   return (
     <ThemeProvider theme={theme}>
@@ -146,7 +136,14 @@ const LoginForm = () => {
               onClick={onSubmit}
               disabled={loading}
             >
-              {loading ? <SpinnerAdornment /> : "Sign In"}
+              Sign In
+              {loading && (
+                <CircularProgress
+                  className={classes.submitSpinner}
+                  size={30}
+                  color="black"
+                />
+              )}
             </Button>
             <Grid container>
               {/* <Grid item xs>

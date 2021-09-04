@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import "./anime.css";
 import { useParams } from "react-router-dom";
 import {
@@ -83,12 +83,26 @@ const Anime = (props) => {
           console.log(err);
         }
       }
-      // setTimeout(() => {
       setLoading(false);
-      // }, 5000);
     }
     fun();
   }, [id, props?.user?.name, props?.history, anime]);
+
+  const reviewID = props.location.hash.replace("#", "");
+  const element = document.getElementById(reviewID);
+  useMemo(() => {
+    setTimeout(() => {
+      window.scrollTo({
+        behavior: element ? "smooth" : "auto",
+        top: element ? element.offsetTop : 0,
+      });
+      setTimeout(() => {
+        try {
+          document.getElementById(reviewID).classList.add("customShake");
+        } catch (e) {}
+      }, 600);
+    }, 200);
+  });
 
   function avgScore(reviews) {
     if (reviews.length === 0) return -1;
