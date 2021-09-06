@@ -96,7 +96,6 @@ const Users = () => {
                 <td>{user.watched}</td>
               </tr>
             ))}
-            No Users in Our database! :(
           </tbody>
         </table>
       )}
