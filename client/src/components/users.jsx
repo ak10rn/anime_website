@@ -87,6 +87,7 @@ const Users = () => {
                       src={user.image}
                       alt={user.name}
                       className="user-img"
+                      loading="lazy"
                     />{" "}
                     <span>{user.name}</span>
                   </Link>
@@ -95,6 +96,7 @@ const Users = () => {
                 <td>{user.watched}</td>
               </tr>
             ))}
+            No Users in Our database! :(
           </tbody>
         </table>
       )}

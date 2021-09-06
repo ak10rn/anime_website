@@ -45,6 +45,12 @@
 .card-title {
   font-size: 1rem;
 }
+.card-outer {
+  height: 100%;
+}
+.img-temp {
+  height: 100%;
+}
 @media screen and (max-width: 768px) {
   .b {
     position: static;
@@ -56,6 +62,10 @@
     justify-content: center;
     align-items: center;
     display: flex;
+    height: auto !important;
+  }
+  .card-outer {
+    height: auto !important;
   }
   .card-body {
     text-align: center;

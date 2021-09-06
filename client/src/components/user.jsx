@@ -21,7 +21,7 @@ const User = (props) => {
       setLoading(true);
       try {
         const { data } = await getUserReviews(id);
-        setReviews(Object.values(data));
+        setReviews(Object.values(data).reverse());
         const { data: userData } = await getUser(id);
         setUser(userData);
         // console.log("userData", userData);
@@ -78,7 +78,12 @@ const User = (props) => {
           <div className="container text-light user-container d-flex flex-column">
             <div className="user-details">
               <div className="user-info0">
-                <img src={user.image} alt="dp" className="user-image" />
+                <img
+                  src={user.image}
+                  alt="dp"
+                  className="user-image"
+                  loading="lazy"
+                />
                 <h1> {user.name} </h1>
                 <p>Joined {handleDateFormat(user.register_date)}</p>
               </div>

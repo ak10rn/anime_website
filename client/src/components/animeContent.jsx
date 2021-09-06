@@ -5,7 +5,7 @@ const AnimeContent = (props) => {
   return (
     <div className="anime-details">
       <div className="anime-img">
-        <img src={anime.image_url} alt="" />
+        <img src={anime.image_url} alt="" loading="lazy" />
       </div>
 
       <div className="anime-body bg-dark">
