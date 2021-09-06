@@ -21,7 +21,7 @@ const ProfileIcon = ({ user }) => {
         onClick={toggleUserDropdown}
         style={{ cursor: "pointer" }}
       >
-        <img src={user.image} alt="usr_img" />{" "}
+        <img src={user.image} alt="usr_img" loading="lazy" />{" "}
         <div style={{ margin: "auto 5px", whiteSpace: "nowrap" }}>
           <span style={{ color: "yellow" }}>{user.name}</span>{" "}
           <i

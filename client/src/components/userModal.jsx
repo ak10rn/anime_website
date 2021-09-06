@@ -58,6 +58,7 @@ const UserModal = (props) => {
                     height="150"
                     width="150"
                     className="col-5"
+                    loading="lazy"
                   ></img>
                   <div className="upload-btn-wrapper col d-flex justify-content-start align-items-center">
                     <Widget

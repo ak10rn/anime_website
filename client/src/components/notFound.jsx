@@ -19,6 +19,7 @@ const NotFound = (props) => {
               width: "500px",
               borderRadius: "10px",
             }}
+            loading="lazy"
           />
         </div>
         <h1>

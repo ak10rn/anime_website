@@ -27,7 +27,13 @@ const AppNavbar = (props) => {
       <Navbar color="dark" dark expand="md" className="sticky-top mb-3">
         <Container>
           <Link className="navbar-brand " to="/">
-            <img src={logo} width="150px" height="40px" alt="logo" />
+            <img
+              src={logo}
+              width="150px"
+              height="40px"
+              alt="logo"
+              loading="lazy"
+            />
           </Link>
 
           <NavbarToggler onClick={toggleNavbarDropdown} />
