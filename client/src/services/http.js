@@ -17,6 +17,8 @@ axios.interceptors.response.use(null, (error) => {
   return Promise.reject(error);
 });
 
+axios.defaults.headers.post['Content-Type'] ='application/x-www-form-urlencoded';
+
 export function setJWT(jwt) {
   axios.defaults.headers.common["x-auth-token"] = auth.getJWT(jwt);
 }

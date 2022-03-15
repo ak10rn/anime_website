@@ -43,7 +43,11 @@ const Anime = (props) => {
             console.log("notdata");
             try {
               const { data: d } = await getAnimeByMalId(id);
-              const { data: dd } = await saveAnime(d);
+              var z = d.data;
+              console.log("yo",z);
+              z.image_url = z.images.jpg.image_url;
+              z.trailer_url = z.trailer.url;
+              const { data: dd } = await saveAnime(z);
               setAnime(dd);
             } catch (err) {
               console.log(err);

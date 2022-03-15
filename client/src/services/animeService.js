@@ -4,14 +4,14 @@ const querystring = require("querystring");
 const apiUrl = "/api/animes";
 const reviewUrl = "/api/reviews";
 
-const jikanUrl = "https://api.jikan.moe/v3";
+const jikanUrl = "https://api.jikan.moe/v4";
 
 function animeUrl(id) {
   return `https://blooming-headland-42531.herokuapp.com/${jikanUrl}/anime/${id}`;
 }
 
 function searchUrl(query) {
-  return `https://blooming-headland-42531.herokuapp.com/${jikanUrl}/search/anime/?${querystring.stringify(
+  return `https://blooming-headland-42531.herokuapp.com/${jikanUrl}/anime?${querystring.stringify(
     query
   )}`;
 }
@@ -52,6 +52,7 @@ export function deleteReview(review) {
 // console.log(savedPost);
 
 export function getAnimeByMalId(id) {
+  console.log(animeUrl(id));
   return http.get(animeUrl(id));
 }
 

@@ -26,8 +26,8 @@ function SearchBar({ placeholder }) {
             sort: "asc",
           });
           setLoading(false);
-          console.log(searchedAnimes.data.results);
-          setSearchData(searchedAnimes.data.results);
+          console.log("hello",searchedAnimes.data.data);
+          setSearchData(searchedAnimes.data.data);
         } else {
           setSearchData([]);
         }
@@ -114,7 +114,7 @@ function SearchBar({ placeholder }) {
             >
               <div className="d-flex flex-row px-1">
                 <img
-                  src={value.image_url}
+                  src={value.images.jpg.image_url}
                   alt="img_url"
                   className="search-result-image"
                 />
