@@ -45,12 +45,10 @@
 .card-title {
   font-size: 1rem;
 }
-
 .card-outer {
   height: 100%;
 }
-
-.img-temp{
+.img-temp {
   height: 100%;
 }
 @media screen and (max-width: 768px) {
@@ -66,8 +64,7 @@
     display: flex;
     height: auto !important;
   }
-
-  .card-outer{
+  .card-outer {
     height: auto !important;
   }
   

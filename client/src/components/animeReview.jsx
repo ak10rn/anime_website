@@ -25,7 +25,12 @@ const AnimeReview = (props) => {
   return (
     <div className="anime-review d-flex flex-column" id={review._id}>
       <div className="d-flex flex-row position-relative">
-        <img src={review.user.image} className="user-img" alt="User_Image" />
+        <img
+          src={review.user.image}
+          className="user-img"
+          alt="User_Image"
+          loading="lazy"
+        />
         <div className="user-info d-flex flex-column">
           <strong>
             <Link to={`/users/${review.user._id}`} className="user-name">

@@ -87,6 +87,7 @@ const Users = () => {
                       src={user.image}
                       alt={user.name}
                       className="user-img"
+                      loading="lazy"
                     />{" "}
                     <span>{user.name}</span>
                   </Link>

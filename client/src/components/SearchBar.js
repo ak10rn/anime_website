@@ -117,6 +117,7 @@ function SearchBar({ placeholder }) {
                   src={value.images.jpg.image_url}
                   alt="img_url"
                   className="search-result-image"
+                  loading="lazy"
                 />
                 <div
                   className="ms-2 align-self-center text-light"
