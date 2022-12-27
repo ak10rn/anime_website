@@ -93,6 +93,9 @@ const Anime = (props) => {
   }, [id, props?.user?.name, props?.history, anime]);
 
   const reviewID = props.location.hash.replace("#", "");
+
+  // shake when clicked on a user's comment
+
   const element = document.getElementById(reviewID);
   useMemo(() => {
     setTimeout(() => {
