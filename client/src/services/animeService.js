@@ -1,8 +1,8 @@
-import http from "./http";
-const apiUrl = "/api/animes";
-const reviewUrl = "/api/reviews";
+import http from './http'
+const apiUrl = '/api/animes'
+const reviewUrl = '/api/reviews'
 
-const crossFetch = require("cross-fetch");
+const crossFetch = require('cross-fetch')
 
 // !DEPRECATED
 // const jikanUrl = "https://api.jikan.moe/v4";
@@ -18,25 +18,25 @@ const crossFetch = require("cross-fetch");
 // }
 
 export function getAnimes() {
-	return http.get(apiUrl);
+	return http.get(apiUrl)
 }
 
 export function getAnime(mal_id) {
-	return http.get(`${apiUrl}/${mal_id}`);
+	return http.get(`${apiUrl}/${mal_id}`)
 }
 
 export function saveReview(review) {
 	if (review._id) {
 		// console.log("reviewservice", review);
-		const body = { ...review };
-		delete body._id;
-		return http.put(`${reviewUrl}/${review._id}`, body);
+		const body = { ...review }
+		delete body._id
+		return http.put(`${reviewUrl}/${review._id}`, body)
 	}
-	return http.post(reviewUrl, review);
+	return http.post(reviewUrl, review)
 }
 
 export function deleteReview(review) {
-	return http.delete(reviewUrl, { data: review });
+	return http.delete(reviewUrl, { data: review })
 }
 
 // to add a review
@@ -57,27 +57,32 @@ export function getAnimeByMalId(id) {
 	// return http.get(animeUrl(id));
 	// const res = await jikan.loadAnime(id)
 	// console.log(res)
-	return crossFetch("https://api.jikan.moe/v4/anime/" + id).then((res) => res.json());
+	return crossFetch(`https://api.jikan.moe/v4/anime/${id}/full`)
+		.then((res) => res.json())
+		.then((res) => res.data)
 }
 
 export function getAnimeBySearchQuery(query) {
 	// console.log("query", query);
-	if (query.length < 3) return [];
+	if (query.length < 3) return []
 	// console.log("searchquery", searchUrl(query));
 	// return http.get(searchUrl(query));
 
-	const url = "https://api.jikan.moe/v4/anime?q=" + encodeURIComponent(query.q);
-	// console.log('url', url);
+	const encodedQuery = Object.keys(query)
+		.map((k) => encodeURIComponent(k) + '=' + encodeURIComponent(query[k]))
+		.join('&')
+
+	const url = `https://api.jikan.moe/v4/anime?q=${encodedQuery}`
 	return crossFetch(url)
 		.then((res) => res.json())
-		.then((res) => res.data);
+		.then((res) => res.data)
 }
 
 export function saveAnime(anime) {
 	if (anime._id) {
-		const body = { ...anime };
-		delete body._id;
-		return http.put(`${apiUrl}/${anime._id}`, body);
+		const body = { ...anime }
+		delete body._id
+		return http.put(`${apiUrl}/${anime._id}`, body)
 	}
-	return http.post(apiUrl, anime);
+	return http.post(apiUrl, anime)
 }

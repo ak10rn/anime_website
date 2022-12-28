@@ -39,14 +39,14 @@ const Anime = (props) => {
       if (!anime.title) {
         try {
           let { data } = await getAnime(id);
+          // console.log(data)
           if (!data) {
-            console.log("notdata");
+            // console.log("notdata");
             try {
-              const data = await getAnimeByMalId(id);
-              console.log("yo", data);
-              data.image_url = data.images.jpg.image_url;
-              data.trailer_url = data.trailer.url;
-              const { data: dd } = await saveAnime(data);
+              const _data = await getAnimeByMalId(id);
+              // console.log("yo", _data);
+              _data.image_url = _data.images.jpg.image_url;
+              const { data: dd } = await saveAnime(_data);
               setAnime(dd);
             } catch (err) {
               console.log(err);
@@ -105,7 +105,7 @@ const Anime = (props) => {
       setTimeout(() => {
         try {
           document.getElementById(reviewID).classList.add("customShake");
-        } catch (e) {}
+        } catch (e) { }
       }, 600);
     }, 200);
   });
@@ -220,8 +220,8 @@ const Anime = (props) => {
       /*const { data: savedAnime } = */ await saveAnime(animedb);
       // console.log("savedAnime", savedAnime);
       /*const { data: deletedReview } = */ await deleteReview(
-        reviewToBeDeleted
-      );
+      reviewToBeDeleted
+    );
       // console.log("deletedReview", deletedReview);
     } catch (err) {
       console.log(err);
