@@ -1,41 +1,42 @@
 import http from "./http";
-const querystring = require("querystring");
-
 const apiUrl = "/api/animes";
 const reviewUrl = "/api/reviews";
 
-const jikanUrl = "https://api.jikan.moe/v4";
+const crossFetch = require("cross-fetch");
 
-function animeUrl(id) {
-  return `https://blooming-headland-42531.herokuapp.com/${jikanUrl}/anime/${id}`;
-}
+// !DEPRECATED
+// const jikanUrl = "https://api.jikan.moe/v4";
 
-function searchUrl(query) {
-  return `https://blooming-headland-42531.herokuapp.com/${jikanUrl}/anime?${querystring.stringify(
-    query
-  )}`;
-}
+// function animeUrl(id) {
+//   return `https://blooming-headland-42531.herokuapp.com/${jikanUrl}/anime/${id}`;
+// }
+
+// function searchUrl(query) {
+//   return `https://blooming-headland-42531.herokuapp.com/${jikanUrl}/anime?${encodeURIComponent(
+//     query
+//   )}`;
+// }
 
 export function getAnimes() {
-  return http.get(apiUrl);
+	return http.get(apiUrl);
 }
 
 export function getAnime(mal_id) {
-  return http.get(`${apiUrl}/${mal_id}`);
+	return http.get(`${apiUrl}/${mal_id}`);
 }
 
 export function saveReview(review) {
-  if (review._id) {
-    // console.log("reviewservice", review);
-    const body = { ...review };
-    delete body._id;
-    return http.put(`${reviewUrl}/${review._id}`, body);
-  }
-  return http.post(reviewUrl, review);
+	if (review._id) {
+		// console.log("reviewservice", review);
+		const body = { ...review };
+		delete body._id;
+		return http.put(`${reviewUrl}/${review._id}`, body);
+	}
+	return http.post(reviewUrl, review);
 }
 
 export function deleteReview(review) {
-  return http.delete(reviewUrl, { data: review });
+	return http.delete(reviewUrl, { data: review });
 }
 
 // to add a review
@@ -52,26 +53,31 @@ export function deleteReview(review) {
 // console.log(savedPost);
 
 export function getAnimeByMalId(id) {
-  console.log(animeUrl(id));
-  return http.get(animeUrl(id));
+	// console.log(animeUrl(id));
+	// return http.get(animeUrl(id));
+	// const res = await jikan.loadAnime(id)
+	// console.log(res)
+	return crossFetch("https://api.jikan.moe/v4/anime/" + id).then((res) => res.json());
 }
 
 export function getAnimeBySearchQuery(query) {
-  // console.log("query", query);
-  if (query.length < 3) return [];
-  console.log("searchquery", searchUrl(query));
-  return http.get(searchUrl(query));
+	// console.log("query", query);
+	if (query.length < 3) return [];
+	// console.log("searchquery", searchUrl(query));
+	// return http.get(searchUrl(query));
+
+	const url = "https://api.jikan.moe/v4/anime?q=" + encodeURIComponent(query.q);
+	// console.log('url', url);
+	return crossFetch(url)
+		.then((res) => res.json())
+		.then((res) => res.data);
 }
 
 export function saveAnime(anime) {
-  if (anime._id) {
-    const body = { ...anime };
-    delete body._id;
-    return http.put(`${apiUrl}/${anime._id}`, body);
-  }
-  return http.post(apiUrl, anime);
-}
-
-export function deleteAnime(anime) {
-  return http.delete(animeUrl(anime._id), { data: anime });
+	if (anime._id) {
+		const body = { ...anime };
+		delete body._id;
+		return http.put(`${apiUrl}/${anime._id}`, body);
+	}
+	return http.post(apiUrl, anime);
 }

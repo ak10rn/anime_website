@@ -26,8 +26,8 @@ function SearchBar({ placeholder }) {
             sort: "asc",
           });
           setLoading(false);
-          console.log("hello",searchedAnimes.data.data);
-          setSearchData(searchedAnimes.data.data);
+          console.log("hello",searchedAnimes);
+          setSearchData(searchedAnimes);
         } else {
           setSearchData([]);
         }

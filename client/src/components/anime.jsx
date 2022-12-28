@@ -42,12 +42,11 @@ const Anime = (props) => {
           if (!data) {
             console.log("notdata");
             try {
-              const { data: d } = await getAnimeByMalId(id);
-              var z = d.data;
-              console.log("yo",z);
-              z.image_url = z.images.jpg.image_url;
-              z.trailer_url = z.trailer.url;
-              const { data: dd } = await saveAnime(z);
+              const data = await getAnimeByMalId(id);
+              console.log("yo", data);
+              data.image_url = data.images.jpg.image_url;
+              data.trailer_url = data.trailer.url;
+              const { data: dd } = await saveAnime(data);
               setAnime(dd);
             } catch (err) {
               console.log(err);
