@@ -72,7 +72,7 @@ export function getAnimeBySearchQuery(query) {
 		.map((k) => encodeURIComponent(k) + '=' + encodeURIComponent(query[k]))
 		.join('&')
 
-	const url = `https://api.jikan.moe/v4/anime?q=${encodedQuery}`
+	const url = `https://api.jikan.moe/v4/anime?${encodedQuery}`
 	return crossFetch(url)
 		.then((res) => res.json())
 		.then((res) => res.data)
