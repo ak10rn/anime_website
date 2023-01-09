@@ -39,15 +39,14 @@ const Anime = (props) => {
       if (!anime.title) {
         try {
           let { data } = await getAnime(id);
+          // console.log(data)
           if (!data) {
-            console.log("notdata");
+            // console.log("notdata");
             try {
-              const { data: d } = await getAnimeByMalId(id);
-              var z = d.data;
-              console.log("yo",z);
-              z.image_url = z.images.jpg.image_url;
-              z.trailer_url = z.trailer.url;
-              const { data: dd } = await saveAnime(z);
+              const _data = await getAnimeByMalId(id);
+              // console.log("yo", _data);
+              _data.image_url = _data.images.jpg.image_url;
+              const { data: dd } = await saveAnime(_data);
               setAnime(dd);
             } catch (err) {
               console.log(err);
@@ -93,6 +92,9 @@ const Anime = (props) => {
   }, [id, props?.user?.name, props?.history, anime]);
 
   const reviewID = props.location.hash.replace("#", "");
+
+  // shake when clicked on a user's comment
+
   const element = document.getElementById(reviewID);
   useMemo(() => {
     setTimeout(() => {
@@ -103,7 +105,7 @@ const Anime = (props) => {
       setTimeout(() => {
         try {
           document.getElementById(reviewID).classList.add("customShake");
-        } catch (e) {}
+        } catch (e) { }
       }, 600);
     }, 200);
   });
@@ -218,8 +220,8 @@ const Anime = (props) => {
       /*const { data: savedAnime } = */ await saveAnime(animedb);
       // console.log("savedAnime", savedAnime);
       /*const { data: deletedReview } = */ await deleteReview(
-        reviewToBeDeleted
-      );
+      reviewToBeDeleted
+    );
       // console.log("deletedReview", deletedReview);
     } catch (err) {
       console.log(err);

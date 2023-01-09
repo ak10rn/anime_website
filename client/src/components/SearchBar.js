@@ -22,12 +22,12 @@ function SearchBar({ placeholder }) {
           const searchedAnimes = await getAnimeBySearchQuery({
             q: event.target.value,
             limit: 10,
-            order_by: "title",
-            sort: "asc",
+            // order_by: "title",
+            // sort: "asc",
           });
           setLoading(false);
-          console.log("hello",searchedAnimes.data.data);
-          setSearchData(searchedAnimes.data.data);
+          // console.log("hello", searchedAnimes);
+          setSearchData(searchedAnimes);
         } else {
           setSearchData([]);
         }
