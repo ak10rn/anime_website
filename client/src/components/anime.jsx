@@ -10,7 +10,7 @@ import {
 } from "../services/animeService";
 import RateModal from "./rateModal";
 import AnimeReviews from "./animeReviews";
-import AnimeContent from "./animeContent";
+import AnimeContentChanged from "./animeContentChanged";
 import CircularSpinner from "./circularSpinner";
 import _ from "lodash";
 
@@ -283,7 +283,7 @@ const Anime = (props) => {
             <div className="title">
               <p>{anime.title}</p>
             </div>
-            <AnimeContent anime={anime} score={score} loading={loading} />
+            <AnimeContentChanged anime={anime} score={score} loading={loading} />
             <AnimeReviews
               id={id}
               key={id}
